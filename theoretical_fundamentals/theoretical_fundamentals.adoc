@@ -7,19 +7,42 @@
 
 == Chapter 3: Theoretical Fundamentals
 
-In this chapter, the m
+In this chapter, the main specifications of linear regualtors will be discussed
 
-=== Classical Voltage Regulator Topology 
 
+
+.Classical Voltage Regulator Topology: a) with PMOS pass device and b) with NMOS pass device
+[#classical_voltage_reg_topologies_nmos_and_pmos_pass_devices]
 image::classical_voltage_reg_topologies_nmos_and_pmos_pass_devices.png[]
 
-=== Drop-out Voltage
+=== Static/Steady-State Parameters
+
+
+==== Drop-out Voltage
 The drop-out voltage is defined as the minimum voltage difference between VIN and VOUT (Figure 2.1) to maintain an intended voltage regulation [4_yang_li_thesis]. A linear regulator which can operate in low drop-out voltage regulation is commonly named as low drop-out regulator (LDO). The application intended for the proposed voltage regulator has quite a big dropout, that allows us to use an NMOS pass device without a charge pump, as such it does not qualify it as a Low-Dropout Regulator.
 
 === Quiescent Current
 
+The quiescent current (I~Q~) is defined as the total current drawn by the voltage regulator from the preceding supply, minus the current that flows to the load. In other words it's the current consumed by the control circuits.
+The power efficiency &eta; of a linear regulator can be expressed in, where I~Load~ is current flowing into the load and V~dropout~ is the dropout voltage.
 
-=== Precision Calculation
+[stem]
+++++
+\eta = \frac{P_{delivered}}{P_{supplied}} = \frac{V_{out}I_{load}}{V_{in}(I_{load} + I_Q)} 
+= \left(1 - \frac{V_{dropout}}{V_{in}}\right)\frac{I_{load}}{(I_{load} + I_Q)}
+++++
+
+// TODO: add current efficiency metric
+
+=== Line Regulation
+
+Line regulation represents the ability of a regulator to withstand static variations from its supply. It is defined as a gain between regulated output and input supply stem:[\Delta V_{out}/ \Delta V_{in}]. The preceding supply might vary due to different causes: its own line/load regulation, bandgap accuracy, static offsets dues to transistor mismatches, temperature drift, etc. 
+    
+
+    //check how to implement tabs
+Ideally sdsds sdsd
+
+==== Precision Calculation
 
 Parameter Vout_static
 Typical 1.5 {plusm} 3% -> min: 1.455V, max: 1.545V
