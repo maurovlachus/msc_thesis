@@ -3,8 +3,20 @@
 :eqnums: all
 :plusm: &#177;
 :xrefstyle: short
+:imagesdir: images
 
 == Chapter 3: Theoretical Fundamentals
+
+In this chapter, the m
+
+=== Classical Voltage Regulator Topology 
+
+image::classical_voltage_reg_topologies_nmos_and_pmos_pass_devices.png[]
+
+=== Drop-out Voltage
+The drop-out voltage is defined as the minimum voltage difference between VIN and VOUT (Figure 2.1) to maintain an intended voltage regulation [4_yang_li_thesis]. A linear regulator which can operate in low drop-out voltage regulation is commonly named as low drop-out regulator (LDO). The application intended for the proposed voltage regulator has quite a big dropout, that allows us to use an NMOS pass device without a charge pump, as such it does not qualify it as a Low-Dropout Regulator.
+
+=== Quiescent Current
 
 
 === Precision Calculation
@@ -43,7 +55,7 @@ The other parameter that we are free to tune is the Slew Rate of the OTA. Indeed
 
 .Load jump response comparison between two OTA models with different Slew Rates
 [#loadJump_ota_model_linear_transientResponse_2u_vs_5u_Islew]
-image::images/loadJump_ota_model_linear_char_2u_vs_5u_Islew.png[width=800]
+image::loadJump_ota_model_linear_char_2u_vs_5u_Islew.png[width=800]
 
 However, we must keep in mind the conditions under which eq. (1) was derived and remains valid. The equation assumes that the output current exhibits both a hard saturation on the bias current and a linear dependence on the input differential voltage. Therefore, increasing the Slew Rate requires more current from the OTA, which leads to increased power consumption. Therefore, there is a trade-off between transient response and power efficiency that must be carefully balanced in the design of the voltage regulator, for class-A type OTAs.
 
@@ -52,13 +64,13 @@ For class AB OTAs, which typically exhibit a nonlinear relationship between the 
 
 .DC sweep of the output current injected by the OTA block for a decrease in its negative input voltage
 [#dc_sweep_ota_model_linear_vs_quadratic]
-image::images/dc_sweep_slew_rates_linear_vs_quadratic_dependence.png[width=800]
+image::dc_sweep_slew_rates_linear_vs_quadratic_dependence.png[width=800]
 
 The resulting transient response of both ota models to a load jump is shown in <<loadJump_ota_model_linear_vs_quadratic>>. The OTA with the nonlinear output current dependence on the input differential voltage shows a smaller undershoot and a faster recovery to the nominal output voltage after a load jump compared to the OTA with a linear output current dependence, even though both OTAs have the same unity-gain bandwidth. This demonstrates that optimizing the Slew Rate through nonlinear stages can significantly enhance the transient response of voltage regulators without necessarily increasing power consumption.
 
 .Load jump response comparison between one OTA model with linear Iout dependence on input differential voltage and Slew Rate cap and another OTA model with quadratic Iout dependence on input differential voltage
 [#loadJump_ota_model_linear_vs_quadratic]
-image::images/loadJump_ota_model_linear_vs_quadratic_dependence.png[width=800]
+image::loadJump_ota_model_linear_vs_quadratic_dependence.png[width=800]
 
 === Stability Analysis of Dual Loop Systems
 
