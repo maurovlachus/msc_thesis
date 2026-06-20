@@ -1,0 +1,7 @@
+= CAS targets
+
+== Comparison of different methods to evaluate the stability of dual/multi loop continuous-time systems
+
+* using classical feedback theory to collapse inner feedback loops
+* using the Signal Flow Graph built with the help of driving point impedances
+* Stability Analysis via State Matrix Decomposition
