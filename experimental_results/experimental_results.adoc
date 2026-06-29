@@ -1,0 +1,49 @@
+:stem: latexmath
+:sectnums:
+:eqnums: all
+:plusm: &#177;
+:xrefstyle: short
+:imagesdir: images
+:tab: {nbsp}{nbsp}{nbsp}{nbsp}
+
+
+== Chapter 4: Experimental Results
+
+
+== VREG Startup and Disable
+
+.Startup Behaviour of the 1.5V Regulator over PVT with 150pF and 5nF Load Capacitance and Load Current Sweep from 10nA to 10mA
+[#reg1v5_startup_pvt_cload_150p_5n_iload_10n_10m_sweep]
+image::reg1v5_startup_pvt_cload_150p_5n_iload_10n_10m_sweep.png[]
+
+As can be seen from <<reg1v5_startup_pvt_cload_150p_5n_iload_10n_10m_sweep>> , the 1V5 Reg startup time varies dramatically, mostly due to the load current the VREG is required to supply directly from the startup and the PVT conditions. The startup time is also influenced by the load capacitance.
+
+.Disable Behaviour of the 1.5V Regulator over PVT with 150pF and 5nF Load Capacitance and Load Current Sweep from 10nA to 10mA
+[#reg1v5_disable_pvt_cload_150p_5n_10n_10m_sweep]
+image::reg1v5_disable_pvt_cload_150p_5n_10n_10m_sweep.png[]
+
+The disable behaviour of the 1V5 Reg is also influenced by the load current and load capacitance. The disable time is generally shorter than the startup time, but it can still vary significantly depending on the PVT conditions and the load current. The longest disable time is observed when the load current is low (10nA) and the load capacitance is large, as the pulldown switch needs to discharge the load capacitance before it can fully disable.
+xs
+
+
+=== Dual-Loop System Stability
+
+Like it was presented in Chapter 2: Theoretical Fundamentals, stability is a sensitive issue in multi-loop systems that has to be treated with care.
+
+=== Static Performance
+
+==== Line Regulation
+
+==== Load Regulation
+
+==== Quiescent Current
+
+
+=== Dynamic Performance
+
+==== Line Transient Response
+
+==== Load Transient Response
+
+
+=== PSRR
