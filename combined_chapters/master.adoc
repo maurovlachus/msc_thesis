@@ -1,0 +1,24 @@
+= Master Document Title
+Author Name
+:toc: left
+
+
+
+
+
+// 1. State of the Art (Assuming no images folder yet, but included for structure)
+include::../state_of_the_art/state_of_the_art.adoc[]
+
+// 2. Theoretical Fundamentals
+:imagesdir: ../theoretical_fundamentals/images
+include::../theoretical_fundamentals/theoretical_fundamentals.adoc[]
+
+
+// 3. Implementation
+:imagesdir: ../implementation/images
+include::../implementation/implementation.adoc[]
+
+
+// 4. Experimental Results
+:imagesdir: ../experimental_results/images
+include::../experimental_results/experimental_results.adoc[]

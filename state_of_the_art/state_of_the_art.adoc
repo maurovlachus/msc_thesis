@@ -1,10 +1,17 @@
-
-
-= Chapter 2: State of the Art in Ultra-Low-Power Capacitor-Less Voltage Regulators
 :stem: latexmath
+:sectnums:
+:eqnums: all
+:plusm: &#177;
+:xrefstyle: short
+ifndef::imagesdir[:imagesdir: images]
+:tab: {nbsp}{nbsp}{nbsp}{nbsp}ges]
+
+//chapter 1
+== State of the Art in Ultra-Low-Power Capacitor-Less Voltage Regulators
+
 
 // to double check headings
-== 2.1. Introduction to the Power Management Paradigm
+=== Introduction to the Power Management Paradigm
 // to add details about automotive
 The unprecedented proliferation of always-on Internet of Things (IoT) nodes, biomedical implantable devices, and microcontrollers due to the recent rise of software-defined-vehicles has catalyzed a paradigm shift in the design of fully integrated power management integrated circuits (PMICs). At the core of these embedded systems lies the Low-Dropout (LDO) or linear voltage regulator(VREG), a pivotal component responsible for providing a clean, stable, and precise supply voltage to sensitive downstream analog and digital blocks. Historically, LDOs and VREGs relied heavily on a bulky external output capacitor, typically in the range of 1&micro;F to 10&micro;F, to ensure loop stability and to buffer charge during sudden load transients. 
 
@@ -12,7 +19,7 @@ However, the modern drive toward extreme miniaturization and cost reduction in S
 
 While advantageous for integration, removing the output capacitor introduces a fundamental tri-lemma in analog design: balancing *ultra-low quiescent current I~Q~*, *fast transient response*, and *high static precision* across all process, voltage, and temperature (PVT) variations. When the quiescent current must be aggressively scaled down to the sub-microampere or low-microampere domain to extend battery life, the internal error amplifier’s bandwidth and slew rate are severely degraded. Consequently, achieving acceptable transient undershoots and overshoots during full-load current steps (eg: 100nA to 10mA) becomes an exceptionally complex challenge. The following sections explore the established research directions and state-of-the-art topologies developed to address these inherent tradeoffs.
 
-== 2.2. Frequency Compensation and Loop Stability in OCL Architectures
+=== Frequency Compensation and Loop Stability in OCL Architectures
 In classical VREG architectures, the large external capacitor establishes a dominant, low-frequency pole at the output node. Because this pole resides at a much lower frequency than the internal poles of the error amplifier (EA), the system inherently behaves as a single-pole system up to its unity-gain frequency (UGF), ensuring a robust phase margin, especially under medium and heavy load conditions. For light loads, the internal poles might approach the UGF, but usually, the ESR of the output capacitor provides a beneficial zero that helps maintain stability.
 
 When the output capacitor is removed (leaving only the parasitic capacitance of the load, typically in the range of 0 to a couple nFs at most), the output pole is pushed to a much higher frequency. More critically, the frequency of this output pole becomes highly load-dependent. At minimal load currents, the transconductance g~m~ of the pass device is exceedingly small, causing p~out~ to drift closer to the internal poles of the EA. This proximity results in complex conjugate poles, leading to severe peaking in the frequency response and catastrophic instability.
@@ -23,43 +30,59 @@ When the output capacitor is removed (leaving only the parasitic capacitance of 
 
 Modern approaches favor the generation of adaptive or load-tracking zeros. By inserting a variable resistor—often implemented via a MOSFET operating in the linear or saturation region whose gate is controlled by a replica of the load current—a zero can be synthesized that naturally shifts in tandem with the output pole. This method effectively flattens the phase response at the unity-gain crossover frequency. However, tracking zeros must be meticulously designed to account for worst-case PVT corners, as an over-compensated zero can lead to early phase dropping, while an under-compensated zero fails to mitigate complex pole formation.
 
-== 2.3. Power Stage Architectures: The Shift from PMOS to NMOS
+=== Power Stage Architectures: The Shift from PMOS to NMOS
 The choice of the power pass-device dictates the fundamental topology of the regulator, directly impacting both the dropout voltage and the transient capabilities of the system.
 
-=== 2.3.1. PMOS-Based Power Stages
+==== PMOS-Based Power Stages
 The vast majority of classical LDOs and many recent ultra-low-power architectures utilize a PMOS transistor as the power pass-device, configured as a common-source amplifier. The primary advantage of a PMOS stage is its ability to operate with an extremely low dropout voltage, meaning the input supply voltage can be nearly identical to the required output voltage. 
 
 Recent literature showcases impressive ultra-low power PMOS implementations. Yao et al. [5] achieved an external capacitor-less LDO with a maximum quiescent current of 2.3&mu;A for a 1mA load. Similarly, Zhan and Ki [7] demonstrated a PMOS LDO capable of supporting a 12mA load while maintaining a 28.6&mu;A standby current. Furthermore, Tan et al. [8] developed a highly optimized 30mA PMOS LDO with a hybrid adaptive biasing scheme, maintaining just 7&mu;A of I_Q. 
 
 Despite these achievements, PMOS power stages suffer from three drawbacks in VREG capless designs. First, the PMOS seen from the supply side builds a common gate stage, which severly impacts the PSRR performance at middle and higher frequencies. As a common-source stage, as seen from the OTA side, the PMOS power stage exhibits a high intrinsic output impedance (r_ds), which pushes the load-dependent pole to lower frequencies, exacerbating stability issues. Second, because holes have lower mobility than electrons, a PMOS device must be sized considerably larger than an equivalent NMOS device to drive the same maximum load current. This increased silicon area also results in a bigger gate capacitance (C_gs + C_gd). 
 
-=== 2.3.2. NMOS-Based Power Stages
+====  NMOS-Based Power Stages
 To overcome the intrinsic bandwidth and slew-rate limitations of PMOS devices, advanced research directions have increasingly adopted NMOS power stages [6], [10]. Configured as a source-follower, the NMOS pass-device provides an intrinsically low output impedance (1/g_m).
 
 Furthermore, the superior electron mobility of the NMOS transistor allows it to be physically smaller than a PMOS device for the same current rating (e.g., 10mA to 50mA). Consequently, the parasitic gate capacitance is drastically reduced, allowing the low-power internal amplifier to slew the gate node much faster. For instance, Liu et al. [6] demonstrated an area-efficient capless NMOS LDO with exceptionally fast transient response metrics. 
 
 The primary tradeoff of the NMOS architecture is the threshold voltage ($V_{th}$) penalty. Because it operates as a source follower, the gate voltage must be driven significantly higher than the output voltage. This typically requires either a higher secondary input supply rail or an internal charge pump if the VREG needs to be used as an LDO. In applications where multiple voltage rails are already present (such as stepping down from a 2.5V rail to a 1.5V core voltage), the NMOS topology presents a superior solution for transient-optimized capless regulation.
 
-== 2.4. Overcoming Slew-Rate Bottlenecks at Nano-Ampere Bias
+=== Overcoming Slew-Rate Bottlenecks at Nano-Ampere Bias
 When the maximum allowed standby current is restricted to the 100 nA to 10 μA range, conventional linear error amplifiers cannot generate enough current to rapidly alter the gate voltage of the pass device during a transient event. The state-of-the-art literature has explored three predominant methodologies to break the correlation between static bias current and dynamic slew rate.
 
-=== 2.4.1. Adaptive Biasing
-Rather than operating the internal amplifiers at a fixed, statically low bias current, adaptive biasing circuits dynamically adjust the internal I~Q~ in proportion to the output load current. At minimal loads (e.g., 100 nA), the regulator consumes only a baseline, microampere-level current, maximizing light-load power efficiency. As the load current increases toward its maximum, a current-sensing mechanism scales up the internal bias. This dynamic scaling significantly increases the transconductance of the internal amplifiers, boosting the unity-gain frequency and extending the stability phase margin at heavy loads [7], [8].
+==== Adaptive Biasing
+
+Rather than operating the internal amplifiers at a fixed, statically low bias current, adaptive biasing circuits dynamically adjust the internal I~Q~ in proportion to the output load current. At minimal loads (e.g., 100 nA), the regulator consumes only a baseline, nanoampere-microampere-level current, maximizing light-load power efficiency.
+
+.Simplified schematic of a conventional adaptive biasing scheme for a VREG with a PMOS power stage[J. Chen et al., "A Low-Quiescent-Current Output-Capacitorless Low-Dropout Regulator With a Dual-Path Adaptive-Biasing Technique," in IEEE Transactions on Circuits and Systems II: Express Briefs, vol. 73, no. 5, pp. 598-602, May 2026]
+[#conventional_adaptive_biasing_scheme_pmos_power_stage]
+image::conventional_adaptive_biasing_scheme_pmos_power_stage.png[]
+
+
+.Simplified schematic of a conventional adaptive biasing scheme for a VREG with an NMOS power stage [D. Mandal, C. Desai, B. Bakkaloglu and S. Kiaei, "Adaptively Biased Output Cap-Less NMOS LDO With 19 ns Settling Time," in IEEE Transactions on Circuits and Systems II: Express Briefs, vol. 66, no. 2, pp. 167-171, Feb. 2019]
+[#conventional_adaptive_biasing_scheme_nmos_power_stage]
+image::conventional_adaptive_biasing_scheme_nmos_power_stage.png[]
+
+As the load current increases toward its maximum, a current-sensing mechanism similar to the one depicted in <<conventional_adaptive_biasing_scheme_pmos_power_stage>> for PMOS power stages or in <<conventional_adaptive_biasing_scheme_nmos_power_stage>> for NMOS power stages, scales up the internal bias. This dynamic scaling significantly increases the transconductance of the internal amplifiers, boosting the unity-gain frequency and extending the stability phase margin at heavy loads [7], [8] [J. Chen et al., "A Low-Quiescent-Current Output-Capacitorless Low-Dropout Regulator With a Dual-Path Adaptive-Biasing Technique," in IEEE Transactions on Circuits and Systems II: Express Briefs, vol. 73, no. 5, pp. 598-602, May 2026][X. Zheng, H. Feng and N. Zhang, "An External Capacitorless Low-Dropout Regulator With 5.58uV Integrated Output Noise From 10 Hz to 100kHz Using Adaptive Bias Technique," 2020 IEEE 3rd International Conference on Electronics Technology (ICET), Chengdu, China, 2020, pp. 242-246][D. Mandal, C. Desai, B. Bakkaloglu and S. Kiaei, "Adaptively Biased Output Cap-Less NMOS LDO With 19 ns Settling Time," in IEEE Transactions on Circuits and Systems II: Express Briefs, vol. 66, no. 2, pp. 167-171, Feb. 2019][M. Song, C. Zhan, L. Wang, L. Wu and B. Sun, "A 127 nA Quiescent Current Capacitorless NMOS LDO with Fast-Transient Response," 2021 IEEE International Conference on Integrated Circuits, Technologies and Applications (ICTA), Zhuhai, China, 2021, pp. 241-242][X. Li, T. Wang, R. Zhang and C. Shi, "A Fast Transient Response Capacitor-Less LDO with 123 nA Ultra-Low Quiescent Current," 2021 IEEE 3rd International Conference on Circuits and Systems (ICCS), Chengdu, China, 2021, pp. 46-50][L. Liu and A. Guo, "A New Cap-less LDO With Gm Boosting Error Amplifier Under Wide Load Current Range and Fast Load Transient Response," 2026 9th International Conference on Advanced Electronic Technology, Computers and Software Engineering (AETCSE), Xi'an, China, 2026, pp. 383-386][J. Xu, X. Zhao, X. Mao, J. Yin, M. Huang and Y. Lu, "A High Bandwidth Capacitorless NMOS LDO with Pole-Tracking Scheme and Adaptive FFRC Achieving -65dB PSR across Full Load Range," 2025 IEEE International Symposium on Circuits and Systems (ISCAS), London, United Kingdom, 2025, pp. 1-5].
 While highly effective in steady-state heavy-load conditions, pure adaptive biasing struggles during the initial moments of a sudden positive load step (e.g., 100 nA → 10 mA). At the exact moment the load jumps, the internal bias is still in its ultra-low state, resulting in a delayed reaction and significant initial undershoots.
 
-=== 2.4.2. Slew-Rate Enhancement (SRE) Circuits
-To address the instantaneous reaction gap of adaptive biasing, researchers have heavily utilized parallel Slew-Rate Enhancement (SRE) feedback loops. SRE mechanisms act as transient bypass paths. A classic implementation, demonstrated by Zhan and Ki [2], involves subthreshold undershoot-reduction techniques utilizing edge detectors. 
+==== Slew-Rate Enhancement (SRE) Circuits
+
+image::sre_1_song_127n_iq_nmos_ldo.png[]
+
+image::sre2_xuhong_fast_transient_ldo_123n_iq.png[]
+To address the instantaneous reaction gap of adaptive biasing, researchers have heavily utilized parallel Slew-Rate Enhancement (SRE) feedback loops. SRE mechanisms act as transient bypass paths. A classic implementation, demonstrated by Zhan and Ki [2], involves subthreshold undershoot-reduction techniques utilizing edge detectors. [J. Chen et al., "A Low-Quiescent-Current Output-Capacitorless Low-Dropout Regulator With a Dual-Path Adaptive-Biasing Technique," in IEEE Transactions on Circuits and Systems II: Express Briefs, vol. 73, no. 5, pp. 598-602, May 2026][L. Wei, AoyunSun and Z. Zhang, "A Time-Based, Fast-Transient, Capacitor-Less NMOS LDO for a Wide Range of On-Chip Capacitive Loads," in IEEE Design & Test][M. Song, C. Zhan, L. Wang, L. Wu and B. Sun, "A 127 nA Quiescent Current Capacitorless NMOS LDO with Fast-Transient Response," 2021 IEEE International Conference on Integrated Circuits, Technologies and Applications (ICTA), Zhuhai, China, 2021, pp. 241-242][X. Li, T. Wang, R. Zhang and C. Shi, "A Fast Transient Response Capacitor-Less LDO with 123 nA Ultra-Low Quiescent Current," 2021 IEEE 3rd International Conference on Circuits and Systems (ICCS), Chengdu, China, 2021, pp. 46-50]
 
 In these architectures, a high-pass filter—usually realized via a series coupling capacitor—is connected between the regulator’s output and auxiliary driving circuitry. Under steady-state DC conditions, the capacitor blocks the signal, and the SRE is inactive, consuming zero power. However, during a fast load transient, the sudden drop in V~out~ (high dV/dt) passes through the coupling capacitor, instantly turning on the auxiliary circuitry to inject a massive surge of current into the pass device’s gate. Recent ultra-low power papers [9], achieving quiescent currents as low as 10 nA, rely extensively on complex SREs to reduce transient undershoots.
 The crucial disadvantage of SRE topologies is the silicon area. The required on-chip coupling capacitors are physically large.
 
-=== 2.4.3. Dynamic Current Scaling via Nonlinear Loops and Current Conveyors
+==== Dynamic Current Scaling via Nonlinear Loops and Current Conveyors
 To achieve massive slew rates without consuming the silicon area of SRE coupling capacitors, contemporary research has pivoted toward dynamically scaling Class-AB architectures and translinear circuits. 
 Galan et al. [4] introduced the concept of super Class-AB Operational Transconductance Amplifiers (OTAs). These amplifiers utilize nonlinear characteristics—exploiting the transition between the cutoff, triode, and saturation regions of MOSFETs—to provide transient currents that are exponentially larger than their baseline bias current.
 
 Expanding on this philosophy, the use of Second-Generation Current Conveyors (CCII) has emerged as a robust solution. A CCII is fundamentally a current-feedback amplifier. Unlike classical voltage-feedback OTAs whose slew rates are strictly limited by their tail currents, a CCII allows for a nearly unbounded transient current drive. By combining a CCII with nonlinear current mirrors—where specific mirroring transistors are dynamically forced from the triode region into saturation during transient events—the regulator can achieve a massive surge in dynamic drive current without any capacitive coupling. This approach directly solves the transient bottleneck while maintaining a compact silicon footprint.
 
-== 2.5. Methodologies for High Static Precision and DC Gain
+=== Methodologies for High Static Precision and DC Gain
 Beyond transient response, an automotive-grade VREG must maintain excellent static precision. In high-performance SoCs, the load regulation (the variation in V~out~ across the full load current spectrum) must typically be kept below a few millivolts. To achieve less than 2mV of variation for a 10mA load jump, the regulator’s closed-loop control system requires an exceptionally high open-loop DC gain, typically exceeding 70 dB.
 
 Two primary research paths have addressed this:
@@ -69,7 +92,7 @@ Two primary research paths have addressed this:
 
 2.  *Positive Feedback and Negative Resistance:* To boost gain without sacrificing voltage headroom, Oh and Bakkaloglu [1] introduced a radical approach utilizing cross-coupled positive feedback. By engineering a negative resistance loop, the output conductance of the amplifier is theoretically cancelled out, resulting in near-infinite low-frequency DC gain. While this current-reused gain-enhancement path significantly improves static precision, it inherently introduces the severe risk of localized loop instability. Small mismatches over PVT corners or over MC300 runs can easily cause the positive feedback to overpower the negative feedback, leading to oscillation.
 
-== 2.6. Positioning and Justification of the Proposed Architecture
+=== Positioning and Justification of the Proposed Architecture
 An analysis of the state-of-the-art reveals a fragmented landscape: PMOS designs achieve ultra-low I~Q~ but suffer from degraded PSRR and increased silicon area; SREs provide fast recovery but consume extra silicon area; and negative-resistance techniques yield high precision but risk instability. The master's thesis presented herein addresses these conflicting tradeoffs through a highly optimized, *nonlinear dual-loop 1.5V capless voltage regulator*. 
 
 Designed to convert a 2.5V supply to a highly stable 1.5V output, the proposed architecture selectively aggregates the most robust state-of-the-art techniques while discarding their respective compromises:
@@ -83,7 +106,7 @@ In conclusion, by strategically fusing NMOS wideband stability, dual-loop gain c
 
 ***
 
-### 2.7 Bibliography / References
+### Bibliography / References
 
 [1] W. Oh and B. Bakkaloglu, "A CMOS Low-Dropout Regulator With Current-Reused Gain-Enhanced Feedforward Path," *IEEE Transactions on Circuits and Systems II: Express Briefs*, vol. 60, no. 11, pp. 756-760, Nov. 2013.
 

@@ -3,14 +3,14 @@
 :eqnums: all
 :plusm: &#177;
 :xrefstyle: short
-:imagesdir: images
+ifndef::imagesdir[:imagesdir: images]
 :tab: {nbsp}{nbsp}{nbsp}{nbsp}
 
+//chapter 4
+== Experimental Results
 
-== Chapter 4: Experimental Results
 
-
-== VREG Startup and Disable
+=== VREG Startup and Disable
 
 .Startup Behaviour of the 1.5V Regulator over PVT with 150pF and 5nF Load Capacitance and Load Current Sweep from 10nA to 10mA
 [#reg1v5_startup_pvt_cload_150p_5n_iload_10n_10m_sweep]
@@ -23,27 +23,100 @@ As can be seen from <<reg1v5_startup_pvt_cload_150p_5n_iload_10n_10m_sweep>> , t
 image::reg1v5_disable_pvt_cload_150p_5n_10n_10m_sweep.png[]
 
 The disable behaviour of the 1V5 Reg is also influenced by the load current and load capacitance. The disable time is generally shorter than the startup time, but it can still vary significantly depending on the PVT conditions and the load current. The longest disable time is observed when the load current is low (10nA) and the load capacitance is large, as the pulldown switch needs to discharge the load capacitance before it can fully disable.
-xs
 
 
-=== Dual-Loop System Stability
+// === Dual-Loop System Stability
 
-Like it was presented in Chapter 2: Theoretical Fundamentals, stability is a sensitive issue in multi-loop systems that has to be treated with care.
+// Like it was presented in Chapter 2: Theoretical Fundamentals, stability is a sensitive issue in multi-loop systems that has to be treated with care.
 
-=== Static Performance
+=== Static and Dynamic Measurements
 
-==== Line Regulation
+.Summary table that contains the minimum and maximum values of the static and dynamic measurements for the 1.5V Regulator over PVT with load capacitance swept between 150pF and 5nF
+[#staticAndDynamicMeasurmentTable]
+image::loadAndLineJumpPlots/staticAndDynamicMeasurmentTable.png[]
 
-==== Load Regulation
-
-==== Quiescent Current
+As can be seen from <<staticAndDynamicMeasurmentTable>>, the regulator manages to achieve a maximum overshoot of 50mV for positive line jumps from 2.25V to 3.6V at 10mA. The maximum undershoot for negative line jumps from 3.6V to 2.25V is 34mV at 10mA. As far as the load transient performance is concerned, the maximum overshoot.
 
 
-=== Dynamic Performance
+// === Static Performance
 
-==== Line Transient Response
+// ==== Line Regulation
 
-==== Load Transient Response
+// ==== Load Regulation
+
+// ==== Quiescent Current
+
+==== Plots
+
+
+
+image::loadAndLineJumpPlots/tran_loadAndLineJump_stackedPlot.svg[]
+
+
+image::loadAndLineJumpPlots/tran_loadAndLineJump_vreg1v5.svg[]
+
+.Worst case corner for the 10mA to 100nA load jump overshoot 
+[#max_overshoot_vreg1v5out_loadJump_10m_100n]
+image::loadAndLineJumpPlots/max_overshoot_vreg1v5out_loadJump_10m_100n.png[]
+
+
+
+.Worst case corner for the 10mA to 100uA load jump overshoot 
+[#max_overshoot_vreg1v5out_loadJump_10m_100u]
+image::loadAndLineJumpPlots/max_overshoot_vreg1v5out_loadJump_10m_100u.png[]
+
+
+.Worst case corner for the 2.25V to 3.6V overshoot at 10mA load current
+[#max_overshoot_vreg1v5out_loadJump_2_25v_3_6v]
+image::loadAndLineJumpPlots/max_overshootAt10mA__vreg1v5out_lineJump_2v25_3v6.png[]
+
+
+
+.Worst case corner for the 2.25V to 3.6V overshoot at 100uA load current
+[#max_overshootAt100uA__vreg1v5out_lineJump_2v25_3v6]
+image::loadAndLineJumpPlots/max_overshootAt100uA__vreg1v5out_lineJump_2v25_3v6.png[]
+
+
+.Worst case corner for the 100nA to 10mA load jump undershoot
+[#max_undershoot_vreg1v5out_loadJump_100n_10m]
+image::loadAndLineJumpPlots/max_undershoot_vreg1v5out_loadJump_100n_10m.png[]
+
+.Worst case corner for the 100uA to 10mA load jump undershoot
+[#max_undershoot_vreg1v5out_loadJump_100u_10m]
+image::loadAndLineJumpPlots/max_undershoot_vreg1v5out_loadJump_100u_10m.png[]
+
+.Worst case corner for the 3.6V to 2.25V undershoot at 100uA load current
+[#max_undershootAt100uA__vreg1v5out_lineJump_3v6_2v25]
+image::loadAndLineJumpPlots/max_undershootAt100uA__vreg1v5out_lineJump_3v6_2v25.png[]
+
+
+.Worst case corner for the 3.6V to 2.25V undershoot at 10mA load current
+[#max_undershootAt10mA__vreg1v5out_lineJump_3v6_2v25]
+image::loadAndLineJumpPlots/max_undershootAt10mA__vreg1v5out_lineJump_3v6_2v25.png[]
+
+
+// === Dynamic Performance
+
+// ==== Line Transient Response
+
+// ==== Load Transient Response
 
 
 === PSRR
+
+image::psrr_plots_over_pvt.png[]
+
+
+
+
+
+The regulator's PSRR maintains its worst case value over a frequency band of 10 Hz to 1GHz of under -13dB even at the maximum load current. Also because of the high open loop DC gain, it manages to have a maximum low frequency PSRR value of under -70dB at 100Hz.
+
+image::psrr_pvt_measurements.png[]
+
+
+The PSRR performance is deeply linked to the capacitance value seen from the gate of the safety power stage to ground. The PSRR performance at high load current can be particularly improved by increasing the gate capacitance of the safety power stage. The plot from  shows the PSRR performance at 10mA load current and 150pF capacitor at the worst case corner for PSRR(150, slow)for different values of gate capacitance.
+
+.PSRR plots at 10mA load current and 150pF load capacitance for different values of gate capacitance of the safety power stage (1pF, 5pF, 10pF, 15pF)
+[#psrr_at_10mA_150pF_mSafetyGateCap_1p_5p_10p_15p]
+image::psrr_at_10mA_150pF_mSafetyGateCap_1p_5p_10p_15p.png[]

@@ -3,10 +3,11 @@
 :eqnums: all
 :plusm: &#177;
 :xrefstyle: short
-:imagesdir: images
+ifndef::imagesdir[:imagesdir: images]
 :tab: {nbsp}{nbsp}{nbsp}{nbsp}
 
-== Chapter 3: Theoretical Fundamentals
+//chapter 3
+== Theoretical Fundamentals
 
 In this chapter, the main specifications of linear regualtors will be discussed
 
@@ -61,7 +62,7 @@ Specifically, the closed-loop line regulation is determined by the open-loop sen
 
 [stem]
 ++++
-\left(\frac{\partial V_{out}}{\partial V_{in}}\right)_{\text{closed_loop}} \approx \frac{\left( \frac{\partial V_{out}}{\partial V_{in}} \right)_{\text{open_loop}}}{1 + T(s)}
+\left(\frac{\partial V_{out}}{\partial V_{in}}\right)_{\text{closed\_loop}} \approx \frac{\left( \frac{\partial V_{out}}{\partial V_{in}} \right)_{\text{open\_loop}}}{1 + T(s)}
 ++++
 
 where stem:[T(s)] represents the loop gain of the regulation loop (the product of the error amplifier gain, the pass element gain, and the feedback factor).
@@ -207,11 +208,11 @@ Based on the derivation above, the absolute value of the output voltage cancels 
 
 To minimize temperature drift in practical linear regulator designs, it is necessary to utilize a highly stable bandgap reference with a low temperature coefficient, alongside an error amplifier optimized to minimize thermal offset drift (stem:[\Delta V_{os}/\Delta T]) through a low mismatch optimized input pair, high DC open-loop gain and layout matching techniques.
 
-=== Deep Dive: Minimizing Thermal Drift in Linear Regulators
+==== Minimizing Thermal Drift in Linear Regulators
 
 Achieving high-precision thermal performance in linear regulators requires addressing both the primary reference voltage source and the non-idealities of the feedback loop. This section examines the specific design and layout techniques used to mitigate these thermal effects.
 
-==== 1. Bandgap Reference (BGR) Stability and Curvature Correction
+==== Bandgap Reference (BGR) Temperature Coefficient
 
 The bandgap reference provides the baseline voltage stem:[V_{ref}]. Standard bandgap circuits achieve first-order temperature cancellation by summing two voltages with opposite thermal behaviors:
 
@@ -236,14 +237,11 @@ By scaling and summing these two voltages, a first-order temperature-compensated
 V_{ref}(T) = V_{BE}(T) + K \cdot V_T(T)
 ++++
 
-where stem:[K] is a constant defined by transistor sizing and resistor ratios. 
+where stem:[K] is a constant defined by transistor sizing and resistor ratios. Even with this first-order compensation, residual second-order temperature effects remain that influence the bandgap's temperature coefficient.
 
-===== Curvature Correction
-In high-precision applications, first-order cancellation is insufficient because stem:[V_{BE}] possesses a non-linear term proportional to stem:[T \ln(T)]. This non-linearity results in a parabolic (curved) stem:[TC] profile over a wide temperature range, typically limiting standard references to stem:[20] to stem:[50 \, \text{ppm}/^\circ\text{C}]. 
 
-To achieve sub-stem:[5 \, \text{ppm}/^\circ\text{C}] drift, designers employ **curvature correction** techniques. These circuits generate a non-linear current component—often proportional to stem:[T^2] or stem:[\text{PTAT}^2]—and inject it back into the summation node. This effectively flattens the parabolic curve, canceling the high-order temperature dependencies of stem:[V_{BE}].
 
-==== 2. Mitigating Error Amplifier Offset Drift
+==== Mitigating Error Amplifier Offset Drift
 
 Even with a perfectly stable reference, any thermal drift in the error amplifier's input-referred offset voltage (stem:[\Delta V_{os}/\Delta T]) propagates directly to the output. This offset is composed of both random and systematic components.
 
@@ -260,8 +258,9 @@ According to **Pelgrom's Law**, the standard deviation of threshold voltage mism
 where stem:[A_{Vth}] is a technology-dependent constant, while stem:[W] and stem:[L] represent the width and length of the input transistors. 
 
 To minimize random thermal drift:
+
 * **Large Device Sizing:** Designers use large gate areas (high stem:[W \cdot L]) for the input pair. Increasing the area averages out local channel fluctuations, lowering both the nominal offset and its corresponding drift over temperature.
-* **PMOS vs. NMOS:** PMOS input pairs are often preferred in sub-micron processes due to lower flicker (stem:[1/f]) noise and historically more predictable matching parameters compared to NMOS equivalents.
+
 
 ===== Systematic Offset and High DC Open-Loop Gain
 Systematic offset occurs due to circuit design asymmetries, such as drain-to-source voltage (stem:[V_{DS}]) imbalances in the input pair or load current mirrors. Because these biases change dynamically with temperature, they introduce systematic drift.
@@ -275,25 +274,14 @@ Maintaining a high DC open-loop gain (stem:[A_{OL}]) in the error amplifier mini
 
 A high stem:[A_{OL}] ensures that the amplifier behaves closer to its mathematical ideal, ensuring that thermal variations in internal node voltages do not manifest as a shifting input-referred offset.
 
-==== 3. Layout Matching and Thermal Gradient Mitigation
 
-Even the most robust circuit topology can suffer from severe temperature drift if the physical layout is not optimized. Silicon chips experience localized thermal gradients, especially in linear regulators where the power pass transistor dissipates significant heat.
 
-===== Isothermal Contours and Spatial Placement
-When the pass transistor handles high currents, it acts as a localized heat source, projecting heat outward in concentric waves. If one transistor of the error amplifier's differential input pair is even slightly closer to this heat source than the other, a temperature difference (stem:[\Delta T_{input}]) is established between them. Because transistor parameters are highly temperature-dependent, this spatial temperature difference translates directly into a severe, thermally-induced offset drift.
+// ==== Precision Calculation
 
-To mitigate this:
-* **Symmetrical Placement:** The error amplifier's input pair is placed along **isothermal contours** (lines of constant temperature). Designers place the input pair as far as possible from the pass element, oriented perpendicularly to the heat dissipation path.
+// Parameter Vout_static
+// Typical 1.5 {plusm} 3% -> min: 1.455V, max: 1.545V
 
-===== Common-Centroid and Cross-Coupled Geometries
-To cancel out linear spatial gradients (such as variations in packaging stress, doping concentrations, and temperature), the input pair is split into multiple parallel sub-transistors and cross-coupled in a **common-centroid** layout (e.g., an stem:[ABBA] or diagonal quadrant configuration).
-
-==== Precision Calculation
-
-Parameter Vout_static
-Typical 1.5 {plusm} 3% -> min: 1.455V, max: 1.545V
-
-V~ref_ideal~ = 1.2V
+// V~ref_ideal~ = 1.2V
 
 // to double check headings
 === Transient Response and Slew Rate
@@ -341,61 +329,291 @@ The resulting transient response of both ota models to a load jump is shown in <
 [#loadJump_ota_model_linear_vs_quadratic]
 image::loadJump_ota_model_linear_vs_quadratic_dependence.png[width=800]
 
-=== Stability Analysis of Dual Loop Systems
-
-Analyzing the stability of systems with multiple interacting feedback loops can be challenging. Traditional methods developed for single-loop systems cannot always be directly applied and finding the right point to break all loops is not possible for all such systems. Signal Flow Graphs (SFGs) offer a powerful, visual approach to characterize linear circuit networks with loading effects at the input and output ports automatically included in the analysis [Ochoa, 1998, A systematic approach...]
 
 
 
-An SFG visually captures the cause-and-effect relationships within a linear system and is equivalent to the Nodal Analysis Matrix Equation [Choma, Signal flow analysis...]:
-[stem]
-++++
-I = Y \cdot V
-++++
-
-where Y is the nodal admittance matrix, V is the vector of node voltages and I is the vector of independent current sources. 	Mason 's Gain formula provides a general method for finding the transfer function between two nodes once the graph has been defined. The determinant of the graph is mathematically equivalent to the determinant of the admittance matrix derived from nodal analysis (1).
 
 
+=== Stability Analysis of Dual-Loop Systems
 
-Just as the admittance matrix characteristic equation d`efines the system natural frequencies, the determinant of the graph contains information about the system poles and zeroes since it defines the loop gain of the system.
+While stability analysis of circuits with only one feedback loop is well
+covered by the classical feedback theory and several methods are available for deriving the phase- and gain-margins associated with the circuit return ratio [cite Bode, Rosenstark, Neag], however extending this approach to circuits with multiple feedback loops is not straightforward.
 
 
 
-The SFG together with the DPI Technique encompass an analysis method for generating the graph of the system as a direct interpretation of the circuit topology. Once the Signal Flow Graph has been found, Mason's rule and other well-known rules for collapsing graphs can be applied to produce the desired transfer function. 	The technique of DPI analysis is based on the transformation of circuit ports to their Norton equivalent representation and on the sequential application of superposition [1].
 
+[[fig:dual_loop_reg_model]]
+.Dual Loop Regulator Architecture
+image::dualLoop_stability_analysis/dual_loop_reg_model.png[Dual Loop Regulator Architecture]
 
+[[sec:stb_using_classical_fb_theory]]
+==== Analysing the Dual-Loop Voltage Regulator's stability using the classical feedback theory
 
-These circuit analysis techniques having been used for the VREG in Fig. 1 give rise to the SFG in Fig. 2 and lead to the following loop gain equation:
+Nonetheless, we can analyse the dual-loop system by breaking the inner loop first and then evaluating the outer loop with the inner loop replaced with its closed-loop equivalent as stated by classical feedback theory.
+The innerloop comprises the path through the stem:[innerOTA] and the NMOS power stage and thus it has two poles, one dominated by the node connected to the gate of the power stage and one dominated by the output node of the regulator.
 
 [stem]
 ++++
-LG(S)  \approx \frac{G_{m2}R_2\left(1+G_{m1}R_1f\right)\left(1+s\frac{C_1}{G_{m1}f}\right)\left(1+s\frac{C_{GS}}{g_{mp}}\right)}{\left(1+sR_2C_2\right)\left(1+sR_1C_1\right)\left(1+s\frac{C_L}{g_{mp}}\right)} - \frac{\left(1+s\frac{C_{GS}}{g_{mp}}\right)sC_{GS}R_2}{\left(1+sR_2C_2\right)\left(1+s\frac{C_L}{g_{mp}}\right)}
+\begin{equation}
+    T_{inner} = \frac{G_{m2}R_2}{(1+sR_2C_2)(1+ s \cdot C_L/g_{mp})}
+    \label{eq:T_inner}
+\end{equation}
 ++++
 
-Equation 3 indicates a three pole system with a pole associated with each of the three nodes denoted in Fig 1, the DC loop gain determined by the voltage gains of the two OTAs within the two signal paths and a zero that appears due to the feedforwarding action of the inner loop on the outer loop. Another zero appears because of the C~GS~ of the power stage. That same parasitic capacitance, if viewed bilaterally, yields a rhp pole, as indicated by the negative term seen in (3). The following inequalities turn into design guidelines:
+The dual-loop system is stable if both the inner loop and the equivalent single-loop system meet the usual stability requirements [Grajdeanu & all, 2022]. Let’s set the condition that the second pole of the inner loop is pushed up above the unity-gain frequency of that loop:
 
-Firstly, looking back to why we chose this configuration in the first place, we should place a condition on the two loops bandwidths:
+[stem]
+++++
+\begin{gather}
+    UGF_{inner}	 \ll f_{p\_out} \nonumber \\
+    \frac{G_{m2}R_2}{R_2C_2} 	\ll \frac{1}{C_L/g_{mp}} \implies \frac{G_{m2}}{C_2} 	\ll \frac{g_{mp}}{C_L} \label{eq:classical_output_pole_constraint}
+\end{gather} 
+++++
+
+Replacing the inner feedback loop by its closed loop equivalent we obtain:
+
+[stem]
+++++
+\begin{gather}
+    H_{inner} = \frac{T_{inner}}{1 + T_{inner}} = \frac{\frac{G_{m2}R_2}{(1+sR_2C_2)(1+s/gmp \cdot C_L)}}{1+\frac{G_{m2}R_2}{(1+sR_2C_2)(1+s/gmp \cdot C_L)}} 
+    \\ = \frac{G_{m2}R_2}{(1+sR_2C_2)(1+s/gmp \cdot C_L) + G_{m2}R_2} \\
+    \approx \frac{G_{m2}R_2}{(1+sR_2C_2) + G_{m2}R_2} 
+    \\ = \frac{1}{s\frac{C_2}{G_{m2}} + \frac{1}{G_{m2}R_2} + 1}
+\end{gather}
+++++
+
+As we can see, the equivalent closed-loop block of the inner feedback loop is a unity gain low pass filter, with the first pole placed at stem:[f = \frac{G_{m2}}{2 \pi C_2}].
+
+The loop gain of the entire regulator is now given by the product of stem:[H_{inner}] and the transmittance of the remaining circuitry, the feedback resistive divider and stem:[G_{m1}] & stem:[Z_1]. To ensure the stability of this loop (and allow for enough margin, considering the gain peaking the inner loop may introduce), we impose the condition that the UGF of stem:[T_{reg}] is smaller than the closed-loop bandwidth of stem:[H_{inner}].
+
+[stem]
+++++
+\begin{gather}
+    T_{reg} = T_{outer} \cdot H_{inner} = \nonumber \\
+    = \frac{G_{m1}fR_1}{1+sR_1C_1} \cdot \frac{1}{s\frac{C_2}{G_{m2}} + \frac{1}{G_{m2}R_2} + 1} \nonumber \\
+    \frac{G_{m1}f}{C_1} \ll \frac{G_{m2}}{C_2} \label{eq:classical_treg_ugf_constraint}
+\end{gather}
+++++
+
+=== Stability Analysis of Multi-Loop Systems using Signal Flow Graphs and Driving Point Impedance
+
+Signal Flow Graphs (SFGs) offer a powerful alternative to characterize linear circuit networks, as they automatically include all loading effects at the input and output ports in the analysis without ever requiring the loop to be physically broken [b1]. 
+
+The technique of Driving Point Impedance (DPI) analysis, introduced by Ochoa [b1], provides a systematic methodology for translating a circuit schematic directly into an SFG. It is based on the transformation of circuit nodes to their Norton equivalent representations and the sequential application of superposition. The resulting SFG alternates between two types of nodes: short-circuit currents (stem:[I_{sc}]) and node voltages (stem:[v]). Active transconductances (like stem:[g_m]) act as directed branches that inject current into the stem:[I_{sc}] nodes, while the driving point impedances (stem:[Z_{DP}]) at each node convert these short-circuit currents back into node voltages. 
+
+This graphical representation mirrors the Modified Nodal Analysis (MNA) matrix equation [b2]:
+
+[stem]
+++++
+\begin{equation}
+    \mathbf{I} = \mathbf{Y} \cdot \mathbf{v}
+    \label{eq:MNA_matrix}
+\end{equation}
+++++
+
+where stem:[\mathbf{Y}] is the nodal admittance matrix, stem:[\mathbf{v}] is the vector of node voltages, and stem:[\mathbf{I}] is the vector of independent current sources. 
+
+Once the SFG is generated, Mason's Gain Formula provides a general method for evaluating the transfer function between any two nodes. A critical parameter in Mason's formula is the graph determinant, stem:[\Delta]. 
+
+The roots of the characteristic equation stem:[\Delta = 0] rigorously define the closed-loop system's natural frequencies (poles).
+
+While stem:[\Delta] perfectly characterizes the closed-loop system, directly extracting the open-loop gain in a multi-loop circuit requires separating the main feedback loop from intrinsic local minor loops (like parasitic capacitances or Early effect impedances). This requires the application of Bode's Return Difference framework, which is discussed in the next section. 
+
+Applying Ochoa's DPI technique to the dual-loop regulator in Fig. <<fig:dual_loop_reg_model>> yields the SFG shown in Fig. <<fig:signalFlowGraph>> with all local feedback loops included, which serves as the foundation for the analytical loop gain extraction.
 
 
-The DC gain we would like to be as high as possible:
 
+[[fig:signalFlowGraph]]
+.Signal Flow Graph
+image::dualLoop_stability_analysis/signal_flow_graph.png[Signal Flow Graph]
 
+[[sec:stb_using_sfg_and_dpi]]
+==== Analysing the Dual-Loop Voltage Regulator's stability using SFGs and DPI
 
-To maintain stability, we need one zero in the transfer function to occur before the unity gain frequency, where the UGF has been computed as of a two-pole system with no 
-dominant pole:
+These circuit analysis techniques having been used for the VREG in Fig <<fig:dual_loop_reg_model>>, give rise to the SFG in Fig <<fig:signalFlowGraph>> and lead to the following loop gain equation:
 
+[stem]
+++++
+\begin{gather}
+    T_{reg}(s) \approx \frac{G_{m2}R_2(1+G_{m1}R_1f)(1+s\frac{C_1}{G_{m1}f})(1+s\frac{C_{GS}}{g_{mp}})}{(1+sR_2C_2)(1+sR_1C_1)(1+s\frac{C_L}{g_{mp}})} - \nonumber\\
+    - \frac{(1+s\frac{C_{GS}}{g_{mp}})sC_{GS}R_2}{(1+sR_2C_2)(1+s\frac{C_L}{g_{mp}})} \label{eq:T_reg_sfg}
+\end{gather}
+++++
 
+Eq. (stem:[\ref{eq:T_reg_sfg}]) indicates a three pole system with a pole associated with each of the three nodes denoted in <<fig:dual_loop_reg_model>>, the DC loop gain determined by the voltage gains of the two OTAs within the two signal paths and a zero that appears due to the feedforwarding action of the inner loop on the outer loop. Another zero appears because of the stem:[C_{GS}] of the power stage. That same parasitic capacitance, if viewed bilaterally, yields a rhp pole, as indicated by the negative term seen in (stem:[\ref{eq:T_reg_sfg}]). 
+The following inequalities turn into design guidelines:
 
+To maintain stability, we need to place the following constraints:
 
-One can also obtain this inequality by following the procedure described in [3]: analyse the dual-loop system by breaking the inner loop first and then evaluating the outer loop with the inner loop replaced with its closed-loop equivalent as stated by classical feedback theory.
+The first zero in the transfer function must occur before the unity gain frequency, where the UGF has been computed as of a two-pole system with no dominant pole:
+
+[stem]
+++++
+\begin{equation}
+    \frac{1+G_{m1}R_1f}{R_1C_1} < \sqrt{\frac{G_{m2}(1+G_{m1}R_1f)}{R_1C_1C_2}} \approx> \frac{G_{m1}f}{C_1} < \frac{G_{m2}}{C_2}
+    \label{eq:zero_frequency_condition}
+\end{equation}
+++++
+
+We recognize this inequality also from (stem:[\ref{eq:classical_treg_ugf_constraint}]).
+
 Last but not least, to ensure a suitable phase margin, the pole associated with the output node should be pushed up in frequency at least a decade above the unity gain bandwidth of the system:
 
-These four inequalities (4) - (7) have been put to use by designing a Dual Loop Voltage Regulator that is stable across a wide load current range: 0 - 10mA with a worst-case PM above {20}^\circ as shown in Fig 3
+[stem]
+++++
+\begin{equation}
+    \frac{g_{mp}}{C_L} \gg \sqrt{\frac{G_{m2}(1+G_{m1}R_1f)}{R_1C_1C_2}}
+    \label{eq:sfg_output_pole_constraint}
+\end{equation}
+++++
+
+Making use of the constraint obtained from (stem:[\ref{eq:sfg_output_pole_constraint}]), and knowing that 
+
+[stem]
+++++
+\begin{equation}
+    \sqrt{\frac{G_{m2}(1+G_{m1}R_1f)}{R_1C_1C_2}} < \sqrt{(\frac{G_{m2}}{C_2})^2}
+\end{equation}
+++++
+
+We can obtain a more restrictive constraint, that corresponds to (stem:[\ref{eq:classical_output_pole_constraint}]), obtained using the classical feedback theory approach:
+
+[stem]
+++++
+\begin{equation}
+    \frac{g_{mp}}{C_L} \gg \frac{G_{m2}}{C_2}
+    \label{eq:output_pole_constraint}
+\end{equation}
+++++
+
+[[sec:loop_gain_from_mna_matrices]]
+=== Computing the Loop Gain of a Multi-Loop Feedback System Numerically using Standard SPICE Simulators
+
+==== Modified Nodal Analysis (MNA)
+In a small-signal AC analysis, a linear or linearized circuit is represented by its Admittance Matrix stem:[\mathbf{Y}(s)]. The relationship between the node voltages stem:[\mathbf{v}(s)] and the independent current sources stem:[\mathbf{J}(s)] is given by:
+
+[stem]
+++++
+\begin{equation}
+    \mathbf{Y}(s)\mathbf{v}(s) = \mathbf{J}(s)
+    \label{eq:mna_equation}
+\end{equation}
+++++
+
+The matrix stem:[\mathbf{Y}(s)] can be decomposed into a real conductance matrix stem:[\mathbf{G}] and a capacitance matrix stem:[\mathbf{C}]:
+
+[stem]
+++++
+\begin{equation}
+    \mathbf{Y}(s) = \mathbf{G} + s\mathbf{C}
+    \label{eq:Y_decomposition_into_G_and_C}
+\end{equation}
+++++
+
+==== Deriving the SFG Adjacency Matrix
+A Signal Flow Graph maps a system into the state-space-like topological form:
+
+[stem]
+++++
+\begin{equation}
+    \mathbf{v} = \mathbf{A}\mathbf{v} + \mathbf{B}\mathbf{u}
+\end{equation}
+++++
+
+where stem:[\mathbf{A}] is the Adjacency Matrix (branch gains between dependent nodes), stem:[\mathbf{u}] is the vector of external inputs, and stem:[\mathbf{B}] is the input coupling matrix.
+
+To transform the MNA equation into the SFG format, we split stem:[\mathbf{Y}] into its diagonal components (stem:[\mathbf{Y}_{diag}]) and off-diagonal components (stem:[\mathbf{Y}_{off}]):
+
+[stem]
+++++
+\begin{equation}
+    (\mathbf{Y}_{diag} + \mathbf{Y}_{off})\mathbf{v} = \mathbf{J} \implies
+    \mathbf{Y}_{diag}\mathbf{v} = -\mathbf{Y}_{off}\mathbf{v} + \mathbf{J}
+\end{equation}
+++++
+
+By multiplying both sides by the inverse of the diagonal matrix (stem:[\mathbf{Y}_{diag}^{-1}]), we isolate stem:[\mathbf{v}]:
+
+[stem]
+++++
+\begin{equation} 
+    \mathbf{v} = \underbrace{(-\mathbf{Y}_{diag}^{-1} \mathbf{Y}_{off})}_{\mathbf{A}} \mathbf{v} + (\mathbf{Y}_{diag}^{-1}) \mathbf{J}
+\end{equation}
+++++
+
+In standard nodal analysis, the independent driving vector stem:[\mathbf{J}] represents injected node currents. If the system's actual external inputs are voltages (e.g., a reference voltage stem:[v_{ref}]), they manifest as currents injected into the nodes via transconductances or admittances. We can map these voltage inputs (stem:[\mathbf{v}_{in}]) to injected currents via an input transconductance matrix stem:[\mathbf{G}_{in}]:
+
+Substituting this back yields the exact SFG state formulation:
+
+[stem]
+++++
+\begin{equation}
+    \mathbf{v} = \underbrace{(-\mathbf{Y}_{diag}^{-1} \mathbf{Y}_{off})}_{\mathbf{A}} \mathbf{v} + \underbrace{(\mathbf{Y}_{diag}^{-1}\mathbf{G}_{in})}_{\mathbf{B}} \underbrace{\mathbf{v}_{in}}_{\mathbf{u}}
+\end{equation}
+++++
+
+Thus, the exact Signal Flow Graph Adjacency Matrix is defined as:
+
+[stem]
+++++
+\begin{equation}
+    \mathbf{A}(s) = -\mathbf{Y}_{diag}^{-1}(s) \mathbf{Y}_{off}(s)
+    \label{eq:A_built_by_admittance_matrix}
+\end{equation}
+++++
+
+Physically, the element stem:[A_{ij}] represents the transconductance from node stem:[j] to node stem:[i] multiplied by the total self-impedance at node stem:[i] (stem:[Z_{ii} = 1/Y_{ii}]). This is the fundamental definition of a branch gain in an SFG.
+
+Beginning from the stem:[\mathbf{G}] and stem:[\mathbf{C}] matrices obtained from a DCOP simulation (stem:[\ref{eq:Y_decomposition_into_G_and_C}]), one can build the adjacency matrix stem:[\mathbf{A}] using (stem:[\ref{eq:A_built_by_admittance_matrix}]).
+
+Then, using Mason's Gain Formula in matrix form, we can obtain the global graph determinant stem:[\Delta]: 
+
+[stem]
+++++
+\begin{equation}
+    \Delta = \det(\mathbf{I} - \mathbf{A}) = 1 - \sum L_i + \sum L_i L_j - \dots
+\end{equation}
+++++
+
+The global determinant stem:[\Delta] encompasses _all_ loops in the network, including the minor local loops intrinsic to active devices (such as diode connections, Early effect impedances, and parasitic capacitances). Consequently, these local loops mathematically inflate the global determinant, obscuring the gain of the main feedback loop [Middlebrook, International Journal of Circuit Theory and Applications, 1998].
+
+To isolate the loop gain of the main feedback loop—what a circuit designer actually cares about—we must invoke Bode's Return Ratio theorem [Bode, Network Analysis and Feedback Amplifier Design, 1945]. Bode defined the Return Difference stem:[F] with respect to a chosen reference parameter stem:[W] as the ratio of the total network determinant stem:[\Delta] to the "dead-system" determinant stem:[\Delta^0]:
+
+[stem]
+++++
+\begin{equation}
+    F = 1 + T = \frac{\Delta}{\Delta^0}
+\end{equation}
+++++
+
+In Bode's framework, stem:[W] is a specific controlled source, typically the stem:[g_m] of an active device from the loop's forward gain. Setting stem:[W = 0] disconnects that source, so current no longer flows from the drain to the source when the gate is driven. This is the active element that vanishes to produce stem:[\Delta^0], breaking the main loop while leaving all passive loading and local minor loops perfectly intact.
+
+In the MNA and SFG picture, this parameter stem:[W = g_m] enters the admittance matrix stem:[\mathbf{Y}] as an off-diagonal entry, stem:[\mathbf{Y}_{drain, gate} = g_m]. When transformed into the SFG adjacency matrix using (stem:[\ref{eq:A_built_by_admittance_matrix}]), it becomes a directed SFG branch:
+
+[stem]
+++++
+\begin{equation}
+    \mathbf{A}_{drain\_gate} = -\frac{g_m}{\mathbf{Y}_{drain\_drain}}
+\end{equation}
+++++
+
+Setting stem:[W = g_m = 0] to find the return ratio is therefore exactly equivalent to zeroing that single SFG branch entry. By constructing a modified adjacency matrix stem:[\mathbf{A}^0] where this specific element is zeroed out, we obtain the dead-system determinant stem:[\Delta^0 = \det(\mathbf{I} - \mathbf{A}^0)].
+
+Therefore, the exact, loading-accurate loop gain stem:[T] can be numerically extracted directly from the circuit matrices as:
+
+[stem]
+++++
+\begin{equation}
+    T = \frac{\det(\mathbf{I} - \mathbf{A})}{\det(\mathbf{I} - \mathbf{A}^0)} - 1
+\end{equation}
+++++
+
+This matrix formulation strictly separates the principal loop gain from local minor loops while preserving all complex loading effects unaltered [Hurst, IEEE Transactions on Circuits and Systems II, 1991].
 
 
 
 
-=== TODO:
-* stability analysis
-* evaluate different class AB OTA topologies
-* Pass Device sizing
+// === TODO:
+// * stability analysis
+// * evaluate different class AB OTA topologies
+// * Pass Device sizing

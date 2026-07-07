@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.26">
+<meta name="author" content="Author Name">
+<title>Master Document Title</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.square{list-style-type:square}
+ul.circle ul:not([class]),ul.disc ul:not([class]),ul.square ul:not([class]){list-style:inherit}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child{border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:first-child,.sidebarblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child,.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock pre>code{display:block}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active,#footnotes .footnote a:first-of-type:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,td.hdlist1,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>Master Document Title</h1>
+<div class="details">
+<span id="author" class="author">Author Name</span><br>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_chapter_2_state_of_the_art_in_ultra_low_power_capacitor_less_voltage_regulators">Chapter 2: State of the Art in Ultra-Low-Power Capacitor-Less Voltage Regulators</a>
+<ul class="sectlevel2">
+<li><a href="#_2_1_introduction_to_the_power_management_paradigm">2.1. Introduction to the Power Management Paradigm</a></li>
+<li><a href="#_2_2_frequency_compensation_and_loop_stability_in_ocl_architectures">2.2. Frequency Compensation and Loop Stability in OCL Architectures</a></li>
+<li><a href="#_power_stage_architectures_the_shift_from_pmos_to_nmos">Power Stage Architectures: The Shift from PMOS to NMOS</a></li>
+<li><a href="#_overcoming_slew_rate_bottlenecks_at_nano_ampere_bias">Overcoming Slew-Rate Bottlenecks at Nano-Ampere Bias</a></li>
+<li><a href="#_methodologies_for_high_static_precision_and_dc_gain">Methodologies for High Static Precision and DC Gain</a></li>
+<li><a href="#_positioning_and_justification_of_the_proposed_architecture">Positioning and Justification of the Proposed Architecture</a></li>
+<li><a href="#_2_7_bibliography_references">2.7 Bibliography / References</a></li>
+</ul>
+</li>
+<li><a href="#_chapter_3_theoretical_fundamentals">1. Chapter 3: Theoretical Fundamentals</a>
+<ul class="sectlevel2">
+<li><a href="#_staticsteady_state_parameters">1.1. Static/Steady-State Parameters</a></li>
+<li><a href="#_load_regulation">1.2. Load Regulation</a></li>
+<li><a href="#_temperature_drift">1.3. Temperature Drift</a></li>
+<li><a href="#_transient_response_and_slew_rate">1.4. Transient Response and Slew Rate</a></li>
+<li><a href="#_stability_analysis_of_dual_loop_systems">1.5. Stability Analysis of Dual Loop Systems</a></li>
+<li><a href="#_todo">1.6. TODO:</a></li>
+</ul>
+</li>
+<li><a href="#_chapter_4_implementation">2. Chapter 4: Implementation</a>
+<ul class="sectlevel2">
+<li><a href="#_dual_loop_architecture">2.1. Dual Loop Architecture</a></li>
+<li><a href="#_inner_ota_design_and_slew_rate_enhancement">2.2. Inner OTA Design and Slew Rate Enhancement</a></li>
+<li><a href="#_outer_ota_design_and_loop_stability">2.3. Outer OTA Design and Loop Stability</a></li>
+<li><a href="#_ptat_current_reference">2.4. PTAT Current reference</a></li>
+<li><a href="#_initial_ptat_current_reference_design">2.5. Initial PTAT current reference design</a></li>
+<li><a href="#_improved_ptat_current_reference_design">2.6. Improved PTAT current reference design</a></li>
+<li><a href="#_adaptive_biasing_2">2.7. Adaptive Biasing</a></li>
+</ul>
+</li>
+<li><a href="#_chapter_4_experimental_results">3. Chapter 4: Experimental Results</a>
+<ul class="sectlevel2">
+<li><a href="#_vreg_startup_and_disable">3.1. VREG Startup and Disable</a></li>
+<li><a href="#_static_and_dynamic_measurements">3.2. Static and Dynamic Measurements</a></li>
+<li><a href="#_psrr">3.3. PSRR</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_chapter_2_state_of_the_art_in_ultra_low_power_capacitor_less_voltage_regulators">Chapter 2: State of the Art in Ultra-Low-Power Capacitor-Less Voltage Regulators</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_2_1_introduction_to_the_power_management_paradigm">2.1. Introduction to the Power Management Paradigm</h3>
+<div class="paragraph">
+<p>The unprecedented proliferation of always-on Internet of Things (IoT) nodes, biomedical implantable devices, and microcontrollers due to the recent rise of software-defined-vehicles has catalyzed a paradigm shift in the design of fully integrated power management integrated circuits (PMICs). At the core of these embedded systems lies the Low-Dropout (LDO) or linear voltage regulator(VREG), a pivotal component responsible for providing a clean, stable, and precise supply voltage to sensitive downstream analog and digital blocks. Historically, LDOs and VREGs relied heavily on a bulky external output capacitor, typically in the range of 1&micro;F to 10&micro;F, to ensure loop stability and to buffer charge during sudden load transients.</p>
+</div>
+<div class="paragraph">
+<p>However, the modern drive toward extreme miniaturization and cost reduction in System-on-Chip (SoC) products favorizes the complete elimination of off-chip components. Removing the external capacitor translates directly to a reduced Bill of Materials (BOM) and a minimized printed circuit board (PCB) footprint. This architectural evolution has given rise to the Output-Capacitor-Less (OCL) or capless voltage regulator.</p>
+</div>
+<div class="paragraph">
+<p>While advantageous for integration, removing the output capacitor introduces a fundamental tri-lemma in analog design: balancing <strong>ultra-low quiescent current I<sub>Q</sub></strong>, <strong>fast transient response</strong>, and <strong>high static precision</strong> across all process, voltage, and temperature (PVT) variations. When the quiescent current must be aggressively scaled down to the sub-microampere or low-microampere domain to extend battery life, the internal error amplifier’s bandwidth and slew rate are severely degraded. Consequently, achieving acceptable transient undershoots and overshoots during full-load current steps (eg: 100nA to 10mA) becomes an exceptionally complex challenge. The following sections explore the established research directions and state-of-the-art topologies developed to address these inherent tradeoffs.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_2_frequency_compensation_and_loop_stability_in_ocl_architectures">2.2. Frequency Compensation and Loop Stability in OCL Architectures</h3>
+<div class="paragraph">
+<p>In classical VREG architectures, the large external capacitor establishes a dominant, low-frequency pole at the output node. Because this pole resides at a much lower frequency than the internal poles of the error amplifier (EA), the system inherently behaves as a single-pole system up to its unity-gain frequency (UGF), ensuring a robust phase margin, especially under medium and heavy load conditions. For light loads, the internal poles might approach the UGF, but usually, the ESR of the output capacitor provides a beneficial zero that helps maintain stability.</p>
+</div>
+<div class="paragraph">
+<p>When the output capacitor is removed (leaving only the parasitic capacitance of the load, typically in the range of 0 to a couple nFs at most), the output pole is pushed to a much higher frequency. More critically, the frequency of this output pole becomes highly load-dependent. At minimal load currents, the transconductance g<sub>m</sub> of the pass device is exceedingly small, causing p<sub>out</sub> to drift closer to the internal poles of the EA. This proximity results in complex conjugate poles, leading to severe peaking in the frequency response and catastrophic instability.</p>
+</div>
+<div class="paragraph">
+<p>Modern approaches favor the generation of adaptive or load-tracking zeros. By inserting a variable resistor—often implemented via a MOSFET operating in the linear or saturation region whose gate is controlled by a replica of the load current—a zero can be synthesized that naturally shifts in tandem with the output pole. This method effectively flattens the phase response at the unity-gain crossover frequency. However, tracking zeros must be meticulously designed to account for worst-case PVT corners, as an over-compensated zero can lead to early phase dropping, while an under-compensated zero fails to mitigate complex pole formation.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_power_stage_architectures_the_shift_from_pmos_to_nmos">Power Stage Architectures: The Shift from PMOS to NMOS</h3>
+<div class="paragraph">
+<p>The choice of the power pass-device dictates the fundamental topology of the regulator, directly impacting both the dropout voltage and the transient capabilities of the system.</p>
+</div>
+<div class="sect3">
+<h4 id="_pmos_based_power_stages">PMOS-Based Power Stages</h4>
+<div class="paragraph">
+<p>The vast majority of classical LDOs and many recent ultra-low-power architectures utilize a PMOS transistor as the power pass-device, configured as a common-source amplifier. The primary advantage of a PMOS stage is its ability to operate with an extremely low dropout voltage, meaning the input supply voltage can be nearly identical to the required output voltage.</p>
+</div>
+<div class="paragraph">
+<p>Recent literature showcases impressive ultra-low power PMOS implementations. Yao et al. [5] achieved an external capacitor-less LDO with a maximum quiescent current of 2.3&mu;A for a 1mA load. Similarly, Zhan and Ki [7] demonstrated a PMOS LDO capable of supporting a 12mA load while maintaining a 28.6&mu;A standby current. Furthermore, Tan et al. [8] developed a highly optimized 30mA PMOS LDO with a hybrid adaptive biasing scheme, maintaining just 7&mu;A of I_Q.</p>
+</div>
+<div class="paragraph">
+<p>Despite these achievements, PMOS power stages suffer from three drawbacks in VREG capless designs. First, the PMOS seen from the supply side builds a common gate stage, which severly impacts the PSRR performance at middle and higher frequencies. As a common-source stage, as seen from the OTA side, the PMOS power stage exhibits a high intrinsic output impedance (r_ds), which pushes the load-dependent pole to lower frequencies, exacerbating stability issues. Second, because holes have lower mobility than electrons, a PMOS device must be sized considerably larger than an equivalent NMOS device to drive the same maximum load current. This increased silicon area also results in a bigger gate capacitance (C_gs + C_gd).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_nmos_based_power_stages">NMOS-Based Power Stages</h4>
+<div class="paragraph">
+<p>To overcome the intrinsic bandwidth and slew-rate limitations of PMOS devices, advanced research directions have increasingly adopted NMOS power stages [6], [10]. Configured as a source-follower, the NMOS pass-device provides an intrinsically low output impedance (1/g_m).</p>
+</div>
+<div class="paragraph">
+<p>Furthermore, the superior electron mobility of the NMOS transistor allows it to be physically smaller than a PMOS device for the same current rating (e.g., 10mA to 50mA). Consequently, the parasitic gate capacitance is drastically reduced, allowing the low-power internal amplifier to slew the gate node much faster. For instance, Liu et al. [6] demonstrated an area-efficient capless NMOS LDO with exceptionally fast transient response metrics.</p>
+</div>
+<div class="paragraph">
+<p>The primary tradeoff of the NMOS architecture is the threshold voltage ($V_{th}$) penalty. Because it operates as a source follower, the gate voltage must be driven significantly higher than the output voltage. This typically requires either a higher secondary input supply rail or an internal charge pump if the VREG needs to be used as an LDO. In applications where multiple voltage rails are already present (such as stepping down from a 2.5V rail to a 1.5V core voltage), the NMOS topology presents a superior solution for transient-optimized capless regulation.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_overcoming_slew_rate_bottlenecks_at_nano_ampere_bias">Overcoming Slew-Rate Bottlenecks at Nano-Ampere Bias</h3>
+<div class="paragraph">
+<p>When the maximum allowed standby current is restricted to the 100 nA to 10 μA range, conventional linear error amplifiers cannot generate enough current to rapidly alter the gate voltage of the pass device during a transient event. The state-of-the-art literature has explored three predominant methodologies to break the correlation between static bias current and dynamic slew rate.</p>
+</div>
+<div class="sect3">
+<h4 id="_adaptive_biasing">Adaptive Biasing</h4>
+<div class="paragraph">
+<p>Rather than operating the internal amplifiers at a fixed, statically low bias current, adaptive biasing circuits dynamically adjust the internal I<sub>Q</sub> in proportion to the output load current. At minimal loads (e.g., 100 nA), the regulator consumes only a baseline, microampere-level current, maximizing light-load power efficiency. As the load current increases toward its maximum, a current-sensing mechanism scales up the internal bias. This dynamic scaling significantly increases the transconductance of the internal amplifiers, boosting the unity-gain frequency and extending the stability phase margin at heavy loads [7], [8].
+While highly effective in steady-state heavy-load conditions, pure adaptive biasing struggles during the initial moments of a sudden positive load step (e.g., 100 nA → 10 mA). At the exact moment the load jumps, the internal bias is still in its ultra-low state, resulting in a delayed reaction and significant initial undershoots.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_slew_rate_enhancement_sre_circuits">Slew-Rate Enhancement (SRE) Circuits</h4>
+<div class="paragraph">
+<p>To address the instantaneous reaction gap of adaptive biasing, researchers have heavily utilized parallel Slew-Rate Enhancement (SRE) feedback loops. SRE mechanisms act as transient bypass paths. A classic implementation, demonstrated by Zhan and Ki [2], involves subthreshold undershoot-reduction techniques utilizing edge detectors.</p>
+</div>
+<div class="paragraph">
+<p>In these architectures, a high-pass filter—usually realized via a series coupling capacitor—is connected between the regulator’s output and auxiliary driving circuitry. Under steady-state DC conditions, the capacitor blocks the signal, and the SRE is inactive, consuming zero power. However, during a fast load transient, the sudden drop in V<sub>out</sub> (high dV/dt) passes through the coupling capacitor, instantly turning on the auxiliary circuitry to inject a massive surge of current into the pass device’s gate. Recent ultra-low power papers [9], achieving quiescent currents as low as 10 nA, rely extensively on complex SREs to reduce transient undershoots.
+The crucial disadvantage of SRE topologies is the silicon area. The required on-chip coupling capacitors are physically large.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_dynamic_current_scaling_via_nonlinear_loops_and_current_conveyors">Dynamic Current Scaling via Nonlinear Loops and Current Conveyors</h4>
+<div class="paragraph">
+<p>To achieve massive slew rates without consuming the silicon area of SRE coupling capacitors, contemporary research has pivoted toward dynamically scaling Class-AB architectures and translinear circuits.
+Galan et al. [4] introduced the concept of super Class-AB Operational Transconductance Amplifiers (OTAs). These amplifiers utilize nonlinear characteristics—exploiting the transition between the cutoff, triode, and saturation regions of MOSFETs—to provide transient currents that are exponentially larger than their baseline bias current.</p>
+</div>
+<div class="paragraph">
+<p>Expanding on this philosophy, the use of Second-Generation Current Conveyors (CCII) has emerged as a robust solution. A CCII is fundamentally a current-feedback amplifier. Unlike classical voltage-feedback OTAs whose slew rates are strictly limited by their tail currents, a CCII allows for a nearly unbounded transient current drive. By combining a CCII with nonlinear current mirrors—where specific mirroring transistors are dynamically forced from the triode region into saturation during transient events—the regulator can achieve a massive surge in dynamic drive current without any capacitive coupling. This approach directly solves the transient bottleneck while maintaining a compact silicon footprint.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_methodologies_for_high_static_precision_and_dc_gain">Methodologies for High Static Precision and DC Gain</h3>
+<div class="paragraph">
+<p>Beyond transient response, an automotive-grade VREG must maintain excellent static precision. In high-performance SoCs, the load regulation (the variation in V<sub>out</sub> across the full load current spectrum) must typically be kept below a few millivolts. To achieve less than 2mV of variation for a 10mA load jump, the regulator’s closed-loop control system requires an exceptionally high open-loop DC gain, typically exceeding 70 dB.</p>
+</div>
+<div class="paragraph">
+<p>Two primary research paths have addressed this:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Cascoded Architectures:</strong> The traditional approach to boosting gain is stacking transistors in a cascoded or double-cascoded configuration. This multiplies the output impedance of the amplifier stages. The limitation is the reduction in voltage headroom, making this technique challenging for sub-1V applications. However, for regulators operating from a 2.5V supply, double-cascoded OTAs remain the gold standard for robust, mismatch-resilient, high-gain amplification.</p>
+</li>
+<li>
+<p><strong>Positive Feedback and Negative Resistance:</strong> To boost gain without sacrificing voltage headroom, Oh and Bakkaloglu [1] introduced a radical approach utilizing cross-coupled positive feedback. By engineering a negative resistance loop, the output conductance of the amplifier is theoretically cancelled out, resulting in near-infinite low-frequency DC gain. While this current-reused gain-enhancement path significantly improves static precision, it inherently introduces the severe risk of localized loop instability. Small mismatches over PVT corners or over MC300 runs can easily cause the positive feedback to overpower the negative feedback, leading to oscillation.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_positioning_and_justification_of_the_proposed_architecture">Positioning and Justification of the Proposed Architecture</h3>
+<div class="paragraph">
+<p>An analysis of the state-of-the-art reveals a fragmented landscape: PMOS designs achieve ultra-low I<sub>Q</sub> but suffer from degraded PSRR and increased silicon area; SREs provide fast recovery but consume extra silicon area; and negative-resistance techniques yield high precision but risk instability. The master&#8217;s thesis presented herein addresses these conflicting tradeoffs through a highly optimized, <strong>nonlinear dual-loop 1.5V capless voltage regulator</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Designed to convert a 2.5V supply to a highly stable 1.5V output, the proposed architecture selectively aggregates the most robust state-of-the-art techniques while discarding their respective compromises:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Dual-Loop Separation of Concerns:</strong> To be able to optimize static precision and dynamic response separately without trying to get both out of a single OTA a dual loop architecture was chosen. The outer regulation loop employs a double-cascoded symmetrical OTA. Leveraging the adequate 2.5V headroom, this stage safely achieves over 80 dB of DC gain at loads above 200 μA, ensuring 2 mV maximum load regulation in Monte Carlo analyses.</p>
+</li>
+<li>
+<p><strong>Nonlinear CCII Inner Loop:</strong> Instead of relying on area-consuming capacitively coupled SREs [2], transient robustness is governed by a parallel inner loop based on a CCII. The novelty lies in its coupling with a nonlinear PMOS current mirror (exploiting an emulated resistor, R_dyn). Mirroring the behaviour from [4], R_dyn glides from the triode region into deep saturation during a sudden output voltage undershoot. This drastically multiplies the positive slew rate dynamically, ensuring maximum undershoots of only 221 mV during massive 100 nA → 10 mA full-load steps.</p>
+</li>
+<li>
+<p><strong>NMOS Power Stage and Stability:</strong> By selecting an NMOS power stage [6], the design capitalizes on intrinsically low output impedance to push the dominant output pole to higher frequencies and increased PSRR. Loop stability—capable of accommodating 0 to 10 nF of capacitive loading is guaranteed through a variable resistor that generates a continuous load-tracking zero, adapting to the output pole&#8217;s movement across the entire current spectrum.</p>
+</li>
+<li>
+<p><strong>Adaptive + PTAT Biasing:</strong> Finally, to preserve battery life without starving the amplifiers, the system employs a PVT-invariant PTAT (Proportional to Absolute Temperature) base biasing current coupled with adaptive biasing [7], [8]. This guarantees a highly competitive worst-case (Fast, 85°C) standby current of just 2.1 μA at minimum load (100 nA), scaling up efficiently as the load approaches 10 mA and as the ambient temperature increases.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In conclusion, by strategically fusing NMOS wideband stability, dual-loop gain compartmentalization, and nonlinear current-conveyor dynamic scaling, the proposed regulator directly addresses the fundamental tradeoffs of ultra-low-power PMIC design, positioning itself as a robust, area-efficient, and highly precise solution relative to current literature.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_2_7_bibliography_references">2.7 Bibliography / References</h3>
+<div class="paragraph">
+<p>[1] W. Oh and B. Bakkaloglu, "A CMOS Low-Dropout Regulator With Current-Reused Gain-Enhanced Feedforward Path," <strong>IEEE Transactions on Circuits and Systems II: Express Briefs</strong>, vol. 60, no. 11, pp. 756-760, Nov. 2013.</p>
+</div>
+<div class="paragraph">
+<p>[2] C. Zhan and W.-H. Ki, "An Output-Capacitor-Free Adaptively Biased Low-Dropout Regulator With Subthreshold Undershoot-Reduction for SoC," <strong>IEEE Transactions on Circuits and Systems I: Regular Papers</strong>, vol. 59, no. 5, pp. 1119-1131, 2012.</p>
+</div>
+<div class="paragraph">
+<p>[3] K. N. Leung and P. K. T. Mok, "A capacitor-free CMOS low-dropout regulator with damping-factor-control frequency compensation," <strong>IEEE Journal of Solid-State Circuits</strong>, vol. 38, no. 10, pp. 1691-1702, Oct. 2003.</p>
+</div>
+<div class="paragraph">
+<p>[4] J. A. Galan, A. J. Lopez-Martin, R. G. Carvajal, J. Ramirez-Angulo, and C. Rubia-Marcos, "Super Class-AB OTAs With Adaptive Biasing and Dynamic Output Current Scaling," <strong>IEEE Transactions on Circuits and Systems I: Regular Papers</strong>, vol. 54, no. 3, pp. 449-457, March 2007.</p>
+</div>
+<div class="paragraph">
+<p>[5] Y. Yao, M. Zhao, and X. Wu, "A Max 2.3μA Quiescent Current External Capacitorless Low-Dropout Regulator," in <strong>IECON 2020 - 46th Annual Conference of the IEEE Industrial Electronics Society</strong>, Singapore, 2020.</p>
+</div>
+<div class="paragraph">
+<p>[6] X. Liu, C. Zhan, and H. Qiao, "Chip-Area-Efficient Capacitor-less LDO Regulator with Fast-Transient Response," in <strong>2019 IEEE International Conference on Integrated Circuits, Technologies and Applications (ICTA)</strong>, Chengdu, China, 2019.</p>
+</div>
+<div class="paragraph">
+<p>[7] C. Zhan and W.-H. Ki, "Analysis and Design of Output-Capacitor-Free Low-Dropout Regulators With Low Quiescent Current and High Power Supply Rejection," <strong>IEEE Transactions on Circuits and Systems I: Regular Papers</strong>, vol. 61, no. 2, pp. 625-636, Feb. 2014.</p>
+</div>
+<div class="paragraph">
+<p>[8] Y.-C. Tan et al., "A 30-mA Compensation-Free Output-Capacitorless Analog LDO With Hybrid Adaptive Biasing," <strong>IEEE Transactions on Power Electronics</strong>, vol. 40, no. 8, pp. 11182-11196, Aug. 2025.</p>
+</div>
+<div class="paragraph">
+<p>[9] M. Huang, Y. Lu, and R. P. Martins, "A 10 nA ultra-low quiescent current and 60 ns fast transient response low-dropout regulator for Internet-of-Things," <strong>IEEE Transactions on Circuits and Systems I: Regular Papers</strong>, vol. 69, no. 1, pp. 433-442, 2022.</p>
+</div>
+<div class="paragraph">
+<p>[10] N. Yan, J. Jiang, and H. Min, "A 12 nA Ultra-Low Quiescent Current Capacitor-Less LDO with 350 ns Fast Transient Response," <strong>IEEE Transactions on Circuits and Systems II: Express Briefs</strong>, vol. 69, no. 3, pp. 799-803, 2022.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_chapter_3_theoretical_fundamentals">1. Chapter 3: Theoretical Fundamentals</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this chapter, the main specifications of linear regualtors will be discussed</p>
+</div>
+<div id="classical_voltage_reg_topologies_nmos_and_pmos_pass_devices" class="imageblock">
+<div class="content">
+<img src="../theoretical_fundamentals/images/classical_voltage_reg_topologies_nmos_and_pmos_pass_devices.png" alt="classical voltage reg topologies nmos and pmos pass devices">
+</div>
+<div class="title">Figure 1. Classical Voltage Regulator Topology: a) with PMOS pass device and b) with NMOS pass device</div>
+</div>
+<div class="sect2">
+<h3 id="_staticsteady_state_parameters">1.1. Static/Steady-State Parameters</h3>
+<div class="sect3">
+<h4 id="_drop_out_voltage">1.1.1. Drop-out Voltage</h4>
+<div class="paragraph">
+<p>The drop-out voltage is defined as the minimum voltage difference between VIN and VOUT (Figure 2.1) to maintain an intended voltage regulation [4_yang_li_thesis]. A linear regulator which can operate in low drop-out voltage regulation is commonly named as low drop-out regulator (LDO). The application intended for the proposed voltage regulator has quite a big dropout, that allows us to use an NMOS pass device without a charge pump, as such it does not qualify it as a Low-Dropout Regulator.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_quiescent_current">1.1.2. Quiescent Current</h4>
+<div class="paragraph">
+<p>The quiescent current (I<sub>Q</sub>) is defined as the total current drawn by the voltage regulator from the preceding supply, minus the current that flows to the load. In other words it&#8217;s the current consumed by the control circuits.
+The power efficiency &eta; of a linear regulator can be expressed in, where I<sub>Load</sub> is current flowing into the load and V<sub>dropout</sub> is the dropout voltage.</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\eta = \frac{P_{delivered}}{P_{supplied}} = \frac{V_{out}I_{load}}{V_{in}(I_{load} + I_Q)}
+= \left(1 - \frac{V_{dropout}}{V_{in}}\right)\frac{I_{load}}{(I_{load} + I_Q)}\]
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_line_regulation">1.1.3. Line Regulation</h4>
+<div class="paragraph">
+<p>Line regulation measures a voltage regulator&#8217;s ability to maintain a stable output voltage \(V_{out}\) despite static or low-frequency variations in its input supply voltage \(V_{in}\). It is quantitatively defined as the ratio of the change in output voltage to the change in input voltage:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\text{Line Regulation} = \frac{\Delta V_{out}}{\Delta V_{in}} = \frac{v_{out}}{v_{in}}\]
+</div>
+</div>
+<div class="paragraph">
+<p><em>Note: This is also frequently expressed as a percentage of the nominal output voltage per volt, i.e., \(\% / \text{V}\), or simply in \(\text{mV}/\text{V}\).</em></p>
+</div>
+<div class="paragraph">
+<p>The input supply feeding the regulator is rarely perfectly stable. It often fluctuates due to a combination of factors, such as:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The line and load regulation limitations of the preceding supply regulator.</p>
+</li>
+<li>
+<p>Thermal drift and bandgap reference inaccuracies.</p>
+</li>
+<li>
+<p>Static offsets resulting from transistor mismatches.</p>
+</li>
+<li>
+<p>AC ripple originating from upstream switching regulators or rectifiers.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Ideally, the regulated output voltage should remain constant at its target value across the entire operating range of the input voltage. This ideal behavior holds true until the input voltage drops too close to the output voltage, reaching the "dropout" threshold. For an NMOS pass-transistor topology, as \(V_{in}\) decreases toward this limit, the gate-driving stage (often an error amplifier powered by \(V_{in}\) or a charge pump) runs out of voltage headroom to sufficiently command the NMOS gate. This pushes the NMOS pass element from its active (saturation) region into the triode region, causing the regulator to drop out of regulation.</p>
+</div>
+<div class="paragraph">
+<p>However, even within the normal operating range, the output voltage is not fully immune to input fluctuations. Due to the finite loop gain of the feedback network, the output voltage varies slightly in response to changes in the input supply.</p>
+</div>
+<div class="paragraph">
+<p>Specifically, the closed-loop line regulation is determined by the open-loop sensitivity of the regulator divided by the feedback loop gain:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\left(\frac{\partial V_{out}}{\partial V_{in}}\right)_{\text{closed_loop}} \approx \frac{\left( \frac{\partial V_{out}}{\partial V_{in}} \right)_{\text{open_loop}}}{1 + T(s)}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(T(s)\) represents the loop gain of the regulation loop (the product of the error amplifier gain, the pass element gain, and the feedback factor).</p>
+</div>
+<div class="paragraph">
+<p>In an open-loop condition, a change in \(V_{in}\) directly affects the output through the finite output impedance (\(r_{ds}\)) and channel-length modulation of the pass transistor, as well as through any body effect (particularly in NMOS source followers). Because the loop gain \(T(s)\) is finite, and further decreases at higher frequencies, the error amplifier cannot completely suppress these perturbations, leading to a measurable shift in \(V_{out}\) when \(V_{in}\) changes. To achieve superior line regulation, the low-frequency gain of the error amplifier must be maximised.</p>
+</div>
+<div class="sect4">
+<h5 id="_small_signal_analysis_of_the_line_regulation_of_a_voltage_regulator_with_an_nmos_pass_device">Small-Signal Analysis of the Line Regulation of a voltage regulator with an NMOS Pass device</h5>
+<div class="paragraph">
+<p>To establish a formal quantitative analysis of the line regulation for an NMOS-based regulator, we evaluate its small-signal model. The analysis starts from the regulator model of <a href="#classical_voltage_reg_topologies_nmos_and_pmos_pass_devices">Figure 1</a>(b). Let the transconductance of the NMOS pass transistor \(M_N\) be \(g_{mn}\), its output resistance be \(r_{ds\_n}\), and the open-loop voltage gain of the error amplifier be \(A_{OTA}\).</p>
+</div>
+<div class="paragraph">
+<p>The feedback network consists of a resistive divider \(R_1\) and \(R_2\), while \(R_L\) represents the load resistance. The small-signal relationship describing the propagation of an input variation \(\Delta V_{in}\) to the output variation \(\Delta V_{out}\) is given by:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\left[ \left( -\Delta V_{out} \frac{R_2}{R_1 + R_2} A_{OTA} - \Delta V_{out} \right) g_{mn} + \frac{\Delta V_{in} - \Delta V_{out}}{r_{o,n}} \right] \left[ (R_1 + R_2) \parallel R_L \right] = \Delta V_{out}\]
+</div>
+</div>
+<div class="paragraph">
+<p>By solving this equation for the transfer function \(\Delta V_{out} / \Delta V_{in}\), the exact expression for the line regulation of the NMOS regulator is derived as:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\frac{\Delta V_{out}}{\Delta V_{in}} = \frac{v_{out}}{v_{in}} = \frac{1}{\left(1 + \frac{R_2}{R_1 + R_2} A_{OTA}\right) g_{mn} r_{o,n} + \frac{r_{o,n}}{(R_1 + R_2) \parallel R_L} + 1}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Under typical operating conditions, the loop gain is high, and the expression could be simplified to:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\frac{\Delta V_{out}}{\Delta V_{in}} = \frac{v_{out}}{v_{in}} \approx \frac{1}{\frac{R_2}{R_1 + R_2} A_{OTA} g_{mn} r_{o,n}}\]
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_physical_comparison_nmos_vs_pmos_regulators">1.1.4. Physical Comparison: NMOS vs. PMOS Regulators</h4>
+<div class="paragraph">
+<p>The simplified formulation reveals that the line regulation of the NMOS regulator is inversely proportional to both the amplifier&#8217;s open-loop gain \(A_{OTA}\) and the intrinsic gain of the NMOS pass transistor, \(g_{mn} r_{o,n}\).</p>
+</div>
+<div class="paragraph">
+<p>Compared to a conventional PMOS-based regulator—which typically exhibits a line regulation of approximately:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\left(\frac{\Delta V_{out}}{\Delta V_{in}}\right)_{\text{PMOS}} \approx \frac{1}{\frac{R_2}{R_1 + R_2} A_{OTA}}\]
+</div>
+</div>
+<div class="paragraph">
+<p>the NMOS regulator improves line regulation performance by a factor of \(g_{mn} r_{o,n}\).</p>
+</div>
+<div class="paragraph">
+<p>This key performance advantage is physically intuitive when considering the topology of the pass device. The NMOS pass transistor effectively functions as a "cascode" transistor situated between the noisy input supply \(V_{in}\) (connected to its drain) and the output node \(V_{out}\) (connected to its source). Because any voltage variation applied to the drain of a regulated NMOS transistor is inherently shielded by the channel, its equivalent variation at the source node is heavily attenuated by the transistor&#8217;s intrinsic gain \(g_{mn} r_{o,n}\) in addition to the closed-loop feedback gain \(A_{OTA}\).</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_load_regulation">1.2. Load Regulation</h3>
+<div class="paragraph">
+<p>Load regulation measures a voltage regulator&#8217;s ability to maintain a stable output voltage in the presence of static or low-frequency variations in the load current. It is mathematically defined as the ratio of the static output voltage variation (\(\Delta V_{out}\)) to the static load current change (\(\Delta I_{out}\) or \(\Delta I_{load}\)):</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\text{Load Regulation} = \frac{\Delta V_{out}}{\Delta I_{load}} = \frac{v_{out}}{i_{load}}\]
+</div>
+</div>
+<div class="paragraph">
+<p>This ratio essentially represents the closed-loop output impedance (\(R_{out\_closed\_loop}\)) of the regulator. A lower closed-loop output impedance corresponds to superior load regulation, meaning lower static output voltage deviations due to varying load currents.</p>
+</div>
+<div class="sect3">
+<h4 id="_small_signal_analysis_of_the_nmos_regulator">1.2.1. Small-Signal Analysis of the NMOS Regulator</h4>
+<div class="paragraph">
+<p>To analyze the load regulation of the NMOS regulator quantitatively, we utilize the small-signal representation based again on the regulator model from  <a href="#classical_voltage_reg_topologies_nmos_and_pmos_pass_devices">Figure 1</a>(b). In this model, \(A_{OTA}\) is the open-loop gain of the error amplifier, \(g_{mn}\) is the transconductance of the NMOS pass element, and \(I_{load}\) represents the load current flowing through the load resistance \(R_L\).</p>
+</div>
+<div class="paragraph">
+<p>When the load current changes by a small-signal amount \(\Delta I_{load}\), it induces a corresponding shift in the output voltage \(\Delta V_{out}\). The small-signal relationship describing the impact of this load current variation on the output voltage is formulated as:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\left( -\Delta V_{out} \frac{R_2}{R_1 + R_2} A_{OTA} - \Delta V_{out} \right) g_{mn} = \Delta I_{load}\]
+</div>
+</div>
+<div class="paragraph">
+<p>By rearranging the terms to isolate the transfer function \(\Delta V_{out} / \Delta I_{load}\), we obtain the closed-loop expression:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\frac{\Delta V_{out}}{\Delta I_{load}} = -\frac{1}{\left( \frac{R_2}{R_1 + R_2} A_{OTA} + 1 \right) g_{mn}}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Under typical operating conditions where the loop gain is significantly high (such that \(\frac{R_2}{R_1 + R_2} A_{OTA} \gg 1\)), this expression simplifies to:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\frac{\Delta V_{out}}{\Delta I_{load}} \approx -\frac{1}{\frac{R_2}{R_1 + R_2} A_{OTA} g_{mn}}\]
+</div>
+</div>
+<div class="paragraph">
+<p>The negative sign indicates that an increase in load current (current drawn out of the regulator) causes a small, proportional drop in the output voltage.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_physical_intuition_and_feedback_mechanism">1.2.2. Physical Intuition and Feedback Mechanism</h4>
+<div class="paragraph">
+<p>The small-signal analysis demonstrates that the load regulation of the NMOS regulator depends on both the amplifier open-loop gain (\(A_{OTA}\)) and the transconductance of the NMOS pass device (\(g_{mn}\)).</p>
+</div>
+<div class="paragraph">
+<p>This dependency is directly linked to the properties of negative shunt feedback:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Open-loop Output Impedance:</strong> The pass device in an NMOS regulator behaves as a source follower. Looking into the source of the NMOS transistor, the open-loop output impedance is approximately:</p>
+<div class="stemblock">
+<div class="content">
+\[R_{out, ol} \approx \frac{1}{g_{mn}}\]
+</div>
+</div>
+</li>
+<li>
+<p><strong>Loop Gain:</strong> The feedback loop consists of the resistor divider ratio \(\beta = R_2 / (R_1 + R_2)\), the error amplifier gain \(A_{OTA}\), and the pass-device source-follower gain (which is approximately unity). This yields a loop gain of:</p>
+<div class="stemblock">
+<div class="content">
+\[T \approx \frac{R_2}{R_1 + R_2} A_{OTA}\]
+</div>
+</div>
+</li>
+<li>
+<p><strong>Closed-loop Output Impedance:</strong> The voltage-sensing shunt-feedback at the output node reduces the output impedance by a factor of \(1 + T\):</p>
+<div class="stemblock">
+<div class="content">
+\[R_{out, cl} = \frac{R_{out, ol}}{1 + T} \approx \frac{1/g_{mn}}{\frac{R_2}{R_1 + R_2} A_{OTA}} = \frac{1}{\frac{R_2}{R_1 + R_2} A_{OTA} g_{mn}}\]
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This derivation confirms that to minimize output voltage variations under fluctuating load conditions, the design should focus on maximizing both the error amplifier&#8217;s open-loop gain (\(A_{OTA}\)) and the transconductance (\(g_{mn}\)) of the NMOS pass element.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_temperature_drift">1.3. Temperature Drift</h3>
+<div class="paragraph">
+<p>Temperature variations directly affect the output voltage accuracy of a linear regulator. The thermal stability of a regulator is quantified by its temperature coefficient (\(TC\)), which is defined as the fractional change of the output voltage in response to a change in temperature [5 G. Rincon-Mora, Analog IC Design with Low-Dropout Regulators]. Typically expressed in percent per degree Celsius (\(\%/^\circ\text{C}\)) or parts per million per degree Celsius (\(\text{ppm}/^\circ\text{C}\)), the temperature coefficient is mathematically defined as:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[TC = \frac{1}{V_{out}} \frac{\Delta V_{out}}{\Delta T} = \frac{(\Delta V_{ref} + \Delta V_{os}) \left(\frac{V_{out}}{V_{ref}}\right)}{V_{out}\Delta T} = \frac{\Delta V_{ref} + \Delta V_{os}}{V_{ref}\Delta T}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>\(\Delta T\) represents the change in temperature.</p>
+</li>
+<li>
+<p>\(\Delta V_{ref}\) represents the variation in the reference voltage over temperature.</p>
+</li>
+<li>
+<p>\(\Delta V_{os}\) represents the variation in the error amplifier&#8217;s input-referred equivalent offset voltage over temperature.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Based on the derivation above, the absolute value of the output voltage cancels out. This indicates that the regulator&#8217;s overall temperature coefficient is independent of the target output voltage setting. Instead, the thermal stability of the regulator is directly determined by two primary components:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>The reference voltage temperature coefficient:</strong> \(\frac{\Delta V_{ref}}{V_{ref}\Delta T}\)</p>
+</li>
+<li>
+<p><strong>The input-referred offset voltage drift scaled by the reference voltage:</strong> \(\frac{\Delta V_{os}}{V_{ref}\Delta T}\)</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>To minimize temperature drift in practical linear regulator designs, it is necessary to utilize a highly stable bandgap reference with a low temperature coefficient, alongside an error amplifier optimized to minimize thermal offset drift (\(\Delta V_{os}/\Delta T\)) through a low mismatch optimized input pair, high DC open-loop gain and layout matching techniques.</p>
+</div>
+<div class="sect3">
+<h4 id="_minimizing_thermal_drift_in_linear_regulators">1.3.1. Minimizing Thermal Drift in Linear Regulators</h4>
+<div class="paragraph">
+<p>Achieving high-precision thermal performance in linear regulators requires addressing both the primary reference voltage source and the non-idealities of the feedback loop. This section examines the specific design and layout techniques used to mitigate these thermal effects.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_bandgap_reference_bgr_temperature_coefficient">1.3.2. Bandgap Reference (BGR) Temperature Coefficient</h4>
+<div class="paragraph">
+<p>The bandgap reference provides the baseline voltage \(V_{ref}\). Standard bandgap circuits achieve first-order temperature cancellation by summing two voltages with opposite thermal behaviors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>CTAT (Complementary-to-Absolute-Temperature):</strong> The base-emitter voltage of a bipolar junction transistor (\(V_{BE}\)) decreases linearly with temperature, typically at a rate of approximately:</p>
+<div class="stemblock">
+<div class="content">
+\[\frac{\partial V_{BE}}{\partial T} \approx -2 \, \text{mV}/^\circ\text{C}\]
+</div>
+</div>
+</li>
+<li>
+<p><strong>PTAT (Proportional-to-Absolute-Temperature):</strong> The thermal voltage \(V_T = k_B T / q\) increases linearly with temperature, exhibiting a temperature coefficient of:</p>
+<div class="stemblock">
+<div class="content">
+\[\frac{\partial V_T}{\partial T} \approx +0.086 \, \text{mV}/^\circ\text{C}\]
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>By scaling and summing these two voltages, a first-order temperature-compensated reference voltage of approximately \(1.2 \, \text{V}\) (or lower for fractional bandgaps) is produced:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[V_{ref}(T) = V_{BE}(T) + K \cdot V_T(T)\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(K\) is a constant defined by transistor sizing and resistor ratios. Even with this first-order compensation, residual second-order temperature effects remain that influence the bandgap&#8217;s temperature coefficient.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_mitigating_error_amplifier_offset_drift">1.3.3. Mitigating Error Amplifier Offset Drift</h4>
+<div class="paragraph">
+<p>Even with a perfectly stable reference, any thermal drift in the error amplifier&#8217;s input-referred offset voltage (\(\Delta V_{os}/\Delta T\)) propagates directly to the output. This offset is composed of both random and systematic components.</p>
+</div>
+<div class="sect4">
+<h5 id="_random_offset_and_pelgroms_law">Random Offset and Pelgrom&#8217;s Law</h5>
+<div class="paragraph">
+<p>Random offset arises from local, microscopic variations in transistor physical dimensions, doping concentrations, and oxide thicknesses. In the input differential pair of the error amplifier, threshold voltage (\(V_{th}\)) mismatch is the dominant driver of offset drift.</p>
+</div>
+<div class="paragraph">
+<p>According to <strong>Pelgrom&#8217;s Law</strong>, the standard deviation of threshold voltage mismatch (\(\sigma_{\Delta V_{th}}\)) is inversely proportional to the square root of the active gate area:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\sigma_{\Delta V_{th}} = \frac{A_{Vth}}{\sqrt{W \cdot L}}\]
+</div>
+</div>
+<div class="paragraph">
+<p>where \(A_{Vth}\) is a technology-dependent constant, while \(W\) and \(L\) represent the width and length of the input transistors.</p>
+</div>
+<div class="paragraph">
+<p>To minimize random thermal drift:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Large Device Sizing:</strong> Designers use large gate areas (high \(W \cdot L\)) for the input pair. Increasing the area averages out local channel fluctuations, lowering both the nominal offset and its corresponding drift over temperature.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_systematic_offset_and_high_dc_open_loop_gain">Systematic Offset and High DC Open-Loop Gain</h5>
+<div class="paragraph">
+<p>Systematic offset occurs due to circuit design asymmetries, such as drain-to-source voltage (\(V_{DS}\)) imbalances in the input pair or load current mirrors. Because these biases change dynamically with temperature, they introduce systematic drift.</p>
+</div>
+<div class="paragraph">
+<p>Maintaining a high DC open-loop gain (\(A_{OL}\)) in the error amplifier minimizes this systematic drift by heavily attenuating closed-loop gain errors:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\epsilon_{gain} \approx \frac{1}{1 + A_{OL}\beta}\]
+</div>
+</div>
+<div class="paragraph">
+<p>A high \(A_{OL}\) ensures that the amplifier behaves closer to its mathematical ideal, ensuring that thermal variations in internal node voltages do not manifest as a shifting input-referred offset.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_precision_calculation">1.3.4. Precision Calculation</h4>
+<div class="paragraph">
+<p>Parameter Vout_static
+Typical 1.5 &#177; 3% &#8594; min: 1.455V, max: 1.545V</p>
+</div>
+<div class="paragraph">
+<p>V<sub>ref_ideal</sub> = 1.2V</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_transient_response_and_slew_rate">1.4. Transient Response and Slew Rate</h3>
+<div class="paragraph">
+<p>The Slew Rate directly impacts the transient response of the voltage regulator, which is crucial for maintaining the output voltage within acceptable limits under varying load conditions. In automotive applications, where power efficiency and reliability are paramount, optimizing the Slew Rate can lead to improved performance and reduced power consumption.</p>
+</div>
+<div class="paragraph">
+<p>Usually, for a step in the output load current, from 0 to a maximum value \(I_{load\_max}\), the maximum output voltage variation \(\Delta V_{out\_max}\) can be expressed as:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\Delta V_{out\_max} = (\frac{1}{BW_{cl}} + \frac{\Delta V_{gate} \cdot C_{gate}}{I_{SR}})\cdot \frac{I_{load\_max}}{C_{load}}\]
+</div>
+</div>
+<div class="paragraph">
+<p>At the first moment of the current step, the control loop has not had time to react. The extra current demand, \(\Delta I_{load\_max}\), is supplied entirely by the output capacitor, \(C_{load}\). This causes the output voltage to start dropping at a rate:  \(\frac{\Delta I_{load\_max}}{C_{load}}\). The output voltage will stop dropping at the instant when the power stage supplies exactly the same value of the demanded load current. Until then, the loop will try to react and restore the output voltage, but the response time is limited by the loop bandwidth, \(BW_{cl}\). During this time, the output voltage will have dropped by an amount: \(\frac{\Delta I_{load\_max}}{C_{load} \cdot BW_{cl}}\).
+After the loop starts to react, the gate voltage of the pass transistor will begin to change. The time it takes for the gate voltage to change by the required amount such as to supply the demanded load current can be written as: \(t_{sr} = \frac{\Delta V_{gate}}{SR_{Gate}} = \frac{\Delta V_{gate} \cdot C_{gate}}{I_{SR}}\).</p>
+</div>
+<div class="paragraph">
+<p>As can be seen from the equation the loop bandwidth and the slew rate of the OTA play an essential role in shaping the transient response of the voltage regulator.</p>
+</div>
+<div class="paragraph">
+<p>If we consider the NMOS voltage regulator as a two-pole system with the dominant pole at the power stage&#8217;s node and the second pole at the output node, the worst case stability scenario is at low load current and high output capacitance. The value of the gate capacitor should be chosen such that stability at the lowest required load current and maximum load capacitance is ensured. From this design constraint, there is an effective upper bound on the possible bandwidth of the control loop.</p>
+</div>
+<div class="paragraph">
+<p>The other parameter that we are free to tune is the Slew Rate of the OTA. Indeed, increasing the Slew Rate will reduce the time it takes for the gate voltage to change, thus improving the transient response of the regulator.</p>
+</div>
+<div class="paragraph">
+<p><a href="#loadJump_ota_model_linear_transientResponse_2u_vs_5u_Islew">Figure 2</a> shows the difference in transient response between two OTA models with different Slew Rates. The OTA with a higher Slew Rate (5uA/V) shows a faster recovery to the nominal output voltage after a load jump compared to the OTA with a lower Slew Rate (2uA/V). This demonstrates the importance of optimizing the Slew Rate in the design of voltage regulators, especially in applications where rapid load changes are expected.</p>
+</div>
+<div id="loadJump_ota_model_linear_transientResponse_2u_vs_5u_Islew" class="imageblock">
+<div class="content">
+<img src="../theoretical_fundamentals/images/loadJump_ota_model_linear_char_2u_vs_5u_Islew.png" alt="loadJump ota model linear char 2u vs 5u Islew" width="800">
+</div>
+<div class="title">Figure 2. Load jump response comparison between two OTA models with different Slew Rates</div>
+</div>
+<div class="paragraph">
+<p>However, we must keep in mind the conditions under which eq. (1) was derived and remains valid. The equation assumes that the output current exhibits both a hard saturation on the bias current and a linear dependence on the input differential voltage. Therefore, increasing the Slew Rate requires more current from the OTA, which leads to increased power consumption. Therefore, there is a trade-off between transient response and power efficiency that must be carefully balanced in the design of the voltage regulator, for class-A type OTAs.</p>
+</div>
+<div class="paragraph">
+<p>For class AB OTAs, which typically exhibit a nonlinear relationship between the output current and the input differential voltage, the situation differs. In these devices, the slew rate can be enhanced without significantly raising the quiescent current, improving the transient response without a substantial power penalty. <a href="#dc_sweep_ota_model_linear_vs_quadratic">Figure 3</a> illustrates the differing output current behaviors of a linear and a quadratic OTA model. The linear model demonstrates hard saturation at the 2 &micro;A bias current when the output voltage drops below 1 V. Conversely, the quadratic model initially presents a lower slope, resulting in a lower transconductance for minor voltage deviations, but this slope increases rapidly. Consequently, its output current overtakes that of the linear model for voltages below 1.025 V. (It should be noted that no current saturation was incorporated into this simplified quadratic model). Therefore, boosting an OTA&#8217;s slew rate via a nonlinear stage can improve transient behavior and power efficiency, even if the unity-gain bandwidth is held constant.</p>
+</div>
+<div id="dc_sweep_ota_model_linear_vs_quadratic" class="imageblock">
+<div class="content">
+<img src="../theoretical_fundamentals/images/dc_sweep_slew_rates_linear_vs_quadratic_dependence.png" alt="dc sweep slew rates linear vs quadratic dependence" width="800">
+</div>
+<div class="title">Figure 3. DC sweep of the output current injected by the OTA block for a decrease in its negative input voltage</div>
+</div>
+<div class="paragraph">
+<p>The resulting transient response of both ota models to a load jump is shown in <a href="#loadJump_ota_model_linear_vs_quadratic">Figure 4</a>. The OTA with the nonlinear output current dependence on the input differential voltage shows a smaller undershoot and a faster recovery to the nominal output voltage after a load jump compared to the OTA with a linear output current dependence, even though both OTAs have the same unity-gain bandwidth. This demonstrates that optimizing the Slew Rate through nonlinear stages can significantly enhance the transient response of voltage regulators without necessarily increasing power consumption.</p>
+</div>
+<div id="loadJump_ota_model_linear_vs_quadratic" class="imageblock">
+<div class="content">
+<img src="../theoretical_fundamentals/images/loadJump_ota_model_linear_vs_quadratic_dependence.png" alt="loadJump ota model linear vs quadratic dependence" width="800">
+</div>
+<div class="title">Figure 4. Load jump response comparison between one OTA model with linear Iout dependence on input differential voltage and Slew Rate cap and another OTA model with quadratic Iout dependence on input differential voltage</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_stability_analysis_of_dual_loop_systems">1.5. Stability Analysis of Dual Loop Systems</h3>
+<div class="paragraph">
+<p>Analyzing the stability of systems with multiple interacting feedback loops can be challenging. Traditional methods developed for single-loop systems cannot always be directly applied and finding the right point to break all loops is not possible for all such systems. Signal Flow Graphs (SFGs) offer a powerful, visual approach to characterize linear circuit networks with loading effects at the input and output ports automatically included in the analysis [Ochoa, 1998, A systematic approach&#8230;&#8203;]</p>
+</div>
+<div class="paragraph">
+<p>An SFG visually captures the cause-and-effect relationships within a linear system and is equivalent to the Nodal Analysis Matrix Equation [Choma, Signal flow analysis&#8230;&#8203;]:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[I = Y \cdot V\]
+</div>
+</div>
+<div class="paragraph">
+<p>where Y is the nodal admittance matrix, V is the vector of node voltages and I is the vector of independent current sources. 	Mason 's Gain formula provides a general method for finding the transfer function between two nodes once the graph has been defined. The determinant of the graph is mathematically equivalent to the determinant of the admittance matrix derived from nodal analysis (1).</p>
+</div>
+<div class="paragraph">
+<p>Just as the admittance matrix characteristic equation d`efines the system natural frequencies, the determinant of the graph contains information about the system poles and zeroes since it defines the loop gain of the system.</p>
+</div>
+<div class="paragraph">
+<p>The SFG together with the DPI Technique encompass an analysis method for generating the graph of the system as a direct interpretation of the circuit topology. Once the Signal Flow Graph has been found, Mason&#8217;s rule and other well-known rules for collapsing graphs can be applied to produce the desired transfer function. 	The technique of DPI analysis is based on the transformation of circuit ports to their Norton equivalent representation and on the sequential application of superposition [1].</p>
+</div>
+<div class="paragraph">
+<p>These circuit analysis techniques having been used for the VREG in Fig. 1 give rise to the SFG in Fig. 2 and lead to the following loop gain equation:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[LG(S)  \approx \frac{G_{m2}R_2\left(1+G_{m1}R_1f\right)\left(1+s\frac{C_1}{G_{m1}f}\right)\left(1+s\frac{C_{GS}}{g_{mp}}\right)}{\left(1+sR_2C_2\right)\left(1+sR_1C_1\right)\left(1+s\frac{C_L}{g_{mp}}\right)} - \frac{\left(1+s\frac{C_{GS}}{g_{mp}}\right)sC_{GS}R_2}{\left(1+sR_2C_2\right)\left(1+s\frac{C_L}{g_{mp}}\right)}\]
+</div>
+</div>
+<div class="paragraph">
+<p>Equation 3 indicates a three pole system with a pole associated with each of the three nodes denoted in Fig 1, the DC loop gain determined by the voltage gains of the two OTAs within the two signal paths and a zero that appears due to the feedforwarding action of the inner loop on the outer loop. Another zero appears because of the C<sub>GS</sub> of the power stage. That same parasitic capacitance, if viewed bilaterally, yields a rhp pole, as indicated by the negative term seen in (3). The following inequalities turn into design guidelines:</p>
+</div>
+<div class="paragraph">
+<p>Firstly, looking back to why we chose this configuration in the first place, we should place a condition on the two loops bandwidths:</p>
+</div>
+<div class="paragraph">
+<p>The DC gain we would like to be as high as possible:</p>
+</div>
+<div class="paragraph">
+<p>To maintain stability, we need one zero in the transfer function to occur before the unity gain frequency, where the UGF has been computed as of a two-pole system with no
+dominant pole:</p>
+</div>
+<div class="paragraph">
+<p>One can also obtain this inequality by following the procedure described in [3]: analyse the dual-loop system by breaking the inner loop first and then evaluating the outer loop with the inner loop replaced with its closed-loop equivalent as stated by classical feedback theory.
+Last but not least, to ensure a suitable phase margin, the pole associated with the output node should be pushed up in frequency at least a decade above the unity gain bandwidth of the system:</p>
+</div>
+<div class="paragraph">
+<p>These four inequalities (4) - (7) have been put to use by designing a Dual Loop Voltage Regulator that is stable across a wide load current range: 0 - 10mA with a worst-case PM above {20}^\circ as shown in Fig 3</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_todo">1.6. TODO:</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>stability analysis</p>
+</li>
+<li>
+<p>evaluate different class AB OTA topologies</p>
+</li>
+<li>
+<p>Pass Device sizing</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_chapter_4_implementation">2. Chapter 4: Implementation</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_dual_loop_architecture">2.1. Dual Loop Architecture</h3>
+<div class="paragraph">
+<p>To be able to improve on both static precision and dynamic performance, a dual loop architecture was chosen:
+The outer loop was optimized for high DC gain through a double-cascoded symmetrical OTA with an input differential pair sized for low mismatch. [During steady‑state operation, the high gain of the symmetrical outer OTA dominates the CCII inner feedback loop, allowing the 1.5 V regulator to achieve under 2% precision in MC300 simulations.]
+To maintain optimal transient performance, high DC gain and current efficiency, a biasing circuitry with a PTAT component and an adaptive component that increases with load current has been used.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../implementation/images/1v5reg_block_diagram_1v5_reg.svg" alt="1v5reg block diagram 1v5 reg" width="800">
+</div>
+<div class="title">Figure 5. 1V5 Voltage Regulator with Dual Loop Architecture</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_inner_ota_design_and_slew_rate_enhancement">2.2. Inner OTA Design and Slew Rate Enhancement</h3>
+<div class="paragraph">
+<p>For the Inner OTA a second generation current conveyor (CCII) was chosen. The design mirrors the bipolar variant of Fabre [A Precise Macromodel for Second
+Generation Current Conveyors Alain Fabre] [Translinear current conveyors implementation Fabre], using the same translinear loop as its core. This design was chosen over the Barthelemy variant [Barthelemy H (1997) Low-output-impedance class AB bipolar voltage buffer] for its better quiescent current control over PVT. [insert plot of quiescent current variation for both topologies]</p>
+</div>
+<div class="paragraph">
+<p>The CCII has its Y voltage input is driven by the symmetrical outer OTA, while its X current input is directly connected to the regulator output. Owing to its simplicity, class AB behavior, and current feedback operation, the CCII inner loop can be optimized for wide bandwidth and high slew rate, allowing it to take over the system response during transient events. Furthermore, a nonlinear PMOS current mirror that exploits the transition from the triode region to saturation of a resistor-emulating PMOS [4] has been used to further increase the positive slew rate of the inner OTA, ensuring 221mV undershoots in full load jumps between 100nA and 10mA over PVT. R_dyn is biased at the edge of the triode region in steady state, but when a sufficiently high current flows through M24 during a transient undershoot event, R_dyn will enter the saturation region to reach an operating point with a higher drain current, but with the same VGS . This mirrors gliding up the Y-axis of the ID/VDS graph of a MOSFET. A slew rate comparison between a current conveyor with a classical and a nonlinear current mirror is shown in Fig. 2. The regulation loop response to a load jump from 100nA to 10mA with the two aforementioned current mirrors is also shown in Fig. 3.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_outer_ota_design_and_loop_stability">2.3. Outer OTA Design and Loop Stability</h3>
+<div class="paragraph">
+<p>The outer OTA is a double-cascoded symmetrical OTA with an input differential pair sized for low mismatch biased in the subthreshold region. The design of the outer OTA was optimized for high DC gain, which is essential for achieving high precision in the voltage regulator. The symmetrical architecture of the OTA helps to minimize offset while the double-cascoding technique allows for a significant increase in gain without sacrificing bandwidth. The single-stage topology was chosen to minimize the quiescent current and the number of poles in the system, thus improving stability margins.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ptat_current_reference">2.4. PTAT Current reference</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_initial_ptat_current_reference_design">2.5. Initial PTAT current reference design</h3>
+<div class="paragraph">
+<p>The PTAT biasing circuitry is based on the classical ΔVGS PTAT core. The extra resistor R_poly2 has a PTAT behaviour, just like R_ploy1, but it has a greater variance with temperature. In this way, the output PTAT bias current has a lower process corner dependence.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_improved_ptat_current_reference_design">2.6. Improved PTAT current reference design</h3>
+<div class="imageblock">
+<div class="content">
+<img src="../implementation/images/ptat_current_references_comparison.png" alt="ptat current references comparison" width="800">
+</div>
+<div class="title">Figure 6. PTAT Current References Comparison</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adaptive_biasing_2">2.7. Adaptive Biasing</h3>
+<div class="paragraph">
+<p>The adaptive biasing current keeps the regulator&#8217;s efficiency high at minimum loads and increases the Unity Gain frequency, and Stability margins at higher loads. It also allows the outer loop gain to surpass 80dB DC loop gain above 200 uA and 90dB above 2mA.
+With the help of a variable resistor, implemented through M48, that generates a load-tracking zero, stability is ensured for loads between 1u and 10mA and 0 and 10nF,  load current and capacitance, respectively.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_chapter_4_experimental_results">3. Chapter 4: Experimental Results</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_vreg_startup_and_disable">3.1. VREG Startup and Disable</h3>
+<div id="reg1v5_startup_pvt_cload_150p_5n_iload_10n_10m_sweep" class="imageblock">
+<div class="content">
+<img src="../experimental_results/images/reg1v5_startup_pvt_cload_150p_5n_iload_10n_10m_sweep.png" alt="reg1v5 startup pvt cload 150p 5n iload 10n 10m sweep">
+</div>
+<div class="title">Figure 7. Startup Behaviour of the 1.5V Regulator over PVT with 150pF and 5nF Load Capacitance and Load Current Sweep from 10nA to 10mA</div>
+</div>
+<div class="paragraph">
+<p>As can be seen from <a href="#reg1v5_startup_pvt_cload_150p_5n_iload_10n_10m_sweep">Figure 7</a> , the 1V5 Reg startup time varies dramatically, mostly due to the load current the VREG is required to supply directly from the startup and the PVT conditions. The startup time is also influenced by the load capacitance.</p>
+</div>
+<div id="reg1v5_disable_pvt_cload_150p_5n_10n_10m_sweep" class="imageblock">
+<div class="content">
+<img src="../experimental_results/images/reg1v5_disable_pvt_cload_150p_5n_10n_10m_sweep.png" alt="reg1v5 disable pvt cload 150p 5n 10n 10m sweep">
+</div>
+<div class="title">Figure 8. Disable Behaviour of the 1.5V Regulator over PVT with 150pF and 5nF Load Capacitance and Load Current Sweep from 10nA to 10mA</div>
+</div>
+<div class="paragraph">
+<p>The disable behaviour of the 1V5 Reg is also influenced by the load current and load capacitance. The disable time is generally shorter than the startup time, but it can still vary significantly depending on the PVT conditions and the load current. The longest disable time is observed when the load current is low (10nA) and the load capacitance is large, as the pulldown switch needs to discharge the load capacitance before it can fully disable.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_static_and_dynamic_measurements">3.2. Static and Dynamic Measurements</h3>
+<div id="staticAndDynamicMeasurmentTable" class="imageblock">
+<div class="content">
+<img src="../experimental_results/images/loadAndLineJumpPlots/staticAndDynamicMeasurmentTable.svg" alt="staticAndDynamicMeasurmentTable">
+</div>
+<div class="title">Figure 9. Summary table that contains the minimum and maximum values of the static and dynamic measurements for the 1.5V Regulator over PVT with load capacitance swept between 150pF and 5nF</div>
+</div>
+<div class="paragraph">
+<p>As can be seen from <a href="#staticAndDynamicMeasurmentTable">Figure 9</a>, the regulator manages to achieve a maximum overshoot of 50mV for positive line jumps from 2.25V to 3.6V at 10mA. The maximum undershoot for negative line jumps from 3.6V to 2.25V is 34mV at 10mA. As far as the load transient performance is concerned, the maximum overshoot.</p>
+</div>
+<div class="sect3">
+<h4 id="_plots">3.2.1. Plots</h4>
+<div class="imageblock">
+<div class="content">
+<img src="../experimental_results/images/loadAndLineJumpPlots/tran_loadAndLineJump_stackedPlot.svg" alt="tran loadAndLineJump stackedPlot">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../experimental_results/images/loadAndLineJumpPlots/tran_loadAndLineJump_vreg1v5.svg" alt="tran loadAndLineJump vreg1v5">
+</div>
+</div>
+<div id="max_overshoot_vreg1v5out_loadJump_10m_100n" class="imageblock">
+<div class="content">
+<img src="../experimental_results/images/loadAndLineJumpPlots/max_overshoot_vreg1v5out_loadJump_10m_100n.png" alt="max overshoot vreg1v5out loadJump 10m 100n">
+</div>
+<div class="title">Figure 10. Worst case corner for the 10mA to 100nA load jump overshoot</div>
+</div>
+<div id="max_overshoot_vreg1v5out_loadJump_10m_100u" class="imageblock">
+<div class="content">
+<img src="../experimental_results/images/loadAndLineJumpPlots/max_overshoot_vreg1v5out_loadJump_10m_100u.png" alt="max overshoot vreg1v5out loadJump 10m 100u">
+</div>
+<div class="title">Figure 11. Worst case corner for the 10mA to 100uA load jump overshoot</div>
+</div>
+<div id="max_overshoot_vreg1v5out_loadJump_2_25v_3_6v" class="imageblock">
+<div class="content">
+<img src="../experimental_results/images/loadAndLineJumpPlots/max_overshootAt10mA__vreg1v5out_lineJump_2v25_3v6.png" alt="max overshootAt10mA  vreg1v5out lineJump 2v25 3v6">
+</div>
+<div class="title">Figure 12. Worst case corner for the 2.25V to 3.6V overshoot at 10mA load current</div>
+</div>
+<div id="max_overshootAt100uA__vreg1v5out_lineJump_2v25_3v6" class="imageblock">
+<div class="content">
+<img src="../experimental_results/images/loadAndLineJumpPlots/max_overshootAt100uA__vreg1v5out_lineJump_2v25_3v6.png" alt="max overshootAt100uA  vreg1v5out lineJump 2v25 3v6">
+</div>
+<div class="title">Figure 13. Worst case corner for the 2.25V to 3.6V overshoot at 100uA load current</div>
+</div>
+<div id="max_undershoot_vreg1v5out_loadJump_100n_10m" class="imageblock">
+<div class="content">
+<img src="../experimental_results/images/loadAndLineJumpPlots/max_undershoot_vreg1v5out_loadJump_100n_10m.png" alt="max undershoot vreg1v5out loadJump 100n 10m">
+</div>
+<div class="title">Figure 14. Worst case corner for the 100nA to 10mA load jump undershoot</div>
+</div>
+<div id="max_undershoot_vreg1v5out_loadJump_100u_10m" class="imageblock">
+<div class="content">
+<img src="../experimental_results/images/loadAndLineJumpPlots/max_undershoot_vreg1v5out_loadJump_100u_10m.png" alt="max undershoot vreg1v5out loadJump 100u 10m">
+</div>
+<div class="title">Figure 15. Worst case corner for the 100uA to 10mA load jump undershoot</div>
+</div>
+<div id="max_undershootAt100uA__vreg1v5out_lineJump_3v6_2v25" class="imageblock">
+<div class="content">
+<img src="../experimental_results/images/loadAndLineJumpPlots/max_undershootAt100uA__vreg1v5out_lineJump_3v6_2v25.png" alt="max undershootAt100uA  vreg1v5out lineJump 3v6 2v25">
+</div>
+<div class="title">Figure 16. Worst case corner for the 3.6V to 2.25V undershoot at 100uA load current</div>
+</div>
+<div id="max_undershootAt10mA__vreg1v5out_lineJump_3v6_2v25" class="imageblock">
+<div class="content">
+<img src="../experimental_results/images/loadAndLineJumpPlots/max_undershootAt10mA__vreg1v5out_lineJump_3v6_2v25.png" alt="max undershootAt10mA  vreg1v5out lineJump 3v6 2v25">
+</div>
+<div class="title">Figure 17. Worst case corner for the 3.6V to 2.25V undershoot at 10mA load current</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_psrr">3.3. PSRR</h3>
+
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2026-06-29 23:31:36 +0300
+</div>
+</div>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]],
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+  TeX: { equationNumbers: { autoNumber: "all" } }
+})
+MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
+  MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
+    if ((node = data.script.parentNode) && (node = node.parentNode) && node.classList.contains("stemblock")) {
+      data.math.root.display = "block"
+    }
+    return data
+  })
+})
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

@@ -1,0 +1,912 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?asciidoc-toc?>
+<?asciidoc-numbered?>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0" xml:lang="en">
+<info>
+<title>Master Document Title</title>
+<date>2026-06-30</date>
+<author>
+<personname>
+<firstname>Author</firstname>
+<surname>Name</surname>
+</personname>
+</author>
+<authorinitials>AN</authorinitials>
+</info>
+<section xml:id="_state_of_the_art_in_ultra_low_power_capacitor_less_voltage_regulators">
+<title>State of the Art in Ultra-Low-Power Capacitor-Less Voltage Regulators</title>
+<section xml:id="_introduction_to_the_power_management_paradigm">
+<title>Introduction to the Power Management Paradigm</title>
+<simpara>The unprecedented proliferation of always-on Internet of Things (IoT) nodes, biomedical implantable devices, and microcontrollers due to the recent rise of software-defined-vehicles has catalyzed a paradigm shift in the design of fully integrated power management integrated circuits (PMICs). At the core of these embedded systems lies the Low-Dropout (LDO) or linear voltage regulator(VREG), a pivotal component responsible for providing a clean, stable, and precise supply voltage to sensitive downstream analog and digital blocks. Historically, LDOs and VREGs relied heavily on a bulky external output capacitor, typically in the range of 1&micro;F to 10&micro;F, to ensure loop stability and to buffer charge during sudden load transients.</simpara>
+<simpara>However, the modern drive toward extreme miniaturization and cost reduction in System-on-Chip (SoC) products favorizes the complete elimination of off-chip components. Removing the external capacitor translates directly to a reduced Bill of Materials (BOM) and a minimized printed circuit board (PCB) footprint. This architectural evolution has given rise to the Output-Capacitor-Less (OCL) or capless voltage regulator.</simpara>
+<simpara>While advantageous for integration, removing the output capacitor introduces a fundamental tri-lemma in analog design: balancing <emphasis role="strong">ultra-low quiescent current I<subscript>Q</subscript></emphasis>, <emphasis role="strong">fast transient response</emphasis>, and <emphasis role="strong">high static precision</emphasis> across all process, voltage, and temperature (PVT) variations. When the quiescent current must be aggressively scaled down to the sub-microampere or low-microampere domain to extend battery life, the internal error amplifier’s bandwidth and slew rate are severely degraded. Consequently, achieving acceptable transient undershoots and overshoots during full-load current steps (eg: 100nA to 10mA) becomes an exceptionally complex challenge. The following sections explore the established research directions and state-of-the-art topologies developed to address these inherent tradeoffs.</simpara>
+</section>
+<section xml:id="_frequency_compensation_and_loop_stability_in_ocl_architectures">
+<title>Frequency Compensation and Loop Stability in OCL Architectures</title>
+<simpara>In classical VREG architectures, the large external capacitor establishes a dominant, low-frequency pole at the output node. Because this pole resides at a much lower frequency than the internal poles of the error amplifier (EA), the system inherently behaves as a single-pole system up to its unity-gain frequency (UGF), ensuring a robust phase margin, especially under medium and heavy load conditions. For light loads, the internal poles might approach the UGF, but usually, the ESR of the output capacitor provides a beneficial zero that helps maintain stability.</simpara>
+<simpara>When the output capacitor is removed (leaving only the parasitic capacitance of the load, typically in the range of 0 to a couple nFs at most), the output pole is pushed to a much higher frequency. More critically, the frequency of this output pole becomes highly load-dependent. At minimal load currents, the transconductance g<subscript>m</subscript> of the pass device is exceedingly small, causing p<subscript>out</subscript> to drift closer to the internal poles of the EA. This proximity results in complex conjugate poles, leading to severe peaking in the frequency response and catastrophic instability.</simpara>
+<simpara>Modern approaches favor the generation of adaptive or load-tracking zeros. By inserting a variable resistor—often implemented via a MOSFET operating in the linear or saturation region whose gate is controlled by a replica of the load current—a zero can be synthesized that naturally shifts in tandem with the output pole. This method effectively flattens the phase response at the unity-gain crossover frequency. However, tracking zeros must be meticulously designed to account for worst-case PVT corners, as an over-compensated zero can lead to early phase dropping, while an under-compensated zero fails to mitigate complex pole formation.</simpara>
+</section>
+<section xml:id="_power_stage_architectures_the_shift_from_pmos_to_nmos">
+<title>Power Stage Architectures: The Shift from PMOS to NMOS</title>
+<simpara>The choice of the power pass-device dictates the fundamental topology of the regulator, directly impacting both the dropout voltage and the transient capabilities of the system.</simpara>
+<section xml:id="_pmos_based_power_stages">
+<title>PMOS-Based Power Stages</title>
+<simpara>The vast majority of classical LDOs and many recent ultra-low-power architectures utilize a PMOS transistor as the power pass-device, configured as a common-source amplifier. The primary advantage of a PMOS stage is its ability to operate with an extremely low dropout voltage, meaning the input supply voltage can be nearly identical to the required output voltage.</simpara>
+<simpara>Recent literature showcases impressive ultra-low power PMOS implementations. Yao et al. [5] achieved an external capacitor-less LDO with a maximum quiescent current of 2.3&mu;A for a 1mA load. Similarly, Zhan and Ki [7] demonstrated a PMOS LDO capable of supporting a 12mA load while maintaining a 28.6&mu;A standby current. Furthermore, Tan et al. [8] developed a highly optimized 30mA PMOS LDO with a hybrid adaptive biasing scheme, maintaining just 7&mu;A of I_Q.</simpara>
+<simpara>Despite these achievements, PMOS power stages suffer from three drawbacks in VREG capless designs. First, the PMOS seen from the supply side builds a common gate stage, which severly impacts the PSRR performance at middle and higher frequencies. As a common-source stage, as seen from the OTA side, the PMOS power stage exhibits a high intrinsic output impedance (r_ds), which pushes the load-dependent pole to lower frequencies, exacerbating stability issues. Second, because holes have lower mobility than electrons, a PMOS device must be sized considerably larger than an equivalent NMOS device to drive the same maximum load current. This increased silicon area also results in a bigger gate capacitance (C_gs + C_gd).</simpara>
+</section>
+<section xml:id="_nmos_based_power_stages">
+<title>NMOS-Based Power Stages</title>
+<simpara>To overcome the intrinsic bandwidth and slew-rate limitations of PMOS devices, advanced research directions have increasingly adopted NMOS power stages [6], [10]. Configured as a source-follower, the NMOS pass-device provides an intrinsically low output impedance (1/g_m).</simpara>
+<simpara>Furthermore, the superior electron mobility of the NMOS transistor allows it to be physically smaller than a PMOS device for the same current rating (e.g., 10mA to 50mA). Consequently, the parasitic gate capacitance is drastically reduced, allowing the low-power internal amplifier to slew the gate node much faster. For instance, Liu et al. [6] demonstrated an area-efficient capless NMOS LDO with exceptionally fast transient response metrics.</simpara>
+<simpara>The primary tradeoff of the NMOS architecture is the threshold voltage ($V_{th}$) penalty. Because it operates as a source follower, the gate voltage must be driven significantly higher than the output voltage. This typically requires either a higher secondary input supply rail or an internal charge pump if the VREG needs to be used as an LDO. In applications where multiple voltage rails are already present (such as stepping down from a 2.5V rail to a 1.5V core voltage), the NMOS topology presents a superior solution for transient-optimized capless regulation.</simpara>
+</section>
+</section>
+<section xml:id="_overcoming_slew_rate_bottlenecks_at_nano_ampere_bias">
+<title>Overcoming Slew-Rate Bottlenecks at Nano-Ampere Bias</title>
+<simpara>When the maximum allowed standby current is restricted to the 100 nA to 10 μA range, conventional linear error amplifiers cannot generate enough current to rapidly alter the gate voltage of the pass device during a transient event. The state-of-the-art literature has explored three predominant methodologies to break the correlation between static bias current and dynamic slew rate.</simpara>
+<section xml:id="_adaptive_biasing">
+<title>Adaptive Biasing</title>
+<simpara>Rather than operating the internal amplifiers at a fixed, statically low bias current, adaptive biasing circuits dynamically adjust the internal I<subscript>Q</subscript> in proportion to the output load current. At minimal loads (e.g., 100 nA), the regulator consumes only a baseline, microampere-level current, maximizing light-load power efficiency. As the load current increases toward its maximum, a current-sensing mechanism scales up the internal bias. This dynamic scaling significantly increases the transconductance of the internal amplifiers, boosting the unity-gain frequency and extending the stability phase margin at heavy loads [7], [8].
+While highly effective in steady-state heavy-load conditions, pure adaptive biasing struggles during the initial moments of a sudden positive load step (e.g., 100 nA → 10 mA). At the exact moment the load jumps, the internal bias is still in its ultra-low state, resulting in a delayed reaction and significant initial undershoots.</simpara>
+</section>
+<section xml:id="_slew_rate_enhancement_sre_circuits">
+<title>Slew-Rate Enhancement (SRE) Circuits</title>
+<simpara>To address the instantaneous reaction gap of adaptive biasing, researchers have heavily utilized parallel Slew-Rate Enhancement (SRE) feedback loops. SRE mechanisms act as transient bypass paths. A classic implementation, demonstrated by Zhan and Ki [2], involves subthreshold undershoot-reduction techniques utilizing edge detectors.</simpara>
+<simpara>In these architectures, a high-pass filter—usually realized via a series coupling capacitor—is connected between the regulator’s output and auxiliary driving circuitry. Under steady-state DC conditions, the capacitor blocks the signal, and the SRE is inactive, consuming zero power. However, during a fast load transient, the sudden drop in V<subscript>out</subscript> (high dV/dt) passes through the coupling capacitor, instantly turning on the auxiliary circuitry to inject a massive surge of current into the pass device’s gate. Recent ultra-low power papers [9], achieving quiescent currents as low as 10 nA, rely extensively on complex SREs to reduce transient undershoots.
+The crucial disadvantage of SRE topologies is the silicon area. The required on-chip coupling capacitors are physically large.</simpara>
+</section>
+<section xml:id="_dynamic_current_scaling_via_nonlinear_loops_and_current_conveyors">
+<title>Dynamic Current Scaling via Nonlinear Loops and Current Conveyors</title>
+<simpara>To achieve massive slew rates without consuming the silicon area of SRE coupling capacitors, contemporary research has pivoted toward dynamically scaling Class-AB architectures and translinear circuits.
+Galan et al. [4] introduced the concept of super Class-AB Operational Transconductance Amplifiers (OTAs). These amplifiers utilize nonlinear characteristics—exploiting the transition between the cutoff, triode, and saturation regions of MOSFETs—to provide transient currents that are exponentially larger than their baseline bias current.</simpara>
+<simpara>Expanding on this philosophy, the use of Second-Generation Current Conveyors (CCII) has emerged as a robust solution. A CCII is fundamentally a current-feedback amplifier. Unlike classical voltage-feedback OTAs whose slew rates are strictly limited by their tail currents, a CCII allows for a nearly unbounded transient current drive. By combining a CCII with nonlinear current mirrors—where specific mirroring transistors are dynamically forced from the triode region into saturation during transient events—the regulator can achieve a massive surge in dynamic drive current without any capacitive coupling. This approach directly solves the transient bottleneck while maintaining a compact silicon footprint.</simpara>
+</section>
+</section>
+<section xml:id="_methodologies_for_high_static_precision_and_dc_gain">
+<title>Methodologies for High Static Precision and DC Gain</title>
+<simpara>Beyond transient response, an automotive-grade VREG must maintain excellent static precision. In high-performance SoCs, the load regulation (the variation in V<subscript>out</subscript> across the full load current spectrum) must typically be kept below a few millivolts. To achieve less than 2mV of variation for a 10mA load jump, the regulator’s closed-loop control system requires an exceptionally high open-loop DC gain, typically exceeding 70 dB.</simpara>
+<simpara>Two primary research paths have addressed this:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><emphasis role="strong">Cascoded Architectures:</emphasis> The traditional approach to boosting gain is stacking transistors in a cascoded or double-cascoded configuration. This multiplies the output impedance of the amplifier stages. The limitation is the reduction in voltage headroom, making this technique challenging for sub-1V applications. However, for regulators operating from a 2.5V supply, double-cascoded OTAs remain the gold standard for robust, mismatch-resilient, high-gain amplification.</simpara>
+</listitem>
+<listitem>
+<simpara><emphasis role="strong">Positive Feedback and Negative Resistance:</emphasis> To boost gain without sacrificing voltage headroom, Oh and Bakkaloglu [1] introduced a radical approach utilizing cross-coupled positive feedback. By engineering a negative resistance loop, the output conductance of the amplifier is theoretically cancelled out, resulting in near-infinite low-frequency DC gain. While this current-reused gain-enhancement path significantly improves static precision, it inherently introduces the severe risk of localized loop instability. Small mismatches over PVT corners or over MC300 runs can easily cause the positive feedback to overpower the negative feedback, leading to oscillation.</simpara>
+</listitem>
+</orderedlist>
+</section>
+<section xml:id="_positioning_and_justification_of_the_proposed_architecture">
+<title>Positioning and Justification of the Proposed Architecture</title>
+<simpara>An analysis of the state-of-the-art reveals a fragmented landscape: PMOS designs achieve ultra-low I<subscript>Q</subscript> but suffer from degraded PSRR and increased silicon area; SREs provide fast recovery but consume extra silicon area; and negative-resistance techniques yield high precision but risk instability. The master&#8217;s thesis presented herein addresses these conflicting tradeoffs through a highly optimized, <emphasis role="strong">nonlinear dual-loop 1.5V capless voltage regulator</emphasis>.</simpara>
+<simpara>Designed to convert a 2.5V supply to a highly stable 1.5V output, the proposed architecture selectively aggregates the most robust state-of-the-art techniques while discarding their respective compromises:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><emphasis role="strong">Dual-Loop Separation of Concerns:</emphasis> To be able to optimize static precision and dynamic response separately without trying to get both out of a single OTA a dual loop architecture was chosen. The outer regulation loop employs a double-cascoded symmetrical OTA. Leveraging the adequate 2.5V headroom, this stage safely achieves over 80 dB of DC gain at loads above 200 μA, ensuring 2 mV maximum load regulation in Monte Carlo analyses.</simpara>
+</listitem>
+<listitem>
+<simpara><emphasis role="strong">Nonlinear CCII Inner Loop:</emphasis> Instead of relying on area-consuming capacitively coupled SREs [2], transient robustness is governed by a parallel inner loop based on a CCII. The novelty lies in its coupling with a nonlinear PMOS current mirror (exploiting an emulated resistor, R_dyn). Mirroring the behaviour from [4], R_dyn glides from the triode region into deep saturation during a sudden output voltage undershoot. This drastically multiplies the positive slew rate dynamically, ensuring maximum undershoots of only 221 mV during massive 100 nA → 10 mA full-load steps.</simpara>
+</listitem>
+<listitem>
+<simpara><emphasis role="strong">NMOS Power Stage and Stability:</emphasis> By selecting an NMOS power stage [6], the design capitalizes on intrinsically low output impedance to push the dominant output pole to higher frequencies and increased PSRR. Loop stability—capable of accommodating 0 to 10 nF of capacitive loading is guaranteed through a variable resistor that generates a continuous load-tracking zero, adapting to the output pole&#8217;s movement across the entire current spectrum.</simpara>
+</listitem>
+<listitem>
+<simpara><emphasis role="strong">Adaptive + PTAT Biasing:</emphasis> Finally, to preserve battery life without starving the amplifiers, the system employs a PVT-invariant PTAT (Proportional to Absolute Temperature) base biasing current coupled with adaptive biasing [7], [8]. This guarantees a highly competitive worst-case (Fast, 85°C) standby current of just 2.1 μA at minimum load (100 nA), scaling up efficiently as the load approaches 10 mA and as the ambient temperature increases.</simpara>
+</listitem>
+</itemizedlist>
+<simpara>In conclusion, by strategically fusing NMOS wideband stability, dual-loop gain compartmentalization, and nonlinear current-conveyor dynamic scaling, the proposed regulator directly addresses the fundamental tradeoffs of ultra-low-power PMIC design, positioning itself as a robust, area-efficient, and highly precise solution relative to current literature.</simpara>
+<simpara><?asciidoc-hr?></simpara>
+</section>
+<section xml:id="_bibliography_references">
+<title>Bibliography / References</title>
+<simpara>[1] W. Oh and B. Bakkaloglu, "A CMOS Low-Dropout Regulator With Current-Reused Gain-Enhanced Feedforward Path," <emphasis role="strong">IEEE Transactions on Circuits and Systems II: Express Briefs</emphasis>, vol. 60, no. 11, pp. 756-760, Nov. 2013.</simpara>
+<simpara>[2] C. Zhan and W.-H. Ki, "An Output-Capacitor-Free Adaptively Biased Low-Dropout Regulator With Subthreshold Undershoot-Reduction for SoC," <emphasis role="strong">IEEE Transactions on Circuits and Systems I: Regular Papers</emphasis>, vol. 59, no. 5, pp. 1119-1131, 2012.</simpara>
+<simpara>[3] K. N. Leung and P. K. T. Mok, "A capacitor-free CMOS low-dropout regulator with damping-factor-control frequency compensation," <emphasis role="strong">IEEE Journal of Solid-State Circuits</emphasis>, vol. 38, no. 10, pp. 1691-1702, Oct. 2003.</simpara>
+<simpara>[4] J. A. Galan, A. J. Lopez-Martin, R. G. Carvajal, J. Ramirez-Angulo, and C. Rubia-Marcos, "Super Class-AB OTAs With Adaptive Biasing and Dynamic Output Current Scaling," <emphasis role="strong">IEEE Transactions on Circuits and Systems I: Regular Papers</emphasis>, vol. 54, no. 3, pp. 449-457, March 2007.</simpara>
+<simpara>[5] Y. Yao, M. Zhao, and X. Wu, "A Max 2.3μA Quiescent Current External Capacitorless Low-Dropout Regulator," in <emphasis role="strong">IECON 2020 - 46th Annual Conference of the IEEE Industrial Electronics Society</emphasis>, Singapore, 2020.</simpara>
+<simpara>[6] X. Liu, C. Zhan, and H. Qiao, "Chip-Area-Efficient Capacitor-less LDO Regulator with Fast-Transient Response," in <emphasis role="strong">2019 IEEE International Conference on Integrated Circuits, Technologies and Applications (ICTA)</emphasis>, Chengdu, China, 2019.</simpara>
+<simpara>[7] C. Zhan and W.-H. Ki, "Analysis and Design of Output-Capacitor-Free Low-Dropout Regulators With Low Quiescent Current and High Power Supply Rejection," <emphasis role="strong">IEEE Transactions on Circuits and Systems I: Regular Papers</emphasis>, vol. 61, no. 2, pp. 625-636, Feb. 2014.</simpara>
+<simpara>[8] Y.-C. Tan et al., "A 30-mA Compensation-Free Output-Capacitorless Analog LDO With Hybrid Adaptive Biasing," <emphasis role="strong">IEEE Transactions on Power Electronics</emphasis>, vol. 40, no. 8, pp. 11182-11196, Aug. 2025.</simpara>
+<simpara>[9] M. Huang, Y. Lu, and R. P. Martins, "A 10 nA ultra-low quiescent current and 60 ns fast transient response low-dropout regulator for Internet-of-Things," <emphasis role="strong">IEEE Transactions on Circuits and Systems I: Regular Papers</emphasis>, vol. 69, no. 1, pp. 433-442, 2022.</simpara>
+<simpara>[10] N. Yan, J. Jiang, and H. Min, "A 12 nA Ultra-Low Quiescent Current Capacitor-Less LDO with 350 ns Fast Transient Response," <emphasis role="strong">IEEE Transactions on Circuits and Systems II: Express Briefs</emphasis>, vol. 69, no. 3, pp. 799-803, 2022.</simpara>
+</section>
+</section>
+<section xml:id="_theoretical_fundamentals">
+<title>Theoretical Fundamentals</title>
+<simpara>In this chapter, the main specifications of linear regualtors will be discussed</simpara>
+<figure xml:id="classical_voltage_reg_topologies_nmos_and_pmos_pass_devices">
+<title>Classical Voltage Regulator Topology: a) with PMOS pass device and b) with NMOS pass device</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../theoretical_fundamentals/images/classical_voltage_reg_topologies_nmos_and_pmos_pass_devices.png"/>
+</imageobject>
+<textobject><phrase>classical voltage reg topologies nmos and pmos pass devices</phrase></textobject>
+</mediaobject>
+</figure>
+<section xml:id="_staticsteady_state_parameters">
+<title>Static/Steady-State Parameters</title>
+<section xml:id="_drop_out_voltage">
+<title>Drop-out Voltage</title>
+<simpara>The drop-out voltage is defined as the minimum voltage difference between VIN and VOUT (Figure 2.1) to maintain an intended voltage regulation [4_yang_li_thesis]. A linear regulator which can operate in low drop-out voltage regulation is commonly named as low drop-out regulator (LDO). The application intended for the proposed voltage regulator has quite a big dropout, that allows us to use an NMOS pass device without a charge pump, as such it does not qualify it as a Low-Dropout Regulator.</simpara>
+</section>
+<section xml:id="_quiescent_current">
+<title>Quiescent Current</title>
+<simpara>The quiescent current (I<subscript>Q</subscript>) is defined as the total current drawn by the voltage regulator from the preceding supply, minus the current that flows to the load. In other words it&#8217;s the current consumed by the control circuits.
+The power efficiency &eta; of a linear regulator can be expressed in, where I<subscript>Load</subscript> is current flowing into the load and V<subscript>dropout</subscript> is the dropout voltage.</simpara>
+<informalequation>
+<alt><![CDATA[\eta = \frac{P_{delivered}}{P_{supplied}} = \frac{V_{out}I_{load}}{V_{in}(I_{load} + I_Q)}
+= \left(1 - \frac{V_{dropout}}{V_{in}}\right)\frac{I_{load}}{(I_{load} + I_Q)}]]></alt>
+<mathphrase><![CDATA[\eta = \frac{P_{delivered}}{P_{supplied}} = \frac{V_{out}I_{load}}{V_{in}(I_{load} + I_Q)}
+= \left(1 - \frac{V_{dropout}}{V_{in}}\right)\frac{I_{load}}{(I_{load} + I_Q)}]]></mathphrase>
+</informalequation>
+</section>
+<section xml:id="_line_regulation">
+<title>Line Regulation</title>
+<simpara>Line regulation measures a voltage regulator&#8217;s ability to maintain a stable output voltage <inlineequation><alt><![CDATA[V_{out}]]></alt><mathphrase><![CDATA[V_{out}]]></mathphrase></inlineequation> despite static or low-frequency variations in its input supply voltage <inlineequation><alt><![CDATA[V_{in}]]></alt><mathphrase><![CDATA[V_{in}]]></mathphrase></inlineequation>. It is quantitatively defined as the ratio of the change in output voltage to the change in input voltage:</simpara>
+<informalequation>
+<alt><![CDATA[\text{Line Regulation} = \frac{\Delta V_{out}}{\Delta V_{in}} = \frac{v_{out}}{v_{in}}]]></alt>
+<mathphrase><![CDATA[\text{Line Regulation} = \frac{\Delta V_{out}}{\Delta V_{in}} = \frac{v_{out}}{v_{in}}]]></mathphrase>
+</informalequation>
+<simpara><emphasis>Note: This is also frequently expressed as a percentage of the nominal output voltage per volt, i.e., <inlineequation><alt><![CDATA[\% / \text{V}]]></alt><mathphrase><![CDATA[\% / \text{V}]]></mathphrase></inlineequation>, or simply in <inlineequation><alt><![CDATA[\text{mV}/\text{V}]]></alt><mathphrase><![CDATA[\text{mV}/\text{V}]]></mathphrase></inlineequation>.</emphasis></simpara>
+<simpara>The input supply feeding the regulator is rarely perfectly stable. It often fluctuates due to a combination of factors, such as:</simpara>
+<itemizedlist>
+<listitem>
+<simpara>The line and load regulation limitations of the preceding supply regulator.</simpara>
+</listitem>
+<listitem>
+<simpara>Thermal drift and bandgap reference inaccuracies.</simpara>
+</listitem>
+<listitem>
+<simpara>Static offsets resulting from transistor mismatches.</simpara>
+</listitem>
+<listitem>
+<simpara>AC ripple originating from upstream switching regulators or rectifiers.</simpara>
+</listitem>
+</itemizedlist>
+<simpara>Ideally, the regulated output voltage should remain constant at its target value across the entire operating range of the input voltage. This ideal behavior holds true until the input voltage drops too close to the output voltage, reaching the "dropout" threshold. For an NMOS pass-transistor topology, as <inlineequation><alt><![CDATA[V_{in}]]></alt><mathphrase><![CDATA[V_{in}]]></mathphrase></inlineequation> decreases toward this limit, the gate-driving stage (often an error amplifier powered by <inlineequation><alt><![CDATA[V_{in}]]></alt><mathphrase><![CDATA[V_{in}]]></mathphrase></inlineequation> or a charge pump) runs out of voltage headroom to sufficiently command the NMOS gate. This pushes the NMOS pass element from its active (saturation) region into the triode region, causing the regulator to drop out of regulation.</simpara>
+<simpara>However, even within the normal operating range, the output voltage is not fully immune to input fluctuations. Due to the finite loop gain of the feedback network, the output voltage varies slightly in response to changes in the input supply.</simpara>
+<simpara>Specifically, the closed-loop line regulation is determined by the open-loop sensitivity of the regulator divided by the feedback loop gain:</simpara>
+<informalequation>
+<alt><![CDATA[\left(\frac{\partial V_{out}}{\partial V_{in}}\right)_{\text{closed\_loop}} \approx \frac{\left( \frac{\partial V_{out}}{\partial V_{in}} \right)_{\text{open\_loop}}}{1 + T(s)}]]></alt>
+<mathphrase><![CDATA[\left(\frac{\partial V_{out}}{\partial V_{in}}\right)_{\text{closed\_loop}} \approx \frac{\left( \frac{\partial V_{out}}{\partial V_{in}} \right)_{\text{open\_loop}}}{1 + T(s)}]]></mathphrase>
+</informalequation>
+<simpara>where <inlineequation><alt><![CDATA[T(s)]]></alt><mathphrase><![CDATA[T(s)]]></mathphrase></inlineequation> represents the loop gain of the regulation loop (the product of the error amplifier gain, the pass element gain, and the feedback factor).</simpara>
+<simpara>In an open-loop condition, a change in <inlineequation><alt><![CDATA[V_{in}]]></alt><mathphrase><![CDATA[V_{in}]]></mathphrase></inlineequation> directly affects the output through the finite output impedance (<inlineequation><alt><![CDATA[r_{ds}]]></alt><mathphrase><![CDATA[r_{ds}]]></mathphrase></inlineequation>) and channel-length modulation of the pass transistor, as well as through any body effect (particularly in NMOS source followers). Because the loop gain <inlineequation><alt><![CDATA[T(s)]]></alt><mathphrase><![CDATA[T(s)]]></mathphrase></inlineequation> is finite, and further decreases at higher frequencies, the error amplifier cannot completely suppress these perturbations, leading to a measurable shift in <inlineequation><alt><![CDATA[V_{out}]]></alt><mathphrase><![CDATA[V_{out}]]></mathphrase></inlineequation> when <inlineequation><alt><![CDATA[V_{in}]]></alt><mathphrase><![CDATA[V_{in}]]></mathphrase></inlineequation> changes. To achieve superior line regulation, the low-frequency gain of the error amplifier must be maximised.</simpara>
+<section xml:id="_small_signal_analysis_of_the_line_regulation_of_a_voltage_regulator_with_an_nmos_pass_device">
+<title>Small-Signal Analysis of the Line Regulation of a voltage regulator with an NMOS Pass device</title>
+<simpara>To establish a formal quantitative analysis of the line regulation for an NMOS-based regulator, we evaluate its small-signal model. The analysis starts from the regulator model of <xref linkend="classical_voltage_reg_topologies_nmos_and_pmos_pass_devices"/>(b). Let the transconductance of the NMOS pass transistor <inlineequation><alt><![CDATA[M_N]]></alt><mathphrase><![CDATA[M_N]]></mathphrase></inlineequation> be <inlineequation><alt><![CDATA[g_{mn}]]></alt><mathphrase><![CDATA[g_{mn}]]></mathphrase></inlineequation>, its output resistance be <inlineequation><alt><![CDATA[r_{ds\_n}]]></alt><mathphrase><![CDATA[r_{ds\_n}]]></mathphrase></inlineequation>, and the open-loop voltage gain of the error amplifier be <inlineequation><alt><![CDATA[A_{OTA}]]></alt><mathphrase><![CDATA[A_{OTA}]]></mathphrase></inlineequation>.</simpara>
+<simpara>The feedback network consists of a resistive divider <inlineequation><alt><![CDATA[R_1]]></alt><mathphrase><![CDATA[R_1]]></mathphrase></inlineequation> and <inlineequation><alt><![CDATA[R_2]]></alt><mathphrase><![CDATA[R_2]]></mathphrase></inlineequation>, while <inlineequation><alt><![CDATA[R_L]]></alt><mathphrase><![CDATA[R_L]]></mathphrase></inlineequation> represents the load resistance. The small-signal relationship describing the propagation of an input variation <inlineequation><alt><![CDATA[\Delta V_{in}]]></alt><mathphrase><![CDATA[\Delta V_{in}]]></mathphrase></inlineequation> to the output variation <inlineequation><alt><![CDATA[\Delta V_{out}]]></alt><mathphrase><![CDATA[\Delta V_{out}]]></mathphrase></inlineequation> is given by:</simpara>
+<informalequation>
+<alt><![CDATA[\left[ \left( -\Delta V_{out} \frac{R_2}{R_1 + R_2} A_{OTA} - \Delta V_{out} \right) g_{mn} + \frac{\Delta V_{in} - \Delta V_{out}}{r_{o,n}} \right] \left[ (R_1 + R_2) \parallel R_L \right] = \Delta V_{out}]]></alt>
+<mathphrase><![CDATA[\left[ \left( -\Delta V_{out} \frac{R_2}{R_1 + R_2} A_{OTA} - \Delta V_{out} \right) g_{mn} + \frac{\Delta V_{in} - \Delta V_{out}}{r_{o,n}} \right] \left[ (R_1 + R_2) \parallel R_L \right] = \Delta V_{out}]]></mathphrase>
+</informalequation>
+<simpara>By solving this equation for the transfer function <inlineequation><alt><![CDATA[\Delta V_{out} / \Delta V_{in}]]></alt><mathphrase><![CDATA[\Delta V_{out} / \Delta V_{in}]]></mathphrase></inlineequation>, the exact expression for the line regulation of the NMOS regulator is derived as:</simpara>
+<informalequation>
+<alt><![CDATA[\frac{\Delta V_{out}}{\Delta V_{in}} = \frac{v_{out}}{v_{in}} = \frac{1}{\left(1 + \frac{R_2}{R_1 + R_2} A_{OTA}\right) g_{mn} r_{o,n} + \frac{r_{o,n}}{(R_1 + R_2) \parallel R_L} + 1}]]></alt>
+<mathphrase><![CDATA[\frac{\Delta V_{out}}{\Delta V_{in}} = \frac{v_{out}}{v_{in}} = \frac{1}{\left(1 + \frac{R_2}{R_1 + R_2} A_{OTA}\right) g_{mn} r_{o,n} + \frac{r_{o,n}}{(R_1 + R_2) \parallel R_L} + 1}]]></mathphrase>
+</informalequation>
+<simpara>Under typical operating conditions, the loop gain is high, and the expression could be simplified to:</simpara>
+<informalequation>
+<alt><![CDATA[\frac{\Delta V_{out}}{\Delta V_{in}} = \frac{v_{out}}{v_{in}} \approx \frac{1}{\frac{R_2}{R_1 + R_2} A_{OTA} g_{mn} r_{o,n}}]]></alt>
+<mathphrase><![CDATA[\frac{\Delta V_{out}}{\Delta V_{in}} = \frac{v_{out}}{v_{in}} \approx \frac{1}{\frac{R_2}{R_1 + R_2} A_{OTA} g_{mn} r_{o,n}}]]></mathphrase>
+</informalequation>
+</section>
+</section>
+<section xml:id="_physical_comparison_nmos_vs_pmos_regulators">
+<title>Physical Comparison: NMOS vs. PMOS Regulators</title>
+<simpara>The simplified formulation reveals that the line regulation of the NMOS regulator is inversely proportional to both the amplifier&#8217;s open-loop gain <inlineequation><alt><![CDATA[A_{OTA}]]></alt><mathphrase><![CDATA[A_{OTA}]]></mathphrase></inlineequation> and the intrinsic gain of the NMOS pass transistor, <inlineequation><alt><![CDATA[g_{mn} r_{o,n}]]></alt><mathphrase><![CDATA[g_{mn} r_{o,n}]]></mathphrase></inlineequation>.</simpara>
+<simpara>Compared to a conventional PMOS-based regulator—which typically exhibits a line regulation of approximately:</simpara>
+<informalequation>
+<alt><![CDATA[\left(\frac{\Delta V_{out}}{\Delta V_{in}}\right)_{\text{PMOS}} \approx \frac{1}{\frac{R_2}{R_1 + R_2} A_{OTA}}]]></alt>
+<mathphrase><![CDATA[\left(\frac{\Delta V_{out}}{\Delta V_{in}}\right)_{\text{PMOS}} \approx \frac{1}{\frac{R_2}{R_1 + R_2} A_{OTA}}]]></mathphrase>
+</informalequation>
+<simpara>the NMOS regulator improves line regulation performance by a factor of <inlineequation><alt><![CDATA[g_{mn} r_{o,n}]]></alt><mathphrase><![CDATA[g_{mn} r_{o,n}]]></mathphrase></inlineequation>.</simpara>
+<simpara>This key performance advantage is physically intuitive when considering the topology of the pass device. The NMOS pass transistor effectively functions as a "cascode" transistor situated between the noisy input supply <inlineequation><alt><![CDATA[V_{in}]]></alt><mathphrase><![CDATA[V_{in}]]></mathphrase></inlineequation> (connected to its drain) and the output node <inlineequation><alt><![CDATA[V_{out}]]></alt><mathphrase><![CDATA[V_{out}]]></mathphrase></inlineequation> (connected to its source). Because any voltage variation applied to the drain of a regulated NMOS transistor is inherently shielded by the channel, its equivalent variation at the source node is heavily attenuated by the transistor&#8217;s intrinsic gain <inlineequation><alt><![CDATA[g_{mn} r_{o,n}]]></alt><mathphrase><![CDATA[g_{mn} r_{o,n}]]></mathphrase></inlineequation> in addition to the closed-loop feedback gain <inlineequation><alt><![CDATA[A_{OTA}]]></alt><mathphrase><![CDATA[A_{OTA}]]></mathphrase></inlineequation>.</simpara>
+</section>
+</section>
+<section xml:id="_load_regulation">
+<title>Load Regulation</title>
+<simpara>Load regulation measures a voltage regulator&#8217;s ability to maintain a stable output voltage in the presence of static or low-frequency variations in the load current. It is mathematically defined as the ratio of the static output voltage variation (<inlineequation><alt><![CDATA[\Delta V_{out}]]></alt><mathphrase><![CDATA[\Delta V_{out}]]></mathphrase></inlineequation>) to the static load current change (<inlineequation><alt><![CDATA[\Delta I_{out}]]></alt><mathphrase><![CDATA[\Delta I_{out}]]></mathphrase></inlineequation> or <inlineequation><alt><![CDATA[\Delta I_{load}]]></alt><mathphrase><![CDATA[\Delta I_{load}]]></mathphrase></inlineequation>):</simpara>
+<informalequation>
+<alt><![CDATA[\text{Load Regulation} = \frac{\Delta V_{out}}{\Delta I_{load}} = \frac{v_{out}}{i_{load}}]]></alt>
+<mathphrase><![CDATA[\text{Load Regulation} = \frac{\Delta V_{out}}{\Delta I_{load}} = \frac{v_{out}}{i_{load}}]]></mathphrase>
+</informalequation>
+<simpara>This ratio essentially represents the closed-loop output impedance (<inlineequation><alt><![CDATA[R_{out\_closed\_loop}]]></alt><mathphrase><![CDATA[R_{out\_closed\_loop}]]></mathphrase></inlineequation>) of the regulator. A lower closed-loop output impedance corresponds to superior load regulation, meaning lower static output voltage deviations due to varying load currents.</simpara>
+<section xml:id="_small_signal_analysis_of_the_nmos_regulator">
+<title>Small-Signal Analysis of the NMOS Regulator</title>
+<simpara>To analyze the load regulation of the NMOS regulator quantitatively, we utilize the small-signal representation based again on the regulator model from  <xref linkend="classical_voltage_reg_topologies_nmos_and_pmos_pass_devices"/>(b). In this model, <inlineequation><alt><![CDATA[A_{OTA}]]></alt><mathphrase><![CDATA[A_{OTA}]]></mathphrase></inlineequation> is the open-loop gain of the error amplifier, <inlineequation><alt><![CDATA[g_{mn}]]></alt><mathphrase><![CDATA[g_{mn}]]></mathphrase></inlineequation> is the transconductance of the NMOS pass element, and <inlineequation><alt><![CDATA[I_{load}]]></alt><mathphrase><![CDATA[I_{load}]]></mathphrase></inlineequation> represents the load current flowing through the load resistance <inlineequation><alt><![CDATA[R_L]]></alt><mathphrase><![CDATA[R_L]]></mathphrase></inlineequation>.</simpara>
+<simpara>When the load current changes by a small-signal amount <inlineequation><alt><![CDATA[\Delta I_{load}]]></alt><mathphrase><![CDATA[\Delta I_{load}]]></mathphrase></inlineequation>, it induces a corresponding shift in the output voltage <inlineequation><alt><![CDATA[\Delta V_{out}]]></alt><mathphrase><![CDATA[\Delta V_{out}]]></mathphrase></inlineequation>. The small-signal relationship describing the impact of this load current variation on the output voltage is formulated as:</simpara>
+<informalequation>
+<alt><![CDATA[\left( -\Delta V_{out} \frac{R_2}{R_1 + R_2} A_{OTA} - \Delta V_{out} \right) g_{mn} = \Delta I_{load}]]></alt>
+<mathphrase><![CDATA[\left( -\Delta V_{out} \frac{R_2}{R_1 + R_2} A_{OTA} - \Delta V_{out} \right) g_{mn} = \Delta I_{load}]]></mathphrase>
+</informalequation>
+<simpara>By rearranging the terms to isolate the transfer function <inlineequation><alt><![CDATA[\Delta V_{out} / \Delta I_{load}]]></alt><mathphrase><![CDATA[\Delta V_{out} / \Delta I_{load}]]></mathphrase></inlineequation>, we obtain the closed-loop expression:</simpara>
+<informalequation>
+<alt><![CDATA[\frac{\Delta V_{out}}{\Delta I_{load}} = -\frac{1}{\left( \frac{R_2}{R_1 + R_2} A_{OTA} + 1 \right) g_{mn}}]]></alt>
+<mathphrase><![CDATA[\frac{\Delta V_{out}}{\Delta I_{load}} = -\frac{1}{\left( \frac{R_2}{R_1 + R_2} A_{OTA} + 1 \right) g_{mn}}]]></mathphrase>
+</informalequation>
+<simpara>Under typical operating conditions where the loop gain is significantly high (such that <inlineequation><alt><![CDATA[\frac{R_2}{R_1 + R_2} A_{OTA} \gg 1]]></alt><mathphrase><![CDATA[\frac{R_2}{R_1 + R_2} A_{OTA} \gg 1]]></mathphrase></inlineequation>), this expression simplifies to:</simpara>
+<informalequation>
+<alt><![CDATA[\frac{\Delta V_{out}}{\Delta I_{load}} \approx -\frac{1}{\frac{R_2}{R_1 + R_2} A_{OTA} g_{mn}}]]></alt>
+<mathphrase><![CDATA[\frac{\Delta V_{out}}{\Delta I_{load}} \approx -\frac{1}{\frac{R_2}{R_1 + R_2} A_{OTA} g_{mn}}]]></mathphrase>
+</informalequation>
+<simpara>The negative sign indicates that an increase in load current (current drawn out of the regulator) causes a small, proportional drop in the output voltage.</simpara>
+</section>
+<section xml:id="_physical_intuition_and_feedback_mechanism">
+<title>Physical Intuition and Feedback Mechanism</title>
+<simpara>The small-signal analysis demonstrates that the load regulation of the NMOS regulator depends on both the amplifier open-loop gain (<inlineequation><alt><![CDATA[A_{OTA}]]></alt><mathphrase><![CDATA[A_{OTA}]]></mathphrase></inlineequation>) and the transconductance of the NMOS pass device (<inlineequation><alt><![CDATA[g_{mn}]]></alt><mathphrase><![CDATA[g_{mn}]]></mathphrase></inlineequation>).</simpara>
+<simpara>This dependency is directly linked to the properties of negative shunt feedback:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><emphasis role="strong">Open-loop Output Impedance:</emphasis> The pass device in an NMOS regulator behaves as a source follower. Looking into the source of the NMOS transistor, the open-loop output impedance is approximately:</simpara>
+<informalequation>
+<alt><![CDATA[R_{out, ol} \approx \frac{1}{g_{mn}}]]></alt>
+<mathphrase><![CDATA[R_{out, ol} \approx \frac{1}{g_{mn}}]]></mathphrase>
+</informalequation>
+</listitem>
+<listitem>
+<simpara><emphasis role="strong">Loop Gain:</emphasis> The feedback loop consists of the resistor divider ratio <inlineequation><alt><![CDATA[\beta = R_2 / (R_1 + R_2)]]></alt><mathphrase><![CDATA[\beta = R_2 / (R_1 + R_2)]]></mathphrase></inlineequation>, the error amplifier gain <inlineequation><alt><![CDATA[A_{OTA}]]></alt><mathphrase><![CDATA[A_{OTA}]]></mathphrase></inlineequation>, and the pass-device source-follower gain (which is approximately unity). This yields a loop gain of:</simpara>
+<informalequation>
+<alt><![CDATA[T \approx \frac{R_2}{R_1 + R_2} A_{OTA}]]></alt>
+<mathphrase><![CDATA[T \approx \frac{R_2}{R_1 + R_2} A_{OTA}]]></mathphrase>
+</informalequation>
+</listitem>
+<listitem>
+<simpara><emphasis role="strong">Closed-loop Output Impedance:</emphasis> The voltage-sensing shunt-feedback at the output node reduces the output impedance by a factor of <inlineequation><alt><![CDATA[1 + T]]></alt><mathphrase><![CDATA[1 + T]]></mathphrase></inlineequation>:</simpara>
+<informalequation>
+<alt><![CDATA[R_{out, cl} = \frac{R_{out, ol}}{1 + T} \approx \frac{1/g_{mn}}{\frac{R_2}{R_1 + R_2} A_{OTA}} = \frac{1}{\frac{R_2}{R_1 + R_2} A_{OTA} g_{mn}}]]></alt>
+<mathphrase><![CDATA[R_{out, cl} = \frac{R_{out, ol}}{1 + T} \approx \frac{1/g_{mn}}{\frac{R_2}{R_1 + R_2} A_{OTA}} = \frac{1}{\frac{R_2}{R_1 + R_2} A_{OTA} g_{mn}}]]></mathphrase>
+</informalequation>
+</listitem>
+</orderedlist>
+<simpara>This derivation confirms that to minimize output voltage variations under fluctuating load conditions, the design should focus on maximizing both the error amplifier&#8217;s open-loop gain (<inlineequation><alt><![CDATA[A_{OTA}]]></alt><mathphrase><![CDATA[A_{OTA}]]></mathphrase></inlineequation>) and the transconductance (<inlineequation><alt><![CDATA[g_{mn}]]></alt><mathphrase><![CDATA[g_{mn}]]></mathphrase></inlineequation>) of the NMOS pass element.</simpara>
+</section>
+</section>
+<section xml:id="_temperature_drift">
+<title>Temperature Drift</title>
+<simpara>Temperature variations directly affect the output voltage accuracy of a linear regulator. The thermal stability of a regulator is quantified by its temperature coefficient (<inlineequation><alt><![CDATA[TC]]></alt><mathphrase><![CDATA[TC]]></mathphrase></inlineequation>), which is defined as the fractional change of the output voltage in response to a change in temperature [5 G. Rincon-Mora, Analog IC Design with Low-Dropout Regulators]. Typically expressed in percent per degree Celsius (<inlineequation><alt><![CDATA[\%/^\circ\text{C}]]></alt><mathphrase><![CDATA[\%/^\circ\text{C}]]></mathphrase></inlineequation>) or parts per million per degree Celsius (<inlineequation><alt><![CDATA[\text{ppm}/^\circ\text{C}]]></alt><mathphrase><![CDATA[\text{ppm}/^\circ\text{C}]]></mathphrase></inlineequation>), the temperature coefficient is mathematically defined as:</simpara>
+<informalequation>
+<alt><![CDATA[TC = \frac{1}{V_{out}} \frac{\Delta V_{out}}{\Delta T} = \frac{(\Delta V_{ref} + \Delta V_{os}) \left(\frac{V_{out}}{V_{ref}}\right)}{V_{out}\Delta T} = \frac{\Delta V_{ref} + \Delta V_{os}}{V_{ref}\Delta T}]]></alt>
+<mathphrase><![CDATA[TC = \frac{1}{V_{out}} \frac{\Delta V_{out}}{\Delta T} = \frac{(\Delta V_{ref} + \Delta V_{os}) \left(\frac{V_{out}}{V_{ref}}\right)}{V_{out}\Delta T} = \frac{\Delta V_{ref} + \Delta V_{os}}{V_{ref}\Delta T}]]></mathphrase>
+</informalequation>
+<simpara>Where:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><inlineequation><alt><![CDATA[\Delta T]]></alt><mathphrase><![CDATA[\Delta T]]></mathphrase></inlineequation> represents the change in temperature.</simpara>
+</listitem>
+<listitem>
+<simpara><inlineequation><alt><![CDATA[\Delta V_{ref}]]></alt><mathphrase><![CDATA[\Delta V_{ref}]]></mathphrase></inlineequation> represents the variation in the reference voltage over temperature.</simpara>
+</listitem>
+<listitem>
+<simpara><inlineequation><alt><![CDATA[\Delta V_{os}]]></alt><mathphrase><![CDATA[\Delta V_{os}]]></mathphrase></inlineequation> represents the variation in the error amplifier&#8217;s input-referred equivalent offset voltage over temperature.</simpara>
+</listitem>
+</itemizedlist>
+<simpara>Based on the derivation above, the absolute value of the output voltage cancels out. This indicates that the regulator&#8217;s overall temperature coefficient is independent of the target output voltage setting. Instead, the thermal stability of the regulator is directly determined by two primary components:</simpara>
+<orderedlist numeration="arabic">
+<listitem>
+<simpara><emphasis role="strong">The reference voltage temperature coefficient:</emphasis> <inlineequation><alt><![CDATA[\frac{\Delta V_{ref}}{V_{ref}\Delta T}]]></alt><mathphrase><![CDATA[\frac{\Delta V_{ref}}{V_{ref}\Delta T}]]></mathphrase></inlineequation></simpara>
+</listitem>
+<listitem>
+<simpara><emphasis role="strong">The input-referred offset voltage drift scaled by the reference voltage:</emphasis> <inlineequation><alt><![CDATA[\frac{\Delta V_{os}}{V_{ref}\Delta T}]]></alt><mathphrase><![CDATA[\frac{\Delta V_{os}}{V_{ref}\Delta T}]]></mathphrase></inlineequation></simpara>
+</listitem>
+</orderedlist>
+<simpara>To minimize temperature drift in practical linear regulator designs, it is necessary to utilize a highly stable bandgap reference with a low temperature coefficient, alongside an error amplifier optimized to minimize thermal offset drift (<inlineequation><alt><![CDATA[\Delta V_{os}/\Delta T]]></alt><mathphrase><![CDATA[\Delta V_{os}/\Delta T]]></mathphrase></inlineequation>) through a low mismatch optimized input pair, high DC open-loop gain and layout matching techniques.</simpara>
+<section xml:id="_minimizing_thermal_drift_in_linear_regulators">
+<title>Minimizing Thermal Drift in Linear Regulators</title>
+<simpara>Achieving high-precision thermal performance in linear regulators requires addressing both the primary reference voltage source and the non-idealities of the feedback loop. This section examines the specific design and layout techniques used to mitigate these thermal effects.</simpara>
+</section>
+<section xml:id="_bandgap_reference_bgr_temperature_coefficient">
+<title>Bandgap Reference (BGR) Temperature Coefficient</title>
+<simpara>The bandgap reference provides the baseline voltage <inlineequation><alt><![CDATA[V_{ref}]]></alt><mathphrase><![CDATA[V_{ref}]]></mathphrase></inlineequation>. Standard bandgap circuits achieve first-order temperature cancellation by summing two voltages with opposite thermal behaviors:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><emphasis role="strong">CTAT (Complementary-to-Absolute-Temperature):</emphasis> The base-emitter voltage of a bipolar junction transistor (<inlineequation><alt><![CDATA[V_{BE}]]></alt><mathphrase><![CDATA[V_{BE}]]></mathphrase></inlineequation>) decreases linearly with temperature, typically at a rate of approximately:</simpara>
+<informalequation>
+<alt><![CDATA[\frac{\partial V_{BE}}{\partial T} \approx -2 \, \text{mV}/^\circ\text{C}]]></alt>
+<mathphrase><![CDATA[\frac{\partial V_{BE}}{\partial T} \approx -2 \, \text{mV}/^\circ\text{C}]]></mathphrase>
+</informalequation>
+</listitem>
+<listitem>
+<simpara><emphasis role="strong">PTAT (Proportional-to-Absolute-Temperature):</emphasis> The thermal voltage <inlineequation><alt><![CDATA[V_T = k_B T / q]]></alt><mathphrase><![CDATA[V_T = k_B T / q]]></mathphrase></inlineequation> increases linearly with temperature, exhibiting a temperature coefficient of:</simpara>
+<informalequation>
+<alt><![CDATA[\frac{\partial V_T}{\partial T} \approx +0.086 \, \text{mV}/^\circ\text{C}]]></alt>
+<mathphrase><![CDATA[\frac{\partial V_T}{\partial T} \approx +0.086 \, \text{mV}/^\circ\text{C}]]></mathphrase>
+</informalequation>
+</listitem>
+</itemizedlist>
+<simpara>By scaling and summing these two voltages, a first-order temperature-compensated reference voltage of approximately <inlineequation><alt><![CDATA[1.2 \, \text{V}]]></alt><mathphrase><![CDATA[1.2 \, \text{V}]]></mathphrase></inlineequation> (or lower for fractional bandgaps) is produced:</simpara>
+<informalequation>
+<alt><![CDATA[V_{ref}(T) = V_{BE}(T) + K \cdot V_T(T)]]></alt>
+<mathphrase><![CDATA[V_{ref}(T) = V_{BE}(T) + K \cdot V_T(T)]]></mathphrase>
+</informalequation>
+<simpara>where <inlineequation><alt><![CDATA[K]]></alt><mathphrase><![CDATA[K]]></mathphrase></inlineequation> is a constant defined by transistor sizing and resistor ratios. Even with this first-order compensation, residual second-order temperature effects remain that influence the bandgap&#8217;s temperature coefficient.</simpara>
+</section>
+<section xml:id="_mitigating_error_amplifier_offset_drift">
+<title>Mitigating Error Amplifier Offset Drift</title>
+<simpara>Even with a perfectly stable reference, any thermal drift in the error amplifier&#8217;s input-referred offset voltage (<inlineequation><alt><![CDATA[\Delta V_{os}/\Delta T]]></alt><mathphrase><![CDATA[\Delta V_{os}/\Delta T]]></mathphrase></inlineequation>) propagates directly to the output. This offset is composed of both random and systematic components.</simpara>
+<section xml:id="_random_offset_and_pelgroms_law">
+<title>Random Offset and Pelgrom&#8217;s Law</title>
+<simpara>Random offset arises from local, microscopic variations in transistor physical dimensions, doping concentrations, and oxide thicknesses. In the input differential pair of the error amplifier, threshold voltage (<inlineequation><alt><![CDATA[V_{th}]]></alt><mathphrase><![CDATA[V_{th}]]></mathphrase></inlineequation>) mismatch is the dominant driver of offset drift.</simpara>
+<simpara>According to <emphasis role="strong">Pelgrom&#8217;s Law</emphasis>, the standard deviation of threshold voltage mismatch (<inlineequation><alt><![CDATA[\sigma_{\Delta V_{th}}]]></alt><mathphrase><![CDATA[\sigma_{\Delta V_{th}}]]></mathphrase></inlineequation>) is inversely proportional to the square root of the active gate area:</simpara>
+<informalequation>
+<alt><![CDATA[\sigma_{\Delta V_{th}} = \frac{A_{Vth}}{\sqrt{W \cdot L}}]]></alt>
+<mathphrase><![CDATA[\sigma_{\Delta V_{th}} = \frac{A_{Vth}}{\sqrt{W \cdot L}}]]></mathphrase>
+</informalequation>
+<simpara>where <inlineequation><alt><![CDATA[A_{Vth}]]></alt><mathphrase><![CDATA[A_{Vth}]]></mathphrase></inlineequation> is a technology-dependent constant, while <inlineequation><alt><![CDATA[W]]></alt><mathphrase><![CDATA[W]]></mathphrase></inlineequation> and <inlineequation><alt><![CDATA[L]]></alt><mathphrase><![CDATA[L]]></mathphrase></inlineequation> represent the width and length of the input transistors.</simpara>
+<simpara>To minimize random thermal drift:</simpara>
+<itemizedlist>
+<listitem>
+<simpara><emphasis role="strong">Large Device Sizing:</emphasis> Designers use large gate areas (high <inlineequation><alt><![CDATA[W \cdot L]]></alt><mathphrase><![CDATA[W \cdot L]]></mathphrase></inlineequation>) for the input pair. Increasing the area averages out local channel fluctuations, lowering both the nominal offset and its corresponding drift over temperature.</simpara>
+</listitem>
+</itemizedlist>
+</section>
+<section xml:id="_systematic_offset_and_high_dc_open_loop_gain">
+<title>Systematic Offset and High DC Open-Loop Gain</title>
+<simpara>Systematic offset occurs due to circuit design asymmetries, such as drain-to-source voltage (<inlineequation><alt><![CDATA[V_{DS}]]></alt><mathphrase><![CDATA[V_{DS}]]></mathphrase></inlineequation>) imbalances in the input pair or load current mirrors. Because these biases change dynamically with temperature, they introduce systematic drift.</simpara>
+<simpara>Maintaining a high DC open-loop gain (<inlineequation><alt><![CDATA[A_{OL}]]></alt><mathphrase><![CDATA[A_{OL}]]></mathphrase></inlineequation>) in the error amplifier minimizes this systematic drift by heavily attenuating closed-loop gain errors:</simpara>
+<informalequation>
+<alt><![CDATA[\epsilon_{gain} \approx \frac{1}{1 + A_{OL}\beta}]]></alt>
+<mathphrase><![CDATA[\epsilon_{gain} \approx \frac{1}{1 + A_{OL}\beta}]]></mathphrase>
+</informalequation>
+<simpara>A high <inlineequation><alt><![CDATA[A_{OL}]]></alt><mathphrase><![CDATA[A_{OL}]]></mathphrase></inlineequation> ensures that the amplifier behaves closer to its mathematical ideal, ensuring that thermal variations in internal node voltages do not manifest as a shifting input-referred offset.</simpara>
+</section>
+</section>
+</section>
+<section xml:id="_transient_response_and_slew_rate">
+<title>Transient Response and Slew Rate</title>
+<simpara>The Slew Rate directly impacts the transient response of the voltage regulator, which is crucial for maintaining the output voltage within acceptable limits under varying load conditions. In automotive applications, where power efficiency and reliability are paramount, optimizing the Slew Rate can lead to improved performance and reduced power consumption.</simpara>
+<simpara>Usually, for a step in the output load current, from 0 to a maximum value <inlineequation><alt><![CDATA[I_{load\_max}]]></alt><mathphrase><![CDATA[I_{load\_max}]]></mathphrase></inlineequation>, the maximum output voltage variation <inlineequation><alt><![CDATA[\Delta V_{out\_max}]]></alt><mathphrase><![CDATA[\Delta V_{out\_max}]]></mathphrase></inlineequation> can be expressed as:</simpara>
+<informalequation>
+<alt><![CDATA[\Delta V_{out\_max} = (\frac{1}{BW_{cl}} + \frac{\Delta V_{gate} \cdot C_{gate}}{I_{SR}})\cdot \frac{I_{load\_max}}{C_{load}}]]></alt>
+<mathphrase><![CDATA[\Delta V_{out\_max} = (\frac{1}{BW_{cl}} + \frac{\Delta V_{gate} \cdot C_{gate}}{I_{SR}})\cdot \frac{I_{load\_max}}{C_{load}}]]></mathphrase>
+</informalequation>
+<simpara>At the first moment of the current step, the control loop has not had time to react. The extra current demand, <inlineequation><alt><![CDATA[\Delta I_{load\_max}]]></alt><mathphrase><![CDATA[\Delta I_{load\_max}]]></mathphrase></inlineequation>, is supplied entirely by the output capacitor, <inlineequation><alt><![CDATA[C_{load}]]></alt><mathphrase><![CDATA[C_{load}]]></mathphrase></inlineequation>. This causes the output voltage to start dropping at a rate:  <inlineequation><alt><![CDATA[\frac{\Delta I_{load\_max}}{C_{load}}]]></alt><mathphrase><![CDATA[\frac{\Delta I_{load\_max}}{C_{load}}]]></mathphrase></inlineequation>. The output voltage will stop dropping at the instant when the power stage supplies exactly the same value of the demanded load current. Until then, the loop will try to react and restore the output voltage, but the response time is limited by the loop bandwidth, <inlineequation><alt><![CDATA[BW_{cl}]]></alt><mathphrase><![CDATA[BW_{cl}]]></mathphrase></inlineequation>. During this time, the output voltage will have dropped by an amount: <inlineequation><alt><![CDATA[\frac{\Delta I_{load\_max}}{C_{load} \cdot BW_{cl}}]]></alt><mathphrase><![CDATA[\frac{\Delta I_{load\_max}}{C_{load} \cdot BW_{cl}}]]></mathphrase></inlineequation>.
+After the loop starts to react, the gate voltage of the pass transistor will begin to change. The time it takes for the gate voltage to change by the required amount such as to supply the demanded load current can be written as: <inlineequation><alt><![CDATA[t_{sr} = \frac{\Delta V_{gate}}{SR_{Gate}} = \frac{\Delta V_{gate} \cdot C_{gate}}{I_{SR}}]]></alt><mathphrase><![CDATA[t_{sr} = \frac{\Delta V_{gate}}{SR_{Gate}} = \frac{\Delta V_{gate} \cdot C_{gate}}{I_{SR}}]]></mathphrase></inlineequation>.</simpara>
+<simpara>As can be seen from the equation the loop bandwidth and the slew rate of the OTA play an essential role in shaping the transient response of the voltage regulator.</simpara>
+<simpara>If we consider the NMOS voltage regulator as a two-pole system with the dominant pole at the power stage&#8217;s node and the second pole at the output node, the worst case stability scenario is at low load current and high output capacitance. The value of the gate capacitor should be chosen such that stability at the lowest required load current and maximum load capacitance is ensured. From this design constraint, there is an effective upper bound on the possible bandwidth of the control loop.</simpara>
+<simpara>The other parameter that we are free to tune is the Slew Rate of the OTA. Indeed, increasing the Slew Rate will reduce the time it takes for the gate voltage to change, thus improving the transient response of the regulator.</simpara>
+<simpara><xref linkend="loadJump_ota_model_linear_transientResponse_2u_vs_5u_Islew"/> shows the difference in transient response between two OTA models with different Slew Rates. The OTA with a higher Slew Rate (5uA/V) shows a faster recovery to the nominal output voltage after a load jump compared to the OTA with a lower Slew Rate (2uA/V). This demonstrates the importance of optimizing the Slew Rate in the design of voltage regulators, especially in applications where rapid load changes are expected.</simpara>
+<figure xml:id="loadJump_ota_model_linear_transientResponse_2u_vs_5u_Islew">
+<title>Load jump response comparison between two OTA models with different Slew Rates</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../theoretical_fundamentals/images/loadJump_ota_model_linear_char_2u_vs_5u_Islew.png" contentwidth="800"/>
+</imageobject>
+<textobject><phrase>loadJump ota model linear char 2u vs 5u Islew</phrase></textobject>
+</mediaobject>
+</figure>
+<simpara>However, we must keep in mind the conditions under which eq. (1) was derived and remains valid. The equation assumes that the output current exhibits both a hard saturation on the bias current and a linear dependence on the input differential voltage. Therefore, increasing the Slew Rate requires more current from the OTA, which leads to increased power consumption. Therefore, there is a trade-off between transient response and power efficiency that must be carefully balanced in the design of the voltage regulator, for class-A type OTAs.</simpara>
+<simpara>For class AB OTAs, which typically exhibit a nonlinear relationship between the output current and the input differential voltage, the situation differs. In these devices, the slew rate can be enhanced without significantly raising the quiescent current, improving the transient response without a substantial power penalty. <xref linkend="dc_sweep_ota_model_linear_vs_quadratic"/> illustrates the differing output current behaviors of a linear and a quadratic OTA model. The linear model demonstrates hard saturation at the 2 &micro;A bias current when the output voltage drops below 1 V. Conversely, the quadratic model initially presents a lower slope, resulting in a lower transconductance for minor voltage deviations, but this slope increases rapidly. Consequently, its output current overtakes that of the linear model for voltages below 1.025 V. (It should be noted that no current saturation was incorporated into this simplified quadratic model). Therefore, boosting an OTA&#8217;s slew rate via a nonlinear stage can improve transient behavior and power efficiency, even if the unity-gain bandwidth is held constant.</simpara>
+<figure xml:id="dc_sweep_ota_model_linear_vs_quadratic">
+<title>DC sweep of the output current injected by the OTA block for a decrease in its negative input voltage</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../theoretical_fundamentals/images/dc_sweep_slew_rates_linear_vs_quadratic_dependence.png" contentwidth="800"/>
+</imageobject>
+<textobject><phrase>dc sweep slew rates linear vs quadratic dependence</phrase></textobject>
+</mediaobject>
+</figure>
+<simpara>The resulting transient response of both ota models to a load jump is shown in <xref linkend="loadJump_ota_model_linear_vs_quadratic"/>. The OTA with the nonlinear output current dependence on the input differential voltage shows a smaller undershoot and a faster recovery to the nominal output voltage after a load jump compared to the OTA with a linear output current dependence, even though both OTAs have the same unity-gain bandwidth. This demonstrates that optimizing the Slew Rate through nonlinear stages can significantly enhance the transient response of voltage regulators without necessarily increasing power consumption.</simpara>
+<figure xml:id="loadJump_ota_model_linear_vs_quadratic">
+<title>Load jump response comparison between one OTA model with linear Iout dependence on input differential voltage and Slew Rate cap and another OTA model with quadratic Iout dependence on input differential voltage</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../theoretical_fundamentals/images/loadJump_ota_model_linear_vs_quadratic_dependence.png" contentwidth="800"/>
+</imageobject>
+<textobject><phrase>loadJump ota model linear vs quadratic dependence</phrase></textobject>
+</mediaobject>
+</figure>
+</section>
+<section xml:id="_stability_analysis_of_dual_loop_systems">
+<title>Stability Analysis of Dual-Loop Systems</title>
+<simpara>While stability analysis of circuits with only one feedback loop is well
+covered by the classical feedback theory and several methods are available for deriving the phase- and gain-margins associated with the circuit return ratio [cite Bode, Rosenstark, Neag], however extending this approach to circuits with multiple feedback loops is not straightforward.</simpara>
+<figure xml:id="fig:dual_loop_reg_model">
+<title>Dual Loop Regulator Architecture</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../theoretical_fundamentals/images/dualLoop_stability_analysis/dual_loop_reg_model.png"/>
+</imageobject>
+<textobject><phrase>Dual Loop Regulator Architecture</phrase></textobject>
+</mediaobject>
+</figure>
+<section xml:id="sec:stb_using_classical_fb_theory">
+<title>Analysing the Dual-Loop Voltage Regulator&#8217;s stability using the classical feedback theory</title>
+<simpara>Nonetheless, we can analyse the dual-loop system by breaking the inner loop first and then evaluating the outer loop with the inner loop replaced with its closed-loop equivalent as stated by classical feedback theory.
+The innerloop comprises the path through the <inlineequation><alt><![CDATA[innerOTA]]></alt><mathphrase><![CDATA[innerOTA]]></mathphrase></inlineequation> and the NMOS power stage and thus it has two poles, one dominated by the node connected to the gate of the power stage and one dominated by the output node of the regulator.</simpara>
+<informalequation>
+<alt><![CDATA[\begin{equation}
+    T_{inner} = \frac{G_{m2}R_2}{(1+sR_2C_2)(1+ s \cdot C_L/g_{mp})}
+    \label{eq:T_inner}
+\end{equation}]]></alt>
+<mathphrase><![CDATA[\begin{equation}
+    T_{inner} = \frac{G_{m2}R_2}{(1+sR_2C_2)(1+ s \cdot C_L/g_{mp})}
+    \label{eq:T_inner}
+\end{equation}]]></mathphrase>
+</informalequation>
+<simpara>The dual-loop system is stable if both the inner loop and the equivalent single-loop system meet the usual stability requirements [Grajdeanu &amp; all, 2022]. Let’s set the condition that the second pole of the inner loop is pushed up above the unity-gain frequency of that loop:</simpara>
+<informalequation>
+<alt><![CDATA[\begin{gather}
+    UGF_{inner}	 \ll f_{p\_out} \nonumber \\
+    \frac{G_{m2}R_2}{R_2C_2} 	\ll \frac{1}{C_L/g_{mp}} \implies \frac{G_{m2}}{C_2} 	\ll \frac{g_{mp}}{C_L} \label{eq:classical_output_pole_constraint}
+\end{gather}]]></alt>
+<mathphrase><![CDATA[\begin{gather}
+    UGF_{inner}	 \ll f_{p\_out} \nonumber \\
+    \frac{G_{m2}R_2}{R_2C_2} 	\ll \frac{1}{C_L/g_{mp}} \implies \frac{G_{m2}}{C_2} 	\ll \frac{g_{mp}}{C_L} \label{eq:classical_output_pole_constraint}
+\end{gather}]]></mathphrase>
+</informalequation>
+<simpara>Replacing the inner feedback loop by its closed loop equivalent we obtain:</simpara>
+<informalequation>
+<alt><![CDATA[\begin{gather}
+    H_{inner} = \frac{T_{inner}}{1 + T_{inner}} = \frac{\frac{G_{m2}R_2}{(1+sR_2C_2)(1+s/gmp \cdot C_L)}}{1+\frac{G_{m2}R_2}{(1+sR_2C_2)(1+s/gmp \cdot C_L)}}
+    \\ = \frac{G_{m2}R_2}{(1+sR_2C_2)(1+s/gmp \cdot C_L) + G_{m2}R_2} \\
+    \approx \frac{G_{m2}R_2}{(1+sR_2C_2) + G_{m2}R_2}
+    \\ = \frac{1}{s\frac{C_2}{G_{m2}} + \frac{1}{G_{m2}R_2} + 1}
+\end{gather}]]></alt>
+<mathphrase><![CDATA[\begin{gather}
+    H_{inner} = \frac{T_{inner}}{1 + T_{inner}} = \frac{\frac{G_{m2}R_2}{(1+sR_2C_2)(1+s/gmp \cdot C_L)}}{1+\frac{G_{m2}R_2}{(1+sR_2C_2)(1+s/gmp \cdot C_L)}}
+    \\ = \frac{G_{m2}R_2}{(1+sR_2C_2)(1+s/gmp \cdot C_L) + G_{m2}R_2} \\
+    \approx \frac{G_{m2}R_2}{(1+sR_2C_2) + G_{m2}R_2}
+    \\ = \frac{1}{s\frac{C_2}{G_{m2}} + \frac{1}{G_{m2}R_2} + 1}
+\end{gather}]]></mathphrase>
+</informalequation>
+<simpara>As we can see, the equivalent closed-loop block of the inner feedback loop is a unity gain low pass filter, with the first pole placed at <inlineequation><alt><![CDATA[f = \frac{G_{m2}}{2 \pi C_2}]]></alt><mathphrase><![CDATA[f = \frac{G_{m2}}{2 \pi C_2}]]></mathphrase></inlineequation>.</simpara>
+<simpara>The loop gain of the entire regulator is now given by the product of <inlineequation><alt><![CDATA[H_{inner}]]></alt><mathphrase><![CDATA[H_{inner}]]></mathphrase></inlineequation> and the transmittance of the remaining circuitry, the feedback resistive divider and <inlineequation><alt><![CDATA[G_{m1}]]></alt><mathphrase><![CDATA[G_{m1}]]></mathphrase></inlineequation> &amp; <inlineequation><alt><![CDATA[Z_1]]></alt><mathphrase><![CDATA[Z_1]]></mathphrase></inlineequation>. To ensure the stability of this loop (and allow for enough margin, considering the gain peaking the inner loop may introduce), we impose the condition that the UGF of <inlineequation><alt><![CDATA[T_{reg}]]></alt><mathphrase><![CDATA[T_{reg}]]></mathphrase></inlineequation> is smaller than the closed-loop bandwidth of <inlineequation><alt><![CDATA[H_{inner}]]></alt><mathphrase><![CDATA[H_{inner}]]></mathphrase></inlineequation>.</simpara>
+<informalequation>
+<alt><![CDATA[\begin{gather}
+    T_{reg} = T_{outer} \cdot H_{inner} = \nonumber \\
+    = \frac{G_{m1}fR_1}{1+sR_1C_1} \cdot \frac{1}{s\frac{C_2}{G_{m2}} + \frac{1}{G_{m2}R_2} + 1} \nonumber \\
+    \frac{G_{m1}f}{C_1} \ll \frac{G_{m2}}{C_2} \label{eq:classical_treg_ugf_constraint}
+\end{gather}]]></alt>
+<mathphrase><![CDATA[\begin{gather}
+    T_{reg} = T_{outer} \cdot H_{inner} = \nonumber \\
+    = \frac{G_{m1}fR_1}{1+sR_1C_1} \cdot \frac{1}{s\frac{C_2}{G_{m2}} + \frac{1}{G_{m2}R_2} + 1} \nonumber \\
+    \frac{G_{m1}f}{C_1} \ll \frac{G_{m2}}{C_2} \label{eq:classical_treg_ugf_constraint}
+\end{gather}]]></mathphrase>
+</informalequation>
+</section>
+</section>
+<section xml:id="_stability_analysis_of_multi_loop_systems_using_signal_flow_graphs_and_driving_point_impedance">
+<title>Stability Analysis of Multi-Loop Systems using Signal Flow Graphs and Driving Point Impedance</title>
+<simpara>Signal Flow Graphs (SFGs) offer a powerful alternative to characterize linear circuit networks, as they automatically include all loading effects at the input and output ports in the analysis without ever requiring the loop to be physically broken [b1].</simpara>
+<simpara>The technique of Driving Point Impedance (DPI) analysis, introduced by Ochoa [b1], provides a systematic methodology for translating a circuit schematic directly into an SFG. It is based on the transformation of circuit nodes to their Norton equivalent representations and the sequential application of superposition. The resulting SFG alternates between two types of nodes: short-circuit currents (<inlineequation><alt><![CDATA[I_{sc}]]></alt><mathphrase><![CDATA[I_{sc}]]></mathphrase></inlineequation>) and node voltages (<inlineequation><alt><![CDATA[v]]></alt><mathphrase><![CDATA[v]]></mathphrase></inlineequation>). Active transconductances (like <inlineequation><alt><![CDATA[g_m]]></alt><mathphrase><![CDATA[g_m]]></mathphrase></inlineequation>) act as directed branches that inject current into the <inlineequation><alt><![CDATA[I_{sc}]]></alt><mathphrase><![CDATA[I_{sc}]]></mathphrase></inlineequation> nodes, while the driving point impedances (<inlineequation><alt><![CDATA[Z_{DP}]]></alt><mathphrase><![CDATA[Z_{DP}]]></mathphrase></inlineequation>) at each node convert these short-circuit currents back into node voltages.</simpara>
+<simpara>This graphical representation mirrors the Modified Nodal Analysis (MNA) matrix equation [b2]:</simpara>
+<informalequation>
+<alt><![CDATA[\begin{equation}
+    \mathbf{I} = \mathbf{Y} \cdot \mathbf{v}
+    \label{eq:MNA_matrix}
+\end{equation}]]></alt>
+<mathphrase><![CDATA[\begin{equation}
+    \mathbf{I} = \mathbf{Y} \cdot \mathbf{v}
+    \label{eq:MNA_matrix}
+\end{equation}]]></mathphrase>
+</informalequation>
+<simpara>where <inlineequation><alt><![CDATA[\mathbf{Y}]]></alt><mathphrase><![CDATA[\mathbf{Y}]]></mathphrase></inlineequation> is the nodal admittance matrix, <inlineequation><alt><![CDATA[\mathbf{v}]]></alt><mathphrase><![CDATA[\mathbf{v}]]></mathphrase></inlineequation> is the vector of node voltages, and <inlineequation><alt><![CDATA[\mathbf{I}]]></alt><mathphrase><![CDATA[\mathbf{I}]]></mathphrase></inlineequation> is the vector of independent current sources.</simpara>
+<simpara>Once the SFG is generated, Mason&#8217;s Gain Formula provides a general method for evaluating the transfer function between any two nodes. A critical parameter in Mason&#8217;s formula is the graph determinant, <inlineequation><alt><![CDATA[\Delta]]></alt><mathphrase><![CDATA[\Delta]]></mathphrase></inlineequation>.</simpara>
+<simpara>The roots of the characteristic equation <inlineequation><alt><![CDATA[\Delta = 0]]></alt><mathphrase><![CDATA[\Delta = 0]]></mathphrase></inlineequation> rigorously define the closed-loop system&#8217;s natural frequencies (poles).</simpara>
+<simpara>While <inlineequation><alt><![CDATA[\Delta]]></alt><mathphrase><![CDATA[\Delta]]></mathphrase></inlineequation> perfectly characterizes the closed-loop system, directly extracting the open-loop gain in a multi-loop circuit requires separating the main feedback loop from intrinsic local minor loops (like parasitic capacitances or Early effect impedances). This requires the application of Bode&#8217;s Return Difference framework, which is discussed in the next section.</simpara>
+<simpara>Applying Ochoa&#8217;s DPI technique to the dual-loop regulator in Fig. <xref linkend="fig:dual_loop_reg_model"/> yields the SFG shown in Fig. <xref linkend="fig:signalFlowGraph"/> with all local feedback loops included, which serves as the foundation for the analytical loop gain extraction.</simpara>
+<figure xml:id="fig:signalFlowGraph">
+<title>Signal Flow Graph</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../theoretical_fundamentals/images/dualLoop_stability_analysis/signal_flow_graph.png"/>
+</imageobject>
+<textobject><phrase>Signal Flow Graph</phrase></textobject>
+</mediaobject>
+</figure>
+<section xml:id="sec:stb_using_sfg_and_dpi">
+<title>Analysing the Dual-Loop Voltage Regulator&#8217;s stability using SFGs and DPI</title>
+<simpara>These circuit analysis techniques having been used for the VREG in Fig <xref linkend="fig:dual_loop_reg_model"/>, give rise to the SFG in Fig <xref linkend="fig:signalFlowGraph"/> and lead to the following loop gain equation:</simpara>
+<informalequation>
+<alt><![CDATA[\begin{gather}
+    T_{reg}(s) \approx \frac{G_{m2}R_2(1+G_{m1}R_1f)(1+s\frac{C_1}{G_{m1}f})(1+s\frac{C_{GS}}{g_{mp}})}{(1+sR_2C_2)(1+sR_1C_1)(1+s\frac{C_L}{g_{mp}})} - \nonumber\\
+    - \frac{(1+s\frac{C_{GS}}{g_{mp}})sC_{GS}R_2}{(1+sR_2C_2)(1+s\frac{C_L}{g_{mp}})} \label{eq:T_reg_sfg}
+\end{gather}]]></alt>
+<mathphrase><![CDATA[\begin{gather}
+    T_{reg}(s) \approx \frac{G_{m2}R_2(1+G_{m1}R_1f)(1+s\frac{C_1}{G_{m1}f})(1+s\frac{C_{GS}}{g_{mp}})}{(1+sR_2C_2)(1+sR_1C_1)(1+s\frac{C_L}{g_{mp}})} - \nonumber\\
+    - \frac{(1+s\frac{C_{GS}}{g_{mp}})sC_{GS}R_2}{(1+sR_2C_2)(1+s\frac{C_L}{g_{mp}})} \label{eq:T_reg_sfg}
+\end{gather}]]></mathphrase>
+</informalequation>
+<simpara>Eq. (<inlineequation><alt><![CDATA[\ref{eq:T_reg_sfg}]]></alt><mathphrase><![CDATA[\ref{eq:T_reg_sfg}]]></mathphrase></inlineequation>) indicates a three pole system with a pole associated with each of the three nodes denoted in <xref linkend="fig:dual_loop_reg_model"/>, the DC loop gain determined by the voltage gains of the two OTAs within the two signal paths and a zero that appears due to the feedforwarding action of the inner loop on the outer loop. Another zero appears because of the <inlineequation><alt><![CDATA[C_{GS}]]></alt><mathphrase><![CDATA[C_{GS}]]></mathphrase></inlineequation> of the power stage. That same parasitic capacitance, if viewed bilaterally, yields a rhp pole, as indicated by the negative term seen in (<inlineequation><alt><![CDATA[\ref{eq:T_reg_sfg}]]></alt><mathphrase><![CDATA[\ref{eq:T_reg_sfg}]]></mathphrase></inlineequation>).
+The following inequalities turn into design guidelines:</simpara>
+<simpara>To maintain stability, we need to place the following constraints:</simpara>
+<simpara>The first zero in the transfer function must occur before the unity gain frequency, where the UGF has been computed as of a two-pole system with no dominant pole:</simpara>
+<informalequation>
+<alt><![CDATA[\begin{equation}
+    \frac{1+G_{m1}R_1f}{R_1C_1} < \sqrt{\frac{G_{m2}(1+G_{m1}R_1f)}{R_1C_1C_2}} \approx> \frac{G_{m1}f}{C_1} < \frac{G_{m2}}{C_2}
+    \label{eq:zero_frequency_condition}
+\end{equation}]]></alt>
+<mathphrase><![CDATA[\begin{equation}
+    \frac{1+G_{m1}R_1f}{R_1C_1} < \sqrt{\frac{G_{m2}(1+G_{m1}R_1f)}{R_1C_1C_2}} \approx> \frac{G_{m1}f}{C_1} < \frac{G_{m2}}{C_2}
+    \label{eq:zero_frequency_condition}
+\end{equation}]]></mathphrase>
+</informalequation>
+<simpara>We recognize this inequality also from (<inlineequation><alt><![CDATA[\ref{eq:classical_treg_ugf_constraint}]]></alt><mathphrase><![CDATA[\ref{eq:classical_treg_ugf_constraint}]]></mathphrase></inlineequation>).</simpara>
+<simpara>Last but not least, to ensure a suitable phase margin, the pole associated with the output node should be pushed up in frequency at least a decade above the unity gain bandwidth of the system:</simpara>
+<informalequation>
+<alt><![CDATA[\begin{equation}
+    \frac{g_{mp}}{C_L} \gg \sqrt{\frac{G_{m2}(1+G_{m1}R_1f)}{R_1C_1C_2}}
+    \label{eq:sfg_output_pole_constraint}
+\end{equation}]]></alt>
+<mathphrase><![CDATA[\begin{equation}
+    \frac{g_{mp}}{C_L} \gg \sqrt{\frac{G_{m2}(1+G_{m1}R_1f)}{R_1C_1C_2}}
+    \label{eq:sfg_output_pole_constraint}
+\end{equation}]]></mathphrase>
+</informalequation>
+<simpara>Making use of the constraint obtained from (<inlineequation><alt><![CDATA[\ref{eq:sfg_output_pole_constraint}]]></alt><mathphrase><![CDATA[\ref{eq:sfg_output_pole_constraint}]]></mathphrase></inlineequation>), and knowing that</simpara>
+<informalequation>
+<alt><![CDATA[\begin{equation}
+    \sqrt{\frac{G_{m2}(1+G_{m1}R_1f)}{R_1C_1C_2}} < \sqrt{(\frac{G_{m2}}{C_2})^2}
+\end{equation}]]></alt>
+<mathphrase><![CDATA[\begin{equation}
+    \sqrt{\frac{G_{m2}(1+G_{m1}R_1f)}{R_1C_1C_2}} < \sqrt{(\frac{G_{m2}}{C_2})^2}
+\end{equation}]]></mathphrase>
+</informalequation>
+<simpara>We can obtain a more restrictive constraint, that corresponds to (<inlineequation><alt><![CDATA[\ref{eq:classical_output_pole_constraint}]]></alt><mathphrase><![CDATA[\ref{eq:classical_output_pole_constraint}]]></mathphrase></inlineequation>), obtained using the classical feedback theory approach:</simpara>
+<informalequation>
+<alt><![CDATA[\begin{equation}
+    \frac{g_{mp}}{C_L} \gg \frac{G_{m2}}{C_2}
+    \label{eq:output_pole_constraint}
+\end{equation}]]></alt>
+<mathphrase><![CDATA[\begin{equation}
+    \frac{g_{mp}}{C_L} \gg \frac{G_{m2}}{C_2}
+    \label{eq:output_pole_constraint}
+\end{equation}]]></mathphrase>
+</informalequation>
+</section>
+</section>
+<section xml:id="sec:loop_gain_from_mna_matrices">
+<title>Computing the Loop Gain of a Multi-Loop Feedback System Numerically using Standard SPICE Simulators</title>
+<section xml:id="_modified_nodal_analysis_mna">
+<title>Modified Nodal Analysis (MNA)</title>
+<simpara>In a small-signal AC analysis, a linear or linearized circuit is represented by its Admittance Matrix <inlineequation><alt><![CDATA[\mathbf{Y}(s)]]></alt><mathphrase><![CDATA[\mathbf{Y}(s)]]></mathphrase></inlineequation>. The relationship between the node voltages <inlineequation><alt><![CDATA[\mathbf{v}(s)]]></alt><mathphrase><![CDATA[\mathbf{v}(s)]]></mathphrase></inlineequation> and the independent current sources <inlineequation><alt><![CDATA[\mathbf{J}(s)]]></alt><mathphrase><![CDATA[\mathbf{J}(s)]]></mathphrase></inlineequation> is given by:</simpara>
+<informalequation>
+<alt><![CDATA[\begin{equation}
+    \mathbf{Y}(s)\mathbf{v}(s) = \mathbf{J}(s)
+    \label{eq:mna_equation}
+\end{equation}]]></alt>
+<mathphrase><![CDATA[\begin{equation}
+    \mathbf{Y}(s)\mathbf{v}(s) = \mathbf{J}(s)
+    \label{eq:mna_equation}
+\end{equation}]]></mathphrase>
+</informalequation>
+<simpara>The matrix <inlineequation><alt><![CDATA[\mathbf{Y}(s)]]></alt><mathphrase><![CDATA[\mathbf{Y}(s)]]></mathphrase></inlineequation> can be decomposed into a real conductance matrix <inlineequation><alt><![CDATA[\mathbf{G}]]></alt><mathphrase><![CDATA[\mathbf{G}]]></mathphrase></inlineequation> and a capacitance matrix <inlineequation><alt><![CDATA[\mathbf{C}]]></alt><mathphrase><![CDATA[\mathbf{C}]]></mathphrase></inlineequation>:</simpara>
+<informalequation>
+<alt><![CDATA[\begin{equation}
+    \mathbf{Y}(s) = \mathbf{G} + s\mathbf{C}
+    \label{eq:Y_decomposition_into_G_and_C}
+\end{equation}]]></alt>
+<mathphrase><![CDATA[\begin{equation}
+    \mathbf{Y}(s) = \mathbf{G} + s\mathbf{C}
+    \label{eq:Y_decomposition_into_G_and_C}
+\end{equation}]]></mathphrase>
+</informalequation>
+</section>
+<section xml:id="_deriving_the_sfg_adjacency_matrix">
+<title>Deriving the SFG Adjacency Matrix</title>
+<simpara>A Signal Flow Graph maps a system into the state-space-like topological form:</simpara>
+<informalequation>
+<alt><![CDATA[\begin{equation}
+    \mathbf{v} = \mathbf{A}\mathbf{v} + \mathbf{B}\mathbf{u}
+\end{equation}]]></alt>
+<mathphrase><![CDATA[\begin{equation}
+    \mathbf{v} = \mathbf{A}\mathbf{v} + \mathbf{B}\mathbf{u}
+\end{equation}]]></mathphrase>
+</informalequation>
+<simpara>where <inlineequation><alt><![CDATA[\mathbf{A}]]></alt><mathphrase><![CDATA[\mathbf{A}]]></mathphrase></inlineequation> is the Adjacency Matrix (branch gains between dependent nodes), <inlineequation><alt><![CDATA[\mathbf{u}]]></alt><mathphrase><![CDATA[\mathbf{u}]]></mathphrase></inlineequation> is the vector of external inputs, and <inlineequation><alt><![CDATA[\mathbf{B}]]></alt><mathphrase><![CDATA[\mathbf{B}]]></mathphrase></inlineequation> is the input coupling matrix.</simpara>
+<simpara>To transform the MNA equation into the SFG format, we split <inlineequation><alt><![CDATA[\mathbf{Y}]]></alt><mathphrase><![CDATA[\mathbf{Y}]]></mathphrase></inlineequation> into its diagonal components (<inlineequation><alt><![CDATA[\mathbf{Y}_{diag}]]></alt><mathphrase><![CDATA[\mathbf{Y}_{diag}]]></mathphrase></inlineequation>) and off-diagonal components (<inlineequation><alt><![CDATA[\mathbf{Y}_{off}]]></alt><mathphrase><![CDATA[\mathbf{Y}_{off}]]></mathphrase></inlineequation>):</simpara>
+<informalequation>
+<alt><![CDATA[\begin{equation}
+    (\mathbf{Y}_{diag} + \mathbf{Y}_{off})\mathbf{v} = \mathbf{J} \implies
+    \mathbf{Y}_{diag}\mathbf{v} = -\mathbf{Y}_{off}\mathbf{v} + \mathbf{J}
+\end{equation}]]></alt>
+<mathphrase><![CDATA[\begin{equation}
+    (\mathbf{Y}_{diag} + \mathbf{Y}_{off})\mathbf{v} = \mathbf{J} \implies
+    \mathbf{Y}_{diag}\mathbf{v} = -\mathbf{Y}_{off}\mathbf{v} + \mathbf{J}
+\end{equation}]]></mathphrase>
+</informalequation>
+<simpara>By multiplying both sides by the inverse of the diagonal matrix (<inlineequation><alt><![CDATA[\mathbf{Y}_{diag}^{-1}]]></alt><mathphrase><![CDATA[\mathbf{Y}_{diag}^{-1}]]></mathphrase></inlineequation>), we isolate <inlineequation><alt><![CDATA[\mathbf{v}]]></alt><mathphrase><![CDATA[\mathbf{v}]]></mathphrase></inlineequation>:</simpara>
+<informalequation>
+<alt><![CDATA[\begin{equation}
+    \mathbf{v} = \underbrace{(-\mathbf{Y}_{diag}^{-1} \mathbf{Y}_{off})}_{\mathbf{A}} \mathbf{v} + (\mathbf{Y}_{diag}^{-1}) \mathbf{J}
+\end{equation}]]></alt>
+<mathphrase><![CDATA[\begin{equation}
+    \mathbf{v} = \underbrace{(-\mathbf{Y}_{diag}^{-1} \mathbf{Y}_{off})}_{\mathbf{A}} \mathbf{v} + (\mathbf{Y}_{diag}^{-1}) \mathbf{J}
+\end{equation}]]></mathphrase>
+</informalequation>
+<simpara>In standard nodal analysis, the independent driving vector <inlineequation><alt><![CDATA[\mathbf{J}]]></alt><mathphrase><![CDATA[\mathbf{J}]]></mathphrase></inlineequation> represents injected node currents. If the system&#8217;s actual external inputs are voltages (e.g., a reference voltage <inlineequation><alt><![CDATA[v_{ref}]]></alt><mathphrase><![CDATA[v_{ref}]]></mathphrase></inlineequation>), they manifest as currents injected into the nodes via transconductances or admittances. We can map these voltage inputs (<inlineequation><alt><![CDATA[\mathbf{v}_{in}]]></alt><mathphrase><![CDATA[\mathbf{v}_{in}]]></mathphrase></inlineequation>) to injected currents via an input transconductance matrix <inlineequation><alt><![CDATA[\mathbf{G}_{in}]]></alt><mathphrase><![CDATA[\mathbf{G}_{in}]]></mathphrase></inlineequation>:</simpara>
+<simpara>Substituting this back yields the exact SFG state formulation:</simpara>
+<informalequation>
+<alt><![CDATA[\begin{equation}
+    \mathbf{v} = \underbrace{(-\mathbf{Y}_{diag}^{-1} \mathbf{Y}_{off})}_{\mathbf{A}} \mathbf{v} + \underbrace{(\mathbf{Y}_{diag}^{-1}\mathbf{G}_{in})}_{\mathbf{B}} \underbrace{\mathbf{v}_{in}}_{\mathbf{u}}
+\end{equation}]]></alt>
+<mathphrase><![CDATA[\begin{equation}
+    \mathbf{v} = \underbrace{(-\mathbf{Y}_{diag}^{-1} \mathbf{Y}_{off})}_{\mathbf{A}} \mathbf{v} + \underbrace{(\mathbf{Y}_{diag}^{-1}\mathbf{G}_{in})}_{\mathbf{B}} \underbrace{\mathbf{v}_{in}}_{\mathbf{u}}
+\end{equation}]]></mathphrase>
+</informalequation>
+<simpara>Thus, the exact Signal Flow Graph Adjacency Matrix is defined as:</simpara>
+<informalequation>
+<alt><![CDATA[\begin{equation}
+    \mathbf{A}(s) = -\mathbf{Y}_{diag}^{-1}(s) \mathbf{Y}_{off}(s)
+    \label{eq:A_built_by_admittance_matrix}
+\end{equation}]]></alt>
+<mathphrase><![CDATA[\begin{equation}
+    \mathbf{A}(s) = -\mathbf{Y}_{diag}^{-1}(s) \mathbf{Y}_{off}(s)
+    \label{eq:A_built_by_admittance_matrix}
+\end{equation}]]></mathphrase>
+</informalequation>
+<simpara>Physically, the element <inlineequation><alt><![CDATA[A_{ij}]]></alt><mathphrase><![CDATA[A_{ij}]]></mathphrase></inlineequation> represents the transconductance from node <inlineequation><alt><![CDATA[j]]></alt><mathphrase><![CDATA[j]]></mathphrase></inlineequation> to node <inlineequation><alt><![CDATA[i]]></alt><mathphrase><![CDATA[i]]></mathphrase></inlineequation> multiplied by the total self-impedance at node <inlineequation><alt><![CDATA[i]]></alt><mathphrase><![CDATA[i]]></mathphrase></inlineequation> (<inlineequation><alt><![CDATA[Z_{ii} = 1/Y_{ii}]]></alt><mathphrase><![CDATA[Z_{ii} = 1/Y_{ii}]]></mathphrase></inlineequation>). This is the fundamental definition of a branch gain in an SFG.</simpara>
+<simpara>Beginning from the <inlineequation><alt><![CDATA[\mathbf{G}]]></alt><mathphrase><![CDATA[\mathbf{G}]]></mathphrase></inlineequation> and <inlineequation><alt><![CDATA[\mathbf{C}]]></alt><mathphrase><![CDATA[\mathbf{C}]]></mathphrase></inlineequation> matrices obtained from a DCOP simulation (<inlineequation><alt><![CDATA[\ref{eq:Y_decomposition_into_G_and_C}]]></alt><mathphrase><![CDATA[\ref{eq:Y_decomposition_into_G_and_C}]]></mathphrase></inlineequation>), one can build the adjacency matrix <inlineequation><alt><![CDATA[\mathbf{A}]]></alt><mathphrase><![CDATA[\mathbf{A}]]></mathphrase></inlineequation> using (<inlineequation><alt><![CDATA[\ref{eq:A_built_by_admittance_matrix}]]></alt><mathphrase><![CDATA[\ref{eq:A_built_by_admittance_matrix}]]></mathphrase></inlineequation>).</simpara>
+<simpara>Then, using Mason&#8217;s Gain Formula in matrix form, we can obtain the global graph determinant <inlineequation><alt><![CDATA[\Delta]]></alt><mathphrase><![CDATA[\Delta]]></mathphrase></inlineequation>:</simpara>
+<informalequation>
+<alt><![CDATA[\begin{equation}
+    \Delta = \det(\mathbf{I} - \mathbf{A}) = 1 - \sum L_i + \sum L_i L_j - \dots
+\end{equation}]]></alt>
+<mathphrase><![CDATA[\begin{equation}
+    \Delta = \det(\mathbf{I} - \mathbf{A}) = 1 - \sum L_i + \sum L_i L_j - \dots
+\end{equation}]]></mathphrase>
+</informalequation>
+<simpara>The global determinant <inlineequation><alt><![CDATA[\Delta]]></alt><mathphrase><![CDATA[\Delta]]></mathphrase></inlineequation> encompasses <emphasis>all</emphasis> loops in the network, including the minor local loops intrinsic to active devices (such as diode connections, Early effect impedances, and parasitic capacitances). Consequently, these local loops mathematically inflate the global determinant, obscuring the gain of the main feedback loop [Middlebrook, International Journal of Circuit Theory and Applications, 1998].</simpara>
+<simpara>To isolate the loop gain of the main feedback loop—what a circuit designer actually cares about—we must invoke Bode&#8217;s Return Ratio theorem [Bode, Network Analysis and Feedback Amplifier Design, 1945]. Bode defined the Return Difference <inlineequation><alt><![CDATA[F]]></alt><mathphrase><![CDATA[F]]></mathphrase></inlineequation> with respect to a chosen reference parameter <inlineequation><alt><![CDATA[W]]></alt><mathphrase><![CDATA[W]]></mathphrase></inlineequation> as the ratio of the total network determinant <inlineequation><alt><![CDATA[\Delta]]></alt><mathphrase><![CDATA[\Delta]]></mathphrase></inlineequation> to the "dead-system" determinant <inlineequation><alt><![CDATA[\Delta^0]]></alt><mathphrase><![CDATA[\Delta^0]]></mathphrase></inlineequation>:</simpara>
+<informalequation>
+<alt><![CDATA[\begin{equation}
+    F = 1 + T = \frac{\Delta}{\Delta^0}
+\end{equation}]]></alt>
+<mathphrase><![CDATA[\begin{equation}
+    F = 1 + T = \frac{\Delta}{\Delta^0}
+\end{equation}]]></mathphrase>
+</informalequation>
+<simpara>In Bode&#8217;s framework, <inlineequation><alt><![CDATA[W]]></alt><mathphrase><![CDATA[W]]></mathphrase></inlineequation> is a specific controlled source, typically the <inlineequation><alt><![CDATA[g_m]]></alt><mathphrase><![CDATA[g_m]]></mathphrase></inlineequation> of an active device from the loop&#8217;s forward gain. Setting <inlineequation><alt><![CDATA[W = 0]]></alt><mathphrase><![CDATA[W = 0]]></mathphrase></inlineequation> disconnects that source, so current no longer flows from the drain to the source when the gate is driven. This is the active element that vanishes to produce <inlineequation><alt><![CDATA[\Delta^0]]></alt><mathphrase><![CDATA[\Delta^0]]></mathphrase></inlineequation>, breaking the main loop while leaving all passive loading and local minor loops perfectly intact.</simpara>
+<simpara>In the MNA and SFG picture, this parameter <inlineequation><alt><![CDATA[W = g_m]]></alt><mathphrase><![CDATA[W = g_m]]></mathphrase></inlineequation> enters the admittance matrix <inlineequation><alt><![CDATA[\mathbf{Y}]]></alt><mathphrase><![CDATA[\mathbf{Y}]]></mathphrase></inlineequation> as an off-diagonal entry, <inlineequation><alt><![CDATA[\mathbf{Y}_{drain, gate} = g_m]]></alt><mathphrase><![CDATA[\mathbf{Y}_{drain, gate} = g_m]]></mathphrase></inlineequation>. When transformed into the SFG adjacency matrix using (<inlineequation><alt><![CDATA[\ref{eq:A_built_by_admittance_matrix}]]></alt><mathphrase><![CDATA[\ref{eq:A_built_by_admittance_matrix}]]></mathphrase></inlineequation>), it becomes a directed SFG branch:</simpara>
+<informalequation>
+<alt><![CDATA[\begin{equation}
+    \mathbf{A}_{drain\_gate} = -\frac{g_m}{\mathbf{Y}_{drain\_drain}}
+\end{equation}]]></alt>
+<mathphrase><![CDATA[\begin{equation}
+    \mathbf{A}_{drain\_gate} = -\frac{g_m}{\mathbf{Y}_{drain\_drain}}
+\end{equation}]]></mathphrase>
+</informalequation>
+<simpara>Setting <inlineequation><alt><![CDATA[W = g_m = 0]]></alt><mathphrase><![CDATA[W = g_m = 0]]></mathphrase></inlineequation> to find the return ratio is therefore exactly equivalent to zeroing that single SFG branch entry. By constructing a modified adjacency matrix <inlineequation><alt><![CDATA[\mathbf{A}^0]]></alt><mathphrase><![CDATA[\mathbf{A}^0]]></mathphrase></inlineequation> where this specific element is zeroed out, we obtain the dead-system determinant <inlineequation><alt><![CDATA[\Delta^0 = \det(\mathbf{I} - \mathbf{A}^0)]]></alt><mathphrase><![CDATA[\Delta^0 = \det(\mathbf{I} - \mathbf{A}^0)]]></mathphrase></inlineequation>.</simpara>
+<simpara>Therefore, the exact, loading-accurate loop gain <inlineequation><alt><![CDATA[T]]></alt><mathphrase><![CDATA[T]]></mathphrase></inlineequation> can be numerically extracted directly from the circuit matrices as:</simpara>
+<informalequation>
+<alt><![CDATA[\begin{equation}
+    T = \frac{\det(\mathbf{I} - \mathbf{A})}{\det(\mathbf{I} - \mathbf{A}^0)} - 1
+\end{equation}]]></alt>
+<mathphrase><![CDATA[\begin{equation}
+    T = \frac{\det(\mathbf{I} - \mathbf{A})}{\det(\mathbf{I} - \mathbf{A}^0)} - 1
+\end{equation}]]></mathphrase>
+</informalequation>
+<simpara>This matrix formulation strictly separates the principal loop gain from local minor loops while preserving all complex loading effects unaltered [Hurst, IEEE Transactions on Circuits and Systems II, 1991].</simpara>
+</section>
+</section>
+</section>
+<section xml:id="_implementation">
+<title>Implementation</title>
+<section xml:id="_dual_loop_architecture">
+<title>Dual Loop Architecture</title>
+<simpara>To be able to improve on both static precision and dynamic performance, a dual loop architecture was chosen:
+The outer loop was optimized for high DC gain through a double-cascoded symmetrical OTA with an input differential pair sized for low mismatch. [During steady‑state operation, the high gain of the symmetrical outer OTA dominates the CCII inner feedback loop, allowing the 1.5 V regulator to achieve under 2% precision in MC300 simulations.]
+To maintain optimal transient performance, high DC gain and current efficiency, a biasing circuitry with a PTAT component and an adaptive component that increases with load current has been used.</simpara>
+<figure>
+<title>1V5 Voltage Regulator with Dual Loop Architecture</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../implementation/images/1v5reg_block_diagram_1v5_reg.svg" contentwidth="800"/>
+</imageobject>
+<textobject><phrase>1v5reg block diagram 1v5 reg</phrase></textobject>
+</mediaobject>
+</figure>
+</section>
+<section xml:id="_inner_ota_design_and_slew_rate_enhancement">
+<title>Inner OTA Design and Slew Rate Enhancement</title>
+<simpara>For the Inner OTA a second generation current conveyor (CCII) was chosen. The design mirrors the bipolar variant of Fabre [A Precise Macromodel for Second
+Generation Current Conveyors Alain Fabre] [Translinear current conveyors implementation Fabre], using the same translinear loop as its core. This design was chosen over the Barthelemy variant [Barthelemy H (1997) Low-output-impedance class AB bipolar voltage buffer] for its better quiescent current control over PVT.</simpara>
+<simpara>The CCII has its Y voltage input is driven by the symmetrical outer OTA, while its X current input is directly connected to the regulator output. Owing to its simplicity, class AB behavior, and current feedback operation, the CCII inner loop can be optimized for wide bandwidth and high slew rate, allowing it to take over the system response during transient events.</simpara>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../implementation/images/nonlinear_currentMirror_behaviour_explanation_using_id_vds_graph.png"/>
+</imageobject>
+<textobject><phrase>nonlinear currentMirror behaviour explanation using id vds graph</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Furthermore, a nonlinear PMOS current mirror that exploits the transition from the triode region to saturation of a resistor-emulating PMOS [4 - J. A. Galan, A. J. Lopez-Martin, R. G. Carvajal, J. Ramirez-Angulo and C. Rubia-Marcos, "Super Class-AB OTAs With Adaptive Biasing and Dynamic Output Current Scaling," ] has been used to further increase the positive slew rate of the inner OTA, ensuring 221mV undershoots in full load jumps between 100nA and 10mA over PVT. R_dyn is biased at the edge of the triode region in steady state, but when a sufficiently high current flows through M24 during a transient undershoot event, R_dyn will enter the saturation region to reach an operating point with a higher drain current, but with the same VGS . This mirrors gliding up the Y-axis of the ID/VDS graph of a MOSFET. A slew rate comparison between a current conveyor with a classical and a nonlinear current mirror is shown in Fig. 2. The regulation loop response to a load jump from 100nA to 10mA with the two aforementioned current mirrors is also shown in Fig. 3.</simpara>
+</section>
+<section xml:id="_outer_ota_design_and_loop_stability">
+<title>Outer OTA Design and Loop Stability</title>
+<simpara>The outer OTA is a double-cascoded symmetrical OTA with an input differential pair sized for low mismatch biased in the subthreshold region. The design of the outer OTA was optimized for high DC gain, which is essential for achieving high precision in the voltage regulator. The symmetrical architecture of the OTA helps to minimize offset while the double-cascoding technique allows for a significant increase in gain without sacrificing bandwidth. The single-stage topology was chosen to minimize the quiescent current and the number of poles in the system, thus improving stability margins.</simpara>
+</section>
+<section xml:id="_ptat_current_reference">
+<title>PTAT Current reference</title>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../implementation/images/generated_ptat_current_over_temp.png"/>
+</imageobject>
+<textobject><phrase>generated ptat current over temp</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+<section xml:id="_initial_ptat_current_reference_design">
+<title>Initial PTAT current reference design</title>
+<simpara>The PTAT biasing circuitry is based on the classical ΔVGS PTAT core. The extra resistor R_poly2 has a PTAT behaviour, just like R_ploy1, but it has a greater variance with temperature. In this way, the output PTAT bias current has a lower process corner dependence.</simpara>
+</section>
+<section xml:id="_improved_ptat_current_reference_design">
+<title>Improved PTAT current reference design</title>
+<figure>
+<title>PTAT Current References Comparison</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../implementation/images/ptat_current_references_comparison.png" contentwidth="800"/>
+</imageobject>
+<textobject><phrase>ptat current references comparison</phrase></textobject>
+</mediaobject>
+</figure>
+</section>
+<section xml:id="_adaptive_biasing_2">
+<title>Adaptive Biasing</title>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../implementation/images/quiescentCurrent_variation_vs_loadCurrent.png"/>
+</imageobject>
+<textobject><phrase>quiescentCurrent variation vs loadCurrent</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>The adaptive biasing current keeps the regulator&#8217;s efficiency high at minimum loads and increases the Unity Gain frequency, and Stability margins at higher loads. It also allows the outer loop gain to surpass 80dB DC loop gain above 200 uA and 90dB above 2mA.
+With the help of a variable resistor, implemented through M48, that generates a load-tracking zero, stability is ensured for loads between 1u and 10mA and 0 and 10nF,  load current and capacitance, respectively.</simpara>
+</section>
+</section>
+<section xml:id="_experimental_results">
+<title>Experimental Results</title>
+<section xml:id="_vreg_startup_and_disable">
+<title>VREG Startup and Disable</title>
+<figure xml:id="reg1v5_startup_pvt_cload_150p_5n_iload_10n_10m_sweep">
+<title>Startup Behaviour of the 1.5V Regulator over PVT with 150pF and 5nF Load Capacitance and Load Current Sweep from 10nA to 10mA</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../experimental_results/images/reg1v5_startup_pvt_cload_150p_5n_iload_10n_10m_sweep.png"/>
+</imageobject>
+<textobject><phrase>reg1v5 startup pvt cload 150p 5n iload 10n 10m sweep</phrase></textobject>
+</mediaobject>
+</figure>
+<simpara>As can be seen from <xref linkend="reg1v5_startup_pvt_cload_150p_5n_iload_10n_10m_sweep"/> , the 1V5 Reg startup time varies dramatically, mostly due to the load current the VREG is required to supply directly from the startup and the PVT conditions. The startup time is also influenced by the load capacitance.</simpara>
+<figure xml:id="reg1v5_disable_pvt_cload_150p_5n_10n_10m_sweep">
+<title>Disable Behaviour of the 1.5V Regulator over PVT with 150pF and 5nF Load Capacitance and Load Current Sweep from 10nA to 10mA</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../experimental_results/images/reg1v5_disable_pvt_cload_150p_5n_10n_10m_sweep.png"/>
+</imageobject>
+<textobject><phrase>reg1v5 disable pvt cload 150p 5n 10n 10m sweep</phrase></textobject>
+</mediaobject>
+</figure>
+<simpara>The disable behaviour of the 1V5 Reg is also influenced by the load current and load capacitance. The disable time is generally shorter than the startup time, but it can still vary significantly depending on the PVT conditions and the load current. The longest disable time is observed when the load current is low (10nA) and the load capacitance is large, as the pulldown switch needs to discharge the load capacitance before it can fully disable.</simpara>
+</section>
+<section xml:id="_static_and_dynamic_measurements">
+<title>Static and Dynamic Measurements</title>
+<figure xml:id="staticAndDynamicMeasurmentTable">
+<title>Summary table that contains the minimum and maximum values of the static and dynamic measurements for the 1.5V Regulator over PVT with load capacitance swept between 150pF and 5nF</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../experimental_results/images/loadAndLineJumpPlots/staticAndDynamicMeasurmentTable.svg"/>
+</imageobject>
+<textobject><phrase>staticAndDynamicMeasurmentTable</phrase></textobject>
+</mediaobject>
+</figure>
+<simpara>As can be seen from <xref linkend="staticAndDynamicMeasurmentTable"/>, the regulator manages to achieve a maximum overshoot of 50mV for positive line jumps from 2.25V to 3.6V at 10mA. The maximum undershoot for negative line jumps from 3.6V to 2.25V is 34mV at 10mA. As far as the load transient performance is concerned, the maximum overshoot.</simpara>
+<section xml:id="_plots">
+<title>Plots</title>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../experimental_results/images/loadAndLineJumpPlots/tran_loadAndLineJump_stackedPlot.svg"/>
+</imageobject>
+<textobject><phrase>tran loadAndLineJump stackedPlot</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../experimental_results/images/loadAndLineJumpPlots/tran_loadAndLineJump_vreg1v5.svg"/>
+</imageobject>
+<textobject><phrase>tran loadAndLineJump vreg1v5</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<figure xml:id="max_overshoot_vreg1v5out_loadJump_10m_100n">
+<title>Worst case corner for the 10mA to 100nA load jump overshoot</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../experimental_results/images/loadAndLineJumpPlots/max_overshoot_vreg1v5out_loadJump_10m_100n.png"/>
+</imageobject>
+<textobject><phrase>max overshoot vreg1v5out loadJump 10m 100n</phrase></textobject>
+</mediaobject>
+</figure>
+<figure xml:id="max_overshoot_vreg1v5out_loadJump_10m_100u">
+<title>Worst case corner for the 10mA to 100uA load jump overshoot</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../experimental_results/images/loadAndLineJumpPlots/max_overshoot_vreg1v5out_loadJump_10m_100u.png"/>
+</imageobject>
+<textobject><phrase>max overshoot vreg1v5out loadJump 10m 100u</phrase></textobject>
+</mediaobject>
+</figure>
+<figure xml:id="max_overshoot_vreg1v5out_loadJump_2_25v_3_6v">
+<title>Worst case corner for the 2.25V to 3.6V overshoot at 10mA load current</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../experimental_results/images/loadAndLineJumpPlots/max_overshootAt10mA__vreg1v5out_lineJump_2v25_3v6.png"/>
+</imageobject>
+<textobject><phrase>max overshootAt10mA  vreg1v5out lineJump 2v25 3v6</phrase></textobject>
+</mediaobject>
+</figure>
+<figure xml:id="max_overshootAt100uA__vreg1v5out_lineJump_2v25_3v6">
+<title>Worst case corner for the 2.25V to 3.6V overshoot at 100uA load current</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../experimental_results/images/loadAndLineJumpPlots/max_overshootAt100uA__vreg1v5out_lineJump_2v25_3v6.png"/>
+</imageobject>
+<textobject><phrase>max overshootAt100uA  vreg1v5out lineJump 2v25 3v6</phrase></textobject>
+</mediaobject>
+</figure>
+<figure xml:id="max_undershoot_vreg1v5out_loadJump_100n_10m">
+<title>Worst case corner for the 100nA to 10mA load jump undershoot</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../experimental_results/images/loadAndLineJumpPlots/max_undershoot_vreg1v5out_loadJump_100n_10m.png"/>
+</imageobject>
+<textobject><phrase>max undershoot vreg1v5out loadJump 100n 10m</phrase></textobject>
+</mediaobject>
+</figure>
+<figure xml:id="max_undershoot_vreg1v5out_loadJump_100u_10m">
+<title>Worst case corner for the 100uA to 10mA load jump undershoot</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../experimental_results/images/loadAndLineJumpPlots/max_undershoot_vreg1v5out_loadJump_100u_10m.png"/>
+</imageobject>
+<textobject><phrase>max undershoot vreg1v5out loadJump 100u 10m</phrase></textobject>
+</mediaobject>
+</figure>
+<figure xml:id="max_undershootAt100uA__vreg1v5out_lineJump_3v6_2v25">
+<title>Worst case corner for the 3.6V to 2.25V undershoot at 100uA load current</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../experimental_results/images/loadAndLineJumpPlots/max_undershootAt100uA__vreg1v5out_lineJump_3v6_2v25.png"/>
+</imageobject>
+<textobject><phrase>max undershootAt100uA  vreg1v5out lineJump 3v6 2v25</phrase></textobject>
+</mediaobject>
+</figure>
+<figure xml:id="max_undershootAt10mA__vreg1v5out_lineJump_3v6_2v25">
+<title>Worst case corner for the 3.6V to 2.25V undershoot at 10mA load current</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../experimental_results/images/loadAndLineJumpPlots/max_undershootAt10mA__vreg1v5out_lineJump_3v6_2v25.png"/>
+</imageobject>
+<textobject><phrase>max undershootAt10mA  vreg1v5out lineJump 3v6 2v25</phrase></textobject>
+</mediaobject>
+</figure>
+</section>
+</section>
+<section xml:id="_psrr">
+<title>PSRR</title>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../experimental_results/images/psrr_plots_over_pvt.png"/>
+</imageobject>
+<textobject><phrase>psrr plots over pvt</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>The regulator&#8217;s PSRR maintains its worst case value over a frequency band of 10 Hz to 1GHz of under -13dB even at the maximum load current. Also because of the high open loop DC gain, it manages to have a maximum low frequency PSRR value of under -70dB at 100Hz.</simpara>
+<informalfigure>
+<mediaobject>
+<imageobject>
+<imagedata fileref="../experimental_results/images/psrr_pvt_measurements.png"/>
+</imageobject>
+<textobject><phrase>psrr pvt measurements</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+</section>
+</article>

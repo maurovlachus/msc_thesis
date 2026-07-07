@@ -1,0 +1,124 @@
+%% Creator: Inkscape 1.4.2 (f4327f4, 2025-05-13), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'tran_loadAndLineJump_stackedPlot_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{342.37163544bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.75068766)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.03363402,0.17289926){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.16956555,0.17289926){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.002\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.3253892,0.17289926){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.004\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.48121402,0.17289926){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.006\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.6368928,0.17289926){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.008\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.7984015,0.17289926){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.01\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.94854244,0.17289926){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.012\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.4736988,0.14223084){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}time[s]\\corner=nom\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.48065031,0.08600539){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}corner=slow\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.48065031,0.06555977){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}corner=fast\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.48065031,0.04511415){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}corner=sf\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.48065031,0.02466853){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}corner=fs\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.48065031,0.00422291){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}corner=slg\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.255509,0.73515377){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}LineandLoadJumpsoverPVTandloadcapvariations\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.01568248,0.19279051){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.01568248,0.25529569){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}2\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.04545071,0.28318936){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}V(VGPASS) [V]\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.01568248,0.29934081){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=19]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.01568248,0.35731874){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}2\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=20]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.04545071,0.38973965){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}V(EN_I) [V]\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=21]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.01568248,0.40554119){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=22]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.01568248,0.44584827){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}2\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=23]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.04545071,0.49594004){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}V(VDD) [V]\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=24]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.01568248,0.51174158){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=25]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.01568248,0.54795953){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}5\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=26]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.00431533,0.58417748){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}10\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=27]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.04545071,0.60214042){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}I(M2,ND) [mA]\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=28]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.01568248,0.61829246){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=29]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(-0.0013677,0.63727767){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}0.5\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=30]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.01568248,0.65626289){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}1\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=31]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(-0.0013677,0.67524811){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}1.5\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=32]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.01568248,0.69423333){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}2\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=33]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+    \put(0.04545071,0.7086913){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}V(VREG1V5) [V]\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=34]{tran_loadAndLineJump_stackedPlot_svg-tex.pdf}}%
+  \end{picture}%
+\endgroup%

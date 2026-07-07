@@ -1,0 +1,96 @@
+%% Creator: Inkscape 1.4.2 (f4327f4, 2025-05-13), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'tran_loadAndLineJump_vreg1v5_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{480bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.946875)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{tran_loadAndLineJump_vreg1v5_svg-tex.pdf}}%
+    \put(0.08710938,0.3095){\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}0\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{tran_loadAndLineJump_vreg1v5_svg-tex.pdf}}%
+    \put(0.08710938,0.45978125){\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}0.5\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{tran_loadAndLineJump_vreg1v5_svg-tex.pdf}}%
+    \put(0.08710938,0.6100625){\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}1\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{tran_loadAndLineJump_vreg1v5_svg-tex.pdf}}%
+    \put(0.08710938,0.76034375){\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}1.5\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{tran_loadAndLineJump_vreg1v5_svg-tex.pdf}}%
+    \put(0.08710938,0.910625){\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}2\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{tran_loadAndLineJump_vreg1v5_svg-tex.pdf}}%
+    \put(0.10021875,0.25265625){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}0\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{tran_loadAndLineJump_vreg1v5_svg-tex.pdf}}%
+    \put(0.243625,0.25265625){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}0.002\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{tran_loadAndLineJump_vreg1v5_svg-tex.pdf}}%
+    \put(0.38703125,0.25265625){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}0.004\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{tran_loadAndLineJump_vreg1v5_svg-tex.pdf}}%
+    \put(0.5304375,0.25265625){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}0.006\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{tran_loadAndLineJump_vreg1v5_svg-tex.pdf}}%
+    \put(0.67384375,0.25265625){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}0.008\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{tran_loadAndLineJump_vreg1v5_svg-tex.pdf}}%
+    \put(0.81725,0.25265625){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}0.01\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{tran_loadAndLineJump_vreg1v5_svg-tex.pdf}}%
+    \put(0.96065625,0.25265625){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}0.012\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{tran_loadAndLineJump_vreg1v5_svg-tex.pdf}}%
+    \put(0.02996875,0.60279688){\rotatebox{90}{\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}V(VREG1V5) [V]\end{tabular}}}}}%
+    \put(0.5304375,0.21046875){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}time [s]\end{tabular}}}}%
+    \put(0.5046875,0.16265625){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}corner=nom\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{tran_loadAndLineJump_vreg1v5_svg-tex.pdf}}%
+    \put(0.5046875,0.13453125){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}corner=slow\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{tran_loadAndLineJump_vreg1v5_svg-tex.pdf}}%
+    \put(0.5046875,0.10640625){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}corner=fast\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{tran_loadAndLineJump_vreg1v5_svg-tex.pdf}}%
+    \put(0.5046875,0.07828125){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}corner=sf\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{tran_loadAndLineJump_vreg1v5_svg-tex.pdf}}%
+    \put(0.5046875,0.05015625){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}corner=fs\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{tran_loadAndLineJump_vreg1v5_svg-tex.pdf}}%
+    \put(0.5046875,0.02203125){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}corner=slg\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=19]{tran_loadAndLineJump_vreg1v5_svg-tex.pdf}}%
+  \end{picture}%
+\endgroup%
